@@ -20,16 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="tan-ln的博客">
-<meta property="og:url" content="http://yoursite.com/tags/Http/index.html">
+  <meta name="description" content="当在 body 中使用了 filter(backdrop-filter) 滤镜属性的时候，会导致 fixed 元素定位发生错误即不再相对 viewport 进行定位，而是相对整个网页（ body 元素）进行定位。  解决方案： 在 html 使用 filter 或 创建 伪元素&#x2F;伪类 对其使用 filter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="filter 与 fixed 布局的冲突">
+<meta property="og:url" content="http://yoursite.com/2020/03/18/filter-%E4%B8%8E-fixed-%E5%B8%83%E5%B1%80%E7%9A%84%E5%86%B2%E7%AA%81/index.html">
 <meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="当在 body 中使用了 filter(backdrop-filter) 滤镜属性的时候，会导致 fixed 元素定位发生错误即不再相对 viewport 进行定位，而是相对整个网页（ body 元素）进行定位。  解决方案： 在 html 使用 filter 或 创建 伪元素&#x2F;伪类 对其使用 filter">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-03-18T02:51:21.000Z">
+<meta property="article:modified_time" content="2022-03-18T03:05:55.623Z">
 <meta property="article:author" content="tang">
 <meta property="article:tag" content="GOGOGO">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/tags/Http/">
+<link rel="canonical" href="http://yoursite.com/2020/03/18/filter-%E4%B8%8E-fixed-%E5%B8%83%E5%B1%80%E7%9A%84%E5%86%B2%E7%AA%81/">
 
 
 <script id="page-configurations">
@@ -37,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>标签: Http | tan-ln的博客</title>
+  <title>filter 与 fixed 布局的冲突 | tan-ln的博客</title>
   
 
 
@@ -157,51 +161,100 @@
         <div class="content-wrap">
           
 
-          <div class="content tag">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Http
-          <small>标签</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/18/filter-%E4%B8%8E-fixed-%E5%B8%83%E5%B1%80%E7%9A%84%E5%86%B2%E7%AA%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          filter 与 fixed 布局的冲突
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-18 10:51:21" itemprop="dateCreated datePublished" datetime="2020-03-18T10:51:21+08:00">2020-03-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-18 11:05:55" itemprop="dateModified" datetime="2022-03-18T11:05:55+08:00">2022-03-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+        <blockquote>
+<p>当在 <code>body</code> 中使用了 <code>filter(backdrop-filter)</code> 滤镜属性的时候，会导致 <code>fixed</code> 元素定位发生错误<br>即不再相对 viewport 进行定位，而是相对<strong>整个网页（ body 元素）</strong>进行定位。</p>
+</blockquote>
+<p>解决方案：</p>
+<p>在 <code>html</code> 使用 <code>filter</code> 或 创建 <em>伪元素/伪类</em> 对其使用 <code>filter</code></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-03-01T21:06:37+08:00"
-              content="2022-03-01">
-          03-01
-        </time>
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
       </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/03/01/network/" itemprop="url">
-            <span itemprop="name">network</span>
-          </a>
-      </div>
+      <footer class="post-footer">
 
-    </header>
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/18/ajax/" rel="prev" title="ajax">
+      <i class="fa fa-chevron-left"></i> ajax
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/01/note/" rel="next" title="JavaScript 语言精粹学习笔记">
+      JavaScript 语言精粹学习笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -347,34 +400,6 @@
 
 
 <script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-
-</body>
-</html>
-boot.js"></script>
 
 
 
