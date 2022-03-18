@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="TCP | IP | HTTPHTTP    应用层      无状态，无连接，对于事务没有记忆能力      xml 明文 可解析        TCP     传输层      数据传递，有序，可靠的，面向连接          二进制格式面向字节         一对一通信 UDP     传输层      无连接，快速但不安全，如写信              面向报文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="network">
+<meta property="og:url" content="http://yoursite.com/2022/03/01/network/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="TCP | IP | HTTPHTTP    应用层      无状态，无连接，对于事务没有记忆能力      xml 明文 可解析        TCP     传输层      数据传递，有序，可靠的，面向连接          二进制格式面向字节         一对一通信 UDP     传输层      无连接，快速但不安全，如写信              面向报文">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-01T13:06:37.000Z">
+<meta property="article:modified_time" content="2022-03-18T01:51:02.350Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="网络协议">
+<meta property="article:tag" content="Http">
+<meta property="article:tag" content="Https">
+<meta property="article:tag" content="Tcp">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/03/01/network/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>network | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">44</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/01/network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          network
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-01 21:06:37" itemprop="dateCreated datePublished" datetime="2022-03-01T21:06:37+08:00">2022-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-18 09:51:02" itemprop="dateModified" datetime="2022-03-18T09:51:02+08:00">2022-03-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="TCP-IP-HTTP"><a href="#TCP-IP-HTTP" class="headerlink" title="TCP | IP | HTTP"></a>TCP | IP | HTTP</h1><pre><code>HTTP    应用层      无状态，无连接，对于事务没有记忆能力      xml 明文 可解析       
+TCP     传输层      数据传递，有序，可靠的，面向连接          二进制格式面向字节         一对一通信
+UDP     传输层      无连接，快速但不安全，如写信              面向报文                  一对多 | 多对多
+IP      网络层      网络路由和寻址
+</code></pre>
+<p>HTTP 1.0 默认使用短链接，客户和服务器每进行一次 HTTP 操作就建立一次连接，任务结束就中断</p>
+<p>HTTP 1.1 起，使用长链接，用以保持 持续连接，响应头：<code>Connection: keep-alive</code>，可以设置保持时间</p>
+<p>长连接可以省去较多的TCP建立和关闭的操作，减少浪费，节约时间。对于频繁请求资源的客户端适合使用长连接。</p>
+<pre><code>信息只能单向传送为单工；
+信息能双向传送但不能同时双向传送称为半双工；
+信息能够同时双向传送则称为全双工。
+</code></pre>
+<h1 id="https"><a href="#https" class="headerlink" title="https"></a>https</h1><h3 id="1-公钥-公开的加密方式"><a href="#1-公钥-公开的加密方式" class="headerlink" title="1. 公钥: 公开的加密方式"></a>1. 公钥: 公开的加密方式</h3><h3 id="2-私钥：存在服务器的唯一解公钥加密的方式"><a href="#2-私钥：存在服务器的唯一解公钥加密的方式" class="headerlink" title="2. 私钥：存在服务器的唯一解公钥加密的方式"></a>2. 私钥：存在服务器的唯一解公钥加密的方式</h3><h3 id="3-数字签名，防止内容被篡改"><a href="#3-数字签名，防止内容被篡改" class="headerlink" title="3. 数字签名，防止内容被篡改"></a>3. 数字签名，防止内容被篡改</h3><p>同时发送 加密后的数据 data + ^data&amp;(再加密后) ====== &gt; 服务器，解密 ^data&amp; === data ? 可信 : 被篡改</p>
+<h3 id="4-数字证书，保证服务器的可信度，真实域名，"><a href="#4-数字证书，保证服务器的可信度，真实域名，" class="headerlink" title="4. 数字证书，保证服务器的可信度，真实域名，"></a>4. 数字证书，保证服务器的可信度，真实域名，</h3><p>请求与相应，携带证书，表示发送者的身份<br>CA 权威机构颁发的证书 （代表某个域名、携带 加密的公钥）<br>判断证书与当前 请求的服务器域名一致，为可信</p>
+<p>启用 https 要携带 证书公钥</p>
+<h1 id="http-amp-amp-https-区别"><a href="#http-amp-amp-https-区别" class="headerlink" title="http &amp;&amp; https 区别"></a>http &amp;&amp; https 区别</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">                    http                https</span><br><span class="line">端口                 80                 443</span><br><span class="line">OSI网络模型         应用层               传输层</span><br><span class="line">安全                无加密               加密 (公钥 + 私钥 + 数字签名 + 数字证书)</span><br></pre></td></tr></table></figure>
+<h1 id="GET-amp-amp-POST"><a href="#GET-amp-amp-POST" class="headerlink" title="GET &amp;&amp; POST"></a>GET &amp;&amp; POST</h1><ol>
+<li><code>get</code> 请求在<em>浏览器回退</em>时，<em>不会重新请求</em>；<code>post</code> 请求则<em>会重新请求</em></li>
+<li><code>get</code> 请求浏览器会<em>主动缓存</em>；<code>post</code> 请求不会，需要<em>手动设置</em></li>
+<li>浏览器<em>历史记录</em>保留 <code>get</code> 请求参数；<code>post</code> 请求的参数不会</li>
+<li><code>get</code> 是通过 url 形式，其<em>长度有限制</em>（浏览器不同长度限制不同）；<code>post</code> <em>浏览器不限制</em>，看服务器是否有限制</li>
+<li><code>get</code> 请求 url 地址栏暴露参数，<code>post</code> 请求参数在请求体中（payload | formData）</li>
+<li><code>get</code> 请求只支持 URL 编码，<code>post</code> 支持多种编码方式</li>
+<li><code>get</code> 只支持 ASCII 字符，<code>post</code> 没有字符类型限制</li>
+</ol>
+<h1 id="三次握手-amp-amp-四次挥手"><a href="#三次握手-amp-amp-四次挥手" class="headerlink" title="三次握手 &amp;&amp; 四次挥手"></a>三次握手 &amp;&amp; 四次挥手</h1><h2 id="三次握手"><a href="#三次握手" class="headerlink" title="三次握手"></a>三次握手</h2><ol>
+<li>建立连接，客户端发送 syn 包到服务器，等待确认</li>
+<li>服务器收到 syn 包，确认之后，发送 syn + ack 包</li>
+<li>客户端收到 syn + ack ，向服务器发送确认包 ack</li>
+</ol>
+<p>连接成功</p>
+<h2 id="四次挥手"><a href="#四次挥手" class="headerlink" title="四次挥手"></a>四次挥手</h2><ol>
+<li>浏览器发送完数据后，请求断开连接，发送 fin</li>
+<li>服务器发送 ack 包到客户端，确认断开请求</li>
+<li>服务器发送断开 fin 请求</li>
+<li>客户端确认服务器的断开 ack</li>
+</ol>
+<p>断开连接</p>
+<h1 id="socket-io"><a href="#socket-io" class="headerlink" title="socket.io"></a>socket.io</h1><pre><code>http: 应用层、无连接、无状态（一问一答）、        数据解析、携带请求头、行、体
+tcp： 传输层、面向连接（三次握手、四次挥手）、    只进行数据传输
+udp： 传输层、无连接（广播）、速度快容易丢包
+ws：将 http 升级到 websocket，但底层还是 tcp
+</code></pre>
+<ol>
+<li>长轮询：客户端不停问、服务器不停回。ajax setInterval</li>
+<li>长连接：客户端一次、服务器多次（向客户端单向输出）</li>
+<li>websocket：全双工、兼容性 IE11</li>
+</ol>
+<h2 id="socket"><a href="#socket" class="headerlink" title="socket"></a>socket</h2><p>概念：套接字，网络通信过程中端点的抽象表示</p>
+<blockquote>
+<p>建立Socket连接至少需要一对套接字，其中一个运行于客户端，称为ClientSocket ，另一个运行于服务器端，称为ServerSocket </p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> 网络协议</a>
+              <a href="/tags/Http/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> Http</a>
+              <a href="/tags/Https/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> Https</a>
+              <a href="/tags/Tcp/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> Tcp</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/27/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="prev" title="数据结构">
+      <i class="fa fa-chevron-left"></i> 数据结构
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/17/Vue2-x-%E6%BA%90%E7%A0%81-01/" rel="next" title="Vue2.x 源码 01 ">
+      Vue2.x 源码 01  <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-IP-HTTP"><span class="nav-number">1.</span> <span class="nav-text">TCP | IP | HTTP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#https"><span class="nav-number">2.</span> <span class="nav-text">https</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%85%AC%E9%92%A5-%E5%85%AC%E5%BC%80%E7%9A%84%E5%8A%A0%E5%AF%86%E6%96%B9%E5%BC%8F"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 公钥: 公开的加密方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%A7%81%E9%92%A5%EF%BC%9A%E5%AD%98%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%94%AF%E4%B8%80%E8%A7%A3%E5%85%AC%E9%92%A5%E5%8A%A0%E5%AF%86%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 私钥：存在服务器的唯一解公钥加密的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%95%B0%E5%AD%97%E7%AD%BE%E5%90%8D%EF%BC%8C%E9%98%B2%E6%AD%A2%E5%86%85%E5%AE%B9%E8%A2%AB%E7%AF%A1%E6%94%B9"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 数字签名，防止内容被篡改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%EF%BC%8C%E4%BF%9D%E8%AF%81%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%8F%AF%E4%BF%A1%E5%BA%A6%EF%BC%8C%E7%9C%9F%E5%AE%9E%E5%9F%9F%E5%90%8D%EF%BC%8C"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. 数字证书，保证服务器的可信度，真实域名，</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#http-amp-amp-https-%E5%8C%BA%E5%88%AB"><span class="nav-number">3.</span> <span class="nav-text">http &amp;&amp; https 区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GET-amp-amp-POST"><span class="nav-number">4.</span> <span class="nav-text">GET &amp;&amp; POST</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B-amp-amp-%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">5.</span> <span class="nav-text">三次握手 &amp;&amp; 四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B"><span class="nav-number">5.1.</span> <span class="nav-text">三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B"><span class="nav-number">5.2.</span> <span class="nav-text">四次挥手</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#socket-io"><span class="nav-number">6.</span> <span class="nav-text">socket.io</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#socket"><span class="nav-number">6.1.</span> <span class="nav-text">socket</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>

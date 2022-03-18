@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="MVVM 从 MVC 到 MVVM  view(pages) &lt;–&gt; Controller(路由、控制器) &lt;–&gt; Model(数据 json)  View(HTML) &lt;–&gt; ViewModel(DOM监听、数据绑定) &lt;–&gt; Model(数据 json)    MVCModel 封装了一些逻辑和操作数据的接口View 视图用于展示页面Contro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2.x 源码 01 ">
+<meta property="og:url" content="http://yoursite.com/2022/03/17/Vue2-x-%E6%BA%90%E7%A0%81-01/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="MVVM 从 MVC 到 MVVM  view(pages) &lt;–&gt; Controller(路由、控制器) &lt;–&gt; Model(数据 json)  View(HTML) &lt;–&gt; ViewModel(DOM监听、数据绑定) &lt;–&gt; Model(数据 json)    MVCModel 封装了一些逻辑和操作数据的接口View 视图用于展示页面Contro">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-17T09:38:26.000Z">
+<meta property="article:modified_time" content="2022-03-18T01:51:21.813Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="Javscript">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="源码阅读">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/03/17/Vue2-x-%E6%BA%90%E7%A0%81-01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue2.x 源码 01  | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">44</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/17/Vue2-x-%E6%BA%90%E7%A0%81-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue2.x 源码 01 
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-17 17:38:26" itemprop="dateCreated datePublished" datetime="2022-03-17T17:38:26+08:00">2022-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-18 09:51:21" itemprop="dateModified" datetime="2022-03-18T09:51:21+08:00">2022-03-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h1><ol>
+<li><p>从 MVC 到 MVVM</p>
+<p> <code>view(pages)</code> &lt;–&gt; <code>Controller(路由、控制器)</code> &lt;–&gt; <code>Model(数据 json)</code></p>
+<p> <code>View(HTML)</code> &lt;–&gt; <code>ViewModel(DOM监听、数据绑定)</code> &lt;–&gt; <code>Model(数据 json)</code></p>
+</li>
+</ol>
+<ul>
+<li><p>MVC<br><code>Model</code> 封装了一些逻辑和操作数据的接口<br><code>View</code> 视图用于展示页面<br><code>Controller</code> 作为控制器，通过调用接口对数据进行操作并返回给 View 层，承上启下的与 Model、View 双向交流</p>
+</li>
+<li><p>MVVM<br><code>Model</code> 数据层，只关心数据方面<br><code>ViewModel</code> 事件监听和数据绑定，起到双向绑定的作用，响应式更新数据<br><code>View</code> 视图展示页面</p>
+</li>
+</ul>
+<blockquote>
+<p>数据变化驱动视图更新，视图变化数据也会同时响应 如 V-Model，是一个双向的过程</p>
+</blockquote>
+<h1 id="Vue-源码"><a href="#Vue-源码" class="headerlink" title="Vue 源码"></a>Vue 源码</h1><ul>
+<li>Vue 作为 构造函数，通过在构造函数的原型上扩展方法<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Vue</span>(<span class="params">options</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">_init</span>(options)      <span class="comment">// Vue.prototype._init(options)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Vue-核心"><a href="#Vue-核心" class="headerlink" title="Vue 核心"></a>Vue 核心</h1><p>compiler + reactive + runtime</p>
+<h2 id="compiler"><a href="#compiler" class="headerlink" title="compiler"></a>compiler</h2><p>编译器，将 template 编译成为 AST 抽象语法树 (以及 可执行函数的字符串形式  <code>with(this)&#123;return $&#123;code&#125;&#125;</code>)</p>
+<h2 id="reactive"><a href="#reactive" class="headerlink" title="reactive"></a>reactive</h2><p>响应式处理 data</p>
+<h2 id="runtime"><a href="#runtime" class="headerlink" title="runtime"></a>runtime</h2><p>虚拟 DOM(vnode) + diff 算法 + 真实 DOM 操作</p>
+<h2 id="Vue-初始化时做了什么"><a href="#Vue-初始化时做了什么" class="headerlink" title="Vue 初始化时做了什么"></a>Vue 初始化时做了什么</h2><ol>
+<li>处理组件配置项 <code>options</code></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_init</span> = <span class="keyword">function</span> (<span class="params">options</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (options &amp;&amp; options.<span class="property">_isComponent</span>) &#123;</span><br><span class="line">    <span class="comment">// 子组件：性能优化，减少原型链的动态查找，提高执行效率</span></span><br><span class="line">    <span class="comment">// 基于 vm.constructor.options 创建 vm.$options 并将属性复制给 vm.$options</span></span><br><span class="line">    <span class="title function_">initInternalComponent</span>(vm, options)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 根组件：options 合并，将全局配置选项合并到根组件的局部配置上（如 全局组件合并为 options 内的 component）</span></span><br><span class="line">    <span class="comment">// 组件选项的合并：三种情况</span></span><br><span class="line">    <span class="comment">// 1. Vue.component(ComponentName, _Component) 注册全局组件时，Vue 内置的全局组件和自己定义的全局组件，最终都会合并到 components 选项中</span></span><br><span class="line">    <span class="comment">// 2. &#123; components: &#123; _Component &#125; &#125; 局部注册组件时，执行编译器生成的 render 函数时做了选项合并，会合并全局配置项到组件的局部配置项上</span></span><br><span class="line">    <span class="comment">// 3. 这里的根组件情况</span></span><br><span class="line">    vm.<span class="property">$options</span> = <span class="title function_">mergeOptions</span>(</span><br><span class="line">      <span class="title function_">resolveConstructorOptions</span>(vm.<span class="property">constructor</span>),</span><br><span class="line">      options || &#123;&#125;,</span><br><span class="line">      vm</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><code>initLifecycle(vm)</code></li>
+</ol>
+<ul>
+<li>初始化一些组件实例的关系属性：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vm.<span class="property">$parent</span> = parent</span><br><span class="line">vm.<span class="property">$root</span> = parent ? parent.<span class="property">$root</span> : vm</span><br><span class="line"></span><br><span class="line">vm.<span class="property">$children</span> = []</span><br><span class="line">vm.<span class="property">$refs</span> = &#123;&#125;</span><br><span class="line"></span><br><span class="line">vm.<span class="property">_watcher</span> = <span class="literal">null</span></span><br><span class="line">vm.<span class="property">_inactive</span> = <span class="literal">null</span></span><br><span class="line">vm.<span class="property">_directInactive</span> = <span class="literal">false</span></span><br><span class="line">vm.<span class="property">_isMounted</span> = <span class="literal">false</span></span><br><span class="line">vm.<span class="property">_isDestroyed</span> = <span class="literal">false</span></span><br><span class="line">vm.<span class="property">_isBeingDestroyed</span> = <span class="literal">false</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li><code>initEvents(vm)</code> 初始化自定义事件</li>
+</ol>
+<ul>
+<li>从父组件的配置项里拿到 监听器<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> listeners = vm.<span class="property">$options</span>.<span class="property">_parentListeners</span></span><br></pre></td></tr></table></figure></li>
+<li>在 <code>prototype</code> 上定义 $on | $off | $emit 等方法</li>
+</ul>
+<ol start="4">
+<li><code>initRender(vm)</code> </li>
+</ol>
+<ul>
+<li>定义插槽 <code>$slot</code></li>
+<li>定义 _c | createElement() 方法</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vm.<span class="property">$slots</span> = <span class="title function_">resolveSlots</span>(options.<span class="property">_renderChildren</span>, renderContext)</span><br><span class="line">vm.<span class="property">_c</span> = <span class="function">(<span class="params">a, b, c, d</span>) =&gt;</span> <span class="title function_">createElement</span>(vm, a, b, c, d, <span class="literal">false</span>)</span><br><span class="line">vm.<span class="property">$createElement</span> = <span class="function">(<span class="params">a, b, c, d</span>) =&gt;</span> <span class="title function_">createElement</span>(vm, a, b, c, d, <span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li><p><code>callHook(vm, &#39;beforeCreate&#39;)</code> 执行生命周期钩子 beforeCreate()</p>
+</li>
+<li><p><code>initInjections(vm)</code> 初始化 inject</p>
+</li>
+<li><p><code>initState(vm)</code> 初始化 state，响应式处理 props | data | computed | watch | methods ..<br>对 <code>props -&gt; methods -&gt; data -&gt; computed -&gt; watch</code> 初始化，</p>
+</li>
+</ol>
+<ul>
+<li>并判重：key 不得与其他 key 重复；</li>
+<li>将属性配置代理到 vue 实例上，允许通过 this.keyName 的形式访问</li>
+</ul>
+<ol start="8">
+<li><p><code>initProvide(vm)</code> 初始化 provide</p>
+</li>
+<li><p><code>callHook(vm, &#39;created&#39;)</code> 执行生命周期钩子 created()</p>
+</li>
+<li><p>查看是否有 el 选项，有则自动调用 $mount()，没有则需要 手动调用 $mount()</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="comment">// el: &#x27;#app&#x27;,</span></span><br><span class="line">&#125;).$mount()</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="响应式原理"><a href="#响应式原理" class="headerlink" title="响应式原理"></a>响应式原理</h2><blockquote>
+<p><strong>如何实现 vue 响应式</strong></p>
+</blockquote>
+<ol>
+<li><p>响应式核心是通过 Object.defineProperty() 拦截对数据属性的访问和设置来实现的</p>
+</li>
+<li><p>响应式数据分为两类：</p>
+<ul>
+<li><p><strong>对象</strong>: 循环遍历数据对象的所有属性，为其设置 <code>getter/setter</code> 方法，以达到拦截的目的</p>
+<blockquote>
+<p>如果其属性依旧为 <em>对象</em>时，则递归每一个 <code>key</code> ，为其设置 <code>getter/setter</code></p>
+</blockquote>
+<ul>
+<li><code>this.key</code> 访问数据时被 <code>getter</code> 方法拦截，并调用 <code>dep.depend()</code> 方法，，进行依赖收集，在 dep 中存储相关 watcher</li>
+<li><code>obj[key] = val</code> 时，修改数据触发 <code>setter</code> 方法，在其中对新旧值对比，需要改变时 将新值设为被观测对象(observe)并进行响应式处理，并调用 <code>dep.notify()</code> 触发依赖通知 watcher 进行异步更新</li>
+</ul>
+</li>
+<li><p><strong>数组</strong>：以数组原方法为原型创建新的对象，并在其中重写增强了 7 个可以直接改变数组的方法，通过拦截这 7 个方法进行数组操作</p>
+<ul>
+<li>插入新数据时进行响应式处理，然后 dep 通知 watcher 去更新</li>
+<li>删除数据时也是由 dep 通知更新</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Data-响应式"><a href="#Data-响应式" class="headerlink" title="Data 响应式"></a>Data 响应式</h3><ul>
+<li>initData<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> keys = <span class="title class_">Object</span>.<span class="title function_">keys</span>(data)</span><br><span class="line"><span class="title function_">observe</span>(data, <span class="literal">true</span> <span class="comment">/** rootData */</span>)     <span class="comment">// new Observe(data)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Observe"><a href="#Observe" class="headerlink" title="Observe"></a>Observe</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果 observe 的是数组</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, l = data.<span class="property">length</span>; i &lt; l; i++) &#123;</span><br><span class="line">  <span class="comment">// 为数组的每个成员 observe</span></span><br><span class="line">  <span class="title function_">observe</span>(data[i])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对象</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">walk</span>(value)</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">walk</span> (data) &#123;</span><br><span class="line">  <span class="keyword">const</span> keys = <span class="title class_">Object</span>.<span class="title function_">keys</span>(obj)</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; keys.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="comment">// 对象的每个属性 做响应式处理</span></span><br><span class="line">    <span class="title function_">defineReactive</span>(obj, keys[i])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Dep-amp-amp-Watcher"><a href="#Dep-amp-amp-Watcher" class="headerlink" title="Dep &amp;&amp; Watcher"></a>Dep &amp;&amp; Watcher</h3><ul>
+<li>Dep 的作用就是收集属性值的变化，用一个数组 subs 保存订阅者 (subs: Array<Watcher>)<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(obj, key, &#123;</span><br><span class="line">  <span class="attr">get</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// dep 和 watcher 双向收集</span></span><br><span class="line">    dep.<span class="title function_">depend</span>()</span><br><span class="line">    <span class="keyword">if</span> (childOb) &#123;</span><br><span class="line">      <span class="comment">// 对嵌套对象进行 依赖收集</span></span><br><span class="line">      childOb.<span class="property">dep</span>.<span class="title function_">depend</span>()</span><br><span class="line">      <span class="comment">// 数组</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(value)) &#123;</span><br><span class="line">        <span class="title function_">dependArray</span>(value)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">set</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 对新值 观测 响应式处理</span></span><br><span class="line">    childOb = !shallow &amp;&amp; <span class="title function_">observe</span>(newVal)</span><br><span class="line">    <span class="comment">// 当响应式数据更新时，做依赖通知更新，即通知所有 watcher，执行 watcher.update 方法，进入异步更新阶段</span></span><br><span class="line">    dep.<span class="title function_">notify</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dep.js</span></span><br><span class="line">depend () &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="title class_">Dep</span>.<span class="property">target</span>) &#123;</span><br><span class="line">    <span class="comment">// dep 放入 newDeps 数组 -&gt; this.newDeps.push(dep)</span></span><br><span class="line">    <span class="comment">// watcher 放入 dep 数组(subs) -&gt; dep.addSub(this)</span></span><br><span class="line">    <span class="comment">// 双向收集</span></span><br><span class="line">    <span class="title class_">Dep</span>.<span class="property">target</span>.<span class="title function_">addDep</span>(<span class="variable language_">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// watcher.js</span></span><br><span class="line">addDep (<span class="attr">dep</span>: <span class="title class_">Dep</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> id = dep.<span class="property">id</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">newDepIds</span>.<span class="title function_">has</span>(id)) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">newDepIds</span>.<span class="title function_">add</span>(id)</span><br><span class="line">    <span class="comment">// 将 dep 放到 watcher 中</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">newDeps</span>.<span class="title function_">push</span>(dep)</span><br><span class="line">    <span class="keyword">if</span> (!<span class="variable language_">this</span>.<span class="property">depIds</span>.<span class="title function_">has</span>(id)) &#123;</span><br><span class="line">      <span class="comment">// 将 watcher 自己放到 dep 中，双向收集</span></span><br><span class="line">      dep.<span class="title function_">addSub</span>(<span class="variable language_">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>数据发生变化时，通知 dep 所有 <code>watcher</code>，执行 watcher.update()，见异步更新</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">set</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// 对新值 观测 响应式处理</span></span><br><span class="line">  childOb = !shallow &amp;&amp; <span class="title function_">observe</span>(newVal)</span><br><span class="line">  <span class="comment">// 当响应式数据更新时，做依赖通知更新，即通知所有 watcher，执行 watcher.update 方法，进入异步更新阶段</span></span><br><span class="line">  dep.<span class="title function_">notify</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="computed"><a href="#computed" class="headerlink" title="computed"></a>computed</h3><ul>
+<li>每个计算属性都 实例化一个 <code>watcher</code> 对象，一个 computed key 对应一个 watcher key</li>
+<li>computed 的两种形式：function、包含一个 get 方法的对象，最终都会转化为 getter</li>
+<li>初始化定义 computed 的时候，Object.defineProperty 方法将 computed 的属性代理到 vue，并定义 <code>getter/setter</code> 方法</li>
+<li>访问 computed 时自动调用 getter，执行 createComputedGetter</li>
+<li><code>createComputedGetter</code> 方法调用 computed 回调函数执行，并将 <code>watcher.dirty = false</code>，将回调函数执行结果 作为<strong>缓存</strong> 保存在 <code>watcher.value</code> 并返回</li>
+<li>当响应式数据更新时，遍历所有 watcher 并执行他们各自的 update 方法，将 <code>watcher.dirty = true</code> ，重新执行 computed 回调函数，计算新值，然后缓存到 <code>watcher.value</code></li>
+</ul>
+<p>计算属性缓存原理：</p>
+<pre><code>  每个 computed 对应一个 new Watcher，watcher 的作用就是调用 update 方法进行异步更新，而 update 只发生在 首次渲染以及后续视图更新
+
+  所以 首次渲染时，watcher 也会通知对应的 computed 更新数据，也就是执行计算属性的回调函数，并把结果返回
+
+  watcher 则是将其缓存到 watcher.value 上，并把 watcher.dirty 置为 false，后续对 computed 的访问都是将 watcher.value 的结果返回
+
+  只有下一次视图更新时，才会 watcher.dirty = true，并重新执行 computed 的回调函数，且继续缓存结果，dirty = false
+</code></pre>
+<h2 id="异步更新"><a href="#异步更新" class="headerlink" title="异步更新"></a>异步更新</h2><ul>
+<li><code>dep.notify()</code><br>此方法通知所有的 watcher，执行他们的 <code>watcher.update()</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">notify () &#123;</span><br><span class="line">  <span class="comment">// 收集的 watcher</span></span><br><span class="line">  <span class="keyword">const</span> subs = <span class="variable language_">this</span>.<span class="property">subs</span>.<span class="title function_">slice</span>()</span><br><span class="line">  <span class="comment">// 遍历当前 dep 收集的所有 watcher，让这些 watcher 依次去执行自己的 update 方法</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, l = subs.<span class="property">length</span>; i &lt; l; i++) &#123;</span><br><span class="line">    subs[i].<span class="title function_">update</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><code>watcher.update()</code><blockquote>
+<p>根据 watcher 配置项( lazy | async | none )决定怎么走，一般情况是 <code>queueWatcher(this)</code> 将当前 watcher 放进 watcher 队列</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">update () &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">lazy</span>) &#123;</span><br><span class="line">    <span class="comment">// 懒执行，比如 computed</span></span><br><span class="line">    <span class="comment">// 将 dirty 置为 true，在组件更新后，当响应式数据再次被更新时，执行 computed getter </span></span><br><span class="line">    <span class="comment">// 重新执行 computed 回调函数，计算新值，然后缓存到 watcher.value</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">dirty</span> = <span class="literal">true</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">sync</span>) &#123;</span><br><span class="line">    <span class="comment">// 同步执行</span></span><br><span class="line">    <span class="comment">// this.$watch() 或者 watch 选项传递一个 sync 配置(&#123; sync: true &#125;)</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">run</span>()</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 放入 watcher 队列（一般都是走这个）</span></span><br><span class="line">    <span class="title function_">queueWatcher</span>(<span class="variable language_">this</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>queueWatcher 方法中，将当前 watcher 放进 queueWatcher 队列后，调用 nextTick() 方法把 flushSchedulerQueue 函数传入 callbacks 数组，</p>
+</blockquote>
+<ul>
+<li><p><code>queueWatcher</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">queueWatcher</span> (<span class="attr">watcher</span>: <span class="title class_">Watcher</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!flushing) &#123;</span><br><span class="line">    <span class="comment">// flushing = false 表示当前 watcher 队列没有在刷新，可以直接入队</span></span><br><span class="line">    queue.<span class="title function_">push</span>(watcher)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="comment">// 当前 watcher 队列已经在刷新，watcher 入队需要特殊操作</span></span><br><span class="line">    <span class="comment">// watcher 队列是有序的</span></span><br><span class="line">    <span class="comment">// 找到 队列中比要插入的 watcher id 大1个的成员，从它的下一个位置插入队列</span></span><br><span class="line">    <span class="comment">// if already flushing, splice the watcher based on its id</span></span><br><span class="line">    <span class="comment">// if already past its id, it will be run next immediately.</span></span><br><span class="line">    <span class="keyword">let</span> i = queue.<span class="property">length</span> - <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span> (i &gt; index &amp;&amp; queue[i].<span class="property">id</span> &gt; watcher.<span class="property">id</span>) &#123;</span><br><span class="line">      i--</span><br><span class="line">    &#125;</span><br><span class="line">    queue.<span class="title function_">splice</span>(i + <span class="number">1</span>, <span class="number">0</span>, watcher)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 即 this.$nextTick() | Vue.nextTick()</span></span><br><span class="line">  <span class="comment">// 将回调函数 flushSchedulerQueue 放入 callbacks 数组</span></span><br><span class="line">  <span class="comment">// 通过 pending 控制，向浏览器异步任务队列添加 flushCallBack 函数</span></span><br><span class="line">  <span class="title function_">nextTick</span>(flushSchedulerQueue)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>flushSchedulerQueue 函数遍历 watcher 并执行 run()</p>
+</blockquote>
+</li>
+<li><p><code>nextTick()</code></p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">nextTick</span> (cb?: <span class="title class_">Function</span>, ctx?: <span class="title class_">Object</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> _resolve</span><br><span class="line">  <span class="comment">// 将传入的 callback 用 try catch 包一层，便于异常捕获</span></span><br><span class="line">  <span class="comment">// 然后将包装后的函数插入 callbacks</span></span><br><span class="line">  callbacks.<span class="title function_">push</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (cb) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        cb.<span class="title function_">call</span>(ctx)</span><br><span class="line">      &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="title function_">handleError</span>(e, ctx, <span class="string">&#x27;nextTick&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (_resolve) &#123;</span><br><span class="line">      <span class="title function_">_resolve</span>(ctx)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">if</span> (!pending) &#123;</span><br><span class="line">    <span class="comment">// pending = false 执行 timerFunc() 函数，此函数的作用为 将 flushCallbacks（遍历callbacks中的 cb 并执行）插入到 浏览器的 异步任务队列</span></span><br><span class="line">    <span class="comment">// vue 优先使用 promise，即 微任务队列</span></span><br><span class="line">    <span class="comment">// 再重置为 true</span></span><br><span class="line">    pending = <span class="literal">true</span></span><br><span class="line">    <span class="title function_">timerFunc</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>flushCallbacks</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">flushCallbacks</span> () &#123;</span><br><span class="line">  <span class="comment">// 再次置为 false，下一个 flushCallbacks 可以进入异步微任务队列</span></span><br><span class="line">  <span class="comment">// 异步微任务队列 只能存在一个 flushCallbacks 函数</span></span><br><span class="line">  pending = <span class="literal">false</span></span><br><span class="line">  <span class="comment">// 缓存 callbacks 所有</span></span><br><span class="line">  <span class="keyword">const</span> copies = callbacks.<span class="title function_">slice</span>(<span class="number">0</span>)</span><br><span class="line">  <span class="comment">// 清空 callbacks</span></span><br><span class="line">  callbacks.<span class="property">length</span> = <span class="number">0</span></span><br><span class="line">  <span class="comment">// 执行 callbacks 中所有 函数</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; copies.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    copies[i]()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> p = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>()</span><br><span class="line">timerFunc = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  p.<span class="title function_">then</span>(flushCallbacks)              <span class="comment">// flushCallbacks() 执行 callbacks 中所有</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="如何实现的异步更新机制"><a href="#如何实现的异步更新机制" class="headerlink" title="如何实现的异步更新机制"></a>如何实现的异步更新机制</h2><ol>
+<li>核心是利用浏览器的<strong>异步任务队列</strong>来实现，首选两种微任务 (promise | MutationObserver)，其次宏任务 (setImmediate | setTimeout)</li>
+<li>响应式数据更新后，调用 <code>dep.notify()</code> 方法，<strong>通知 dep 中收集的 watcher 去执行自己的 update 方法</strong></li>
+<li>watcher.update() 方法将当前 watcher 放入一个 watcher 队列 (全局的 queue 数组) </li>
+<li>然后通过 <code>nextTick(flushSchedulerQueue)</code> 方法把这个 刷新 watcher 队列的方法（flushSchedulerQueue）放入一个全局的 callbacks 数组中</li>
+<li>如果此时浏览器的异步任务队列中没有一个叫 <code>flushCallbacks</code> 的函数，则执行 timeFunc 函数，将 flushCallbacks 函数放入浏览器的异步任务队列（promise）</li>
+<li>如果已经存在 <code>flushCallbacks</code> 则等待执行完成，下一波再放入</li>
+<li>这个 <code>flushCallbacks</code> 函数 负责执行 callbacks 数组中的所有 <code>flushSchedulerQueue</code> 函数，也就是 刷新当前 watcher 队列并执行成员的 watcher.run 方法</li>
+<li>run 方法就是执行 组件更新函数（rendering watcher）new Watcher 时传入的 updateComponent 方法，进入组件更新；或者用户 watch 的回调函数</li>
+</ol>
+<h2 id="Vue-的-nextTick-API-如何实现"><a href="#Vue-的-nextTick-API-如何实现" class="headerlink" title="Vue 的 nextTick API 如何实现"></a>Vue 的 nextTick API 如何实现</h2><p><code>Vue.nextTick()</code> 或者 <code>vm.$nextTick()</code> 就做了两件事：</p>
+<ul>
+<li><p>将传递的回调函数用 try catch 包裹（捕捉异常）后，放入 callbacks 数组</p>
+<blockquote>
+<p><code>callbacks</code> 数组收集了用户调用 <code>nextTick</code> 传递的<strong>回调</strong> 或者是 <code>flushSchedulerQueue</code> 函数（所有 <code>watcher.run()</code>）</p>
+</blockquote>
+</li>
+<li><p>执行 timerFunc 函数，在浏览器的异步任务队列中 放入一个 刷新 callbacks 数组的函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> p = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>()</span><br><span class="line">timerFunc = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  p.<span class="title function_">then</span>(flushCallbacks)              <span class="comment">// flushCallbacks() 执行 callbacks 中所有</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>Vue 在更新 DOM 是异步执行的，响应式数据发生变化时，通过一个 callbacks 数组收集 在同一个事件循环中的所有数据变更，然后在下一次事件循环当中执行</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vm.<span class="property">msg</span> = <span class="string">&#x27;new message&#x27;</span></span><br><span class="line">vm.<span class="property">$el</span>.<span class="property">msg</span> === <span class="string">&#x27;new message&#x27;</span> <span class="comment">// false     DOM更新是异步的，无法立即获取更新后的 DOM</span></span><br><span class="line"></span><br><span class="line">vm.<span class="title function_">nextTick</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  vm.<span class="property">$el</span>.<span class="property">msg</span> === <span class="string">&#x27;new message&#x27;</span> <span class="comment">// true    回调函数将在 DOM 更新后被调用</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h1 id="wen"><a href="#wen" class="headerlink" title="wen"></a>wen</h1><ol>
+<li><code>&lt;comp @click=&quot;handleClick&quot;&gt;&lt;/comp&gt;</code> 中谁监听的 click 事件</li>
+</ol>
+<ul>
+<li>组件上的事件监听由组件本身来监听，谁触发谁监听</li>
+<li>最终会转化为: <code>this.$emit() | this.on(&#39;click&#39;, function handleClick() &#123;&#125;)</code> 的形式</li>
+</ul>
+<ol start="2">
+<li><code>provide/inject</code> 原理</li>
+</ol>
+<ul>
+<li><code>inject</code> 组件主动从 祖代 中查找匹配 <code>key</code> 的结果，并赋值给 <code>inject</code> 中 <code>key</code> 对应的值，最后得到一个 <code>result[key] = value</code> 的对象返回<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> provideKey = inject[key].<span class="property">from</span></span><br><span class="line"><span class="keyword">let</span> source = vm</span><br><span class="line"><span class="keyword">while</span> (source) &#123;</span><br><span class="line">  <span class="keyword">if</span> (source.<span class="property">_provided</span> &amp;&amp; <span class="title function_">hasOwn</span>(source.<span class="property">_provided</span>, provideKey)) &#123;</span><br><span class="line">    result[key] = source.<span class="property">_provided</span>[provideKey]</span><br><span class="line">    <span class="keyword">break</span></span><br><span class="line">  &#125;</span><br><span class="line">  source = source.<span class="property">$parent</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="3">
+<li><code>computed</code> 和 <code>methods</code> 区别</li>
+</ol>
+<ul>
+<li><p><code>methods</code> 每次访问都会执行</p>
+</li>
+<li><p><code>computed</code> 通过 watcher 来实现的，对每个 <code>computed key</code> 实例化一个 <code>watcher</code>，默认 <code>lazy</code> 执行；<code>computed</code> 每次渲染只执行一次，并将 <code>watcher.dirty</code> 置为 <code>false</code>，当再次渲染页面调用 <code>watcher.update()</code> 方法时，会将 <code>watcher.dirty</code> 重置为 <code>true</code>，并且执行一次 <code>computed</code></p>
+</li>
+<li><p>computed 有两种形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// function</span></span><br><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">  <span class="title function_">show</span>(<span class="params"></span>) &#123; <span class="keyword">return</span> <span class="number">1</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 包含 getter 的对象</span></span><br><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">  <span class="attr">showA</span>: &#123;</span><br><span class="line">    <span class="attr">get</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;&#125;  <span class="comment">// 默认只有 getter，也可以定义 setter</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="4">
+<li>watch</li>
+</ol>
+<ul>
+<li>watch 实际上就是 每个 观察对象 调用 <code>vm.$watch</code> 方法，其中会实例化一个 Watcher 对象，并配置参数(deep, immediate)</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">watch</span>: &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="keyword">function</span>(<span class="params">val, oldVal</span>) &#123;&#125;,</span><br><span class="line">  <span class="attr">b</span>: <span class="string">&#x27;someMethod&#x27;</span>, <span class="comment">// 方法名</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 该回调会在任何被侦听的对象的 property 改变时被调用，不论其被嵌套多深</span></span><br><span class="line">  <span class="attr">c</span>: &#123;</span><br><span class="line">    <span class="attr">handler</span>: <span class="keyword">function</span>(<span class="params">val, oldVal</span>) &#123;&#125;,</span><br><span class="line">    <span class="attr">deep</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">d</span>: &#123;</span><br><span class="line">    <span class="attr">handler</span>: <span class="keyword">function</span>(<span class="params">val, oldVal</span>) &#123;&#125;,</span><br><span class="line">    <span class="attr">immediate</span>: <span class="literal">true</span>         <span class="comment">// 侦听开始后立即调用</span></span><br><span class="line">  &#125;，</span><br><span class="line">  <span class="attr">e</span>: [                        <span class="comment">// 数组，逐一调用</span></span><br><span class="line">    <span class="string">&#x27;handle1&#x27;</span>,</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">handle2</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>computed | watch | methods 区别</li>
+</ol>
+<ul>
+<li>使用场景<ul>
+<li>methods 一般用于封装一些复杂的逻辑，同步异步处理</li>
+<li>computed 一般用于简单的同步逻辑，将处理后的数据返回，显示在模板中，以<strong>减轻模板的重量</strong></li>
+<li>watch 一般用于需要监测数据变化时，执行异步或者开销较大的操作</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>computed | watch 都是通过 watcher 来实现的</p>
+</blockquote>
+<ul>
+<li><p><code>computed</code> 默认 lazy 执行，且不可更改，<code>watch</code> 可配置(deep | immediate)</p>
+</li>
+<li><p>使用场景不同，<code>watch</code> 通常用于异步操作，<code>computed</code>同步多</p>
+</li>
+<li><p>watch | methods 两种东西没有可比性，不过可以把 watch 中一些复杂的逻辑抽离到 methods 中，提高可读性</p>
+</li>
+</ul>
+<ol start="6">
+<li>is 属性</li>
+</ol>
+<ol start="7">
+<li>内联模板 <code>inline-template</code></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Javscript/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> Javscript</a>
+              <a href="/tags/Vue/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> Vue</a>
+              <a href="/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> 源码阅读</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/01/network/" rel="prev" title="network">
+      <i class="fa fa-chevron-left"></i> network
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/17/WeakMap-WeakSet/" rel="next" title="WeakMap && WeakSet">
+      WeakMap && WeakSet <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MVVM"><span class="nav-number">1.</span> <span class="nav-text">MVVM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-%E6%BA%90%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">Vue 源码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-%E6%A0%B8%E5%BF%83"><span class="nav-number">3.</span> <span class="nav-text">Vue 核心</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#compiler"><span class="nav-number">3.1.</span> <span class="nav-text">compiler</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reactive"><span class="nav-number">3.2.</span> <span class="nav-text">reactive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#runtime"><span class="nav-number">3.3.</span> <span class="nav-text">runtime</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%97%B6%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">3.4.</span> <span class="nav-text">Vue 初始化时做了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86"><span class="nav-number">3.5.</span> <span class="nav-text">响应式原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="nav-number">3.5.1.</span> <span class="nav-text">Data 响应式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Observe"><span class="nav-number">3.5.2.</span> <span class="nav-text">Observe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dep-amp-amp-Watcher"><span class="nav-number">3.5.3.</span> <span class="nav-text">Dep &amp;&amp; Watcher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#computed"><span class="nav-number">3.5.4.</span> <span class="nav-text">computed</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0"><span class="nav-number">3.6.</span> <span class="nav-text">异步更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%BC%82%E6%AD%A5%E6%9B%B4%E6%96%B0%E6%9C%BA%E5%88%B6"><span class="nav-number">3.7.</span> <span class="nav-text">如何实现的异步更新机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E7%9A%84-nextTick-API-%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.8.</span> <span class="nav-text">Vue 的 nextTick API 如何实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#wen"><span class="nav-number">4.</span> <span class="nav-text">wen</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>

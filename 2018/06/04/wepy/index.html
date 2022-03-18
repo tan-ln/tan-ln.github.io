@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="微信小程序组件化开发框架 WePY 初体验 写在前面：组件化开发的组价(Component)，说的不是小程序中的 scroll-view 这种页面组件，而是指一些设计为通用性的，用来构建较大型应用程序的软件，如 UI 组件。核心意义在于复用。WePY 就是基于 Vue、react 在 MVVM 基础上建立起来的组件开发框架。  WePY项目的创建全局安装或更新WePY命令行工具1npm insta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微信小程序组件化开发框架 WePY 初体验">
+<meta property="og:url" content="http://yoursite.com/2018/06/04/wepy/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="微信小程序组件化开发框架 WePY 初体验 写在前面：组件化开发的组价(Component)，说的不是小程序中的 scroll-view 这种页面组件，而是指一些设计为通用性的，用来构建较大型应用程序的软件，如 UI 组件。核心意义在于复用。WePY 就是基于 Vue、react 在 MVVM 基础上建立起来的组件开发框架。  WePY项目的创建全局安装或更新WePY命令行工具1npm insta">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-04T07:32:12.000Z">
+<meta property="article:modified_time" content="2018-06-04T10:01:47.523Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="wepy">
+<meta property="article:tag" content="小程序">
+<meta property="article:tag" content="组件化">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/06/04/wepy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>微信小程序组件化开发框架 WePY 初体验 | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">44</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/04/wepy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          微信小程序组件化开发框架 WePY 初体验
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2018-06-04 15:32:12 / 修改时间：18:01:47" itemprop="dateCreated datePublished" datetime="2018-06-04T15:32:12+08:00">2018-06-04</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="微信小程序组件化开发框架-WePY-初体验"><a href="#微信小程序组件化开发框架-WePY-初体验" class="headerlink" title="微信小程序组件化开发框架 WePY 初体验"></a>微信小程序组件化开发框架 WePY 初体验</h1><blockquote>
+<p>写在前面：组件化开发的组价(<code>Component</code>)，说的不是小程序中的 <code>scroll-view</code> 这种页面组件，而是指一些设计为通用性的，用来构建较大型应用程序的软件，如 UI 组件。核心意义在于复用。WePY 就是基于 Vue、react 在 MVVM 基础上建立起来的组件开发框架。</p>
+</blockquote>
+<h2 id="WePY项目的创建"><a href="#WePY项目的创建" class="headerlink" title="WePY项目的创建"></a>WePY项目的创建</h2><h3 id="全局安装或更新WePY命令行工具"><a href="#全局安装或更新WePY命令行工具" class="headerlink" title="全局安装或更新WePY命令行工具"></a>全局安装或更新WePY命令行工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install wepy-cli -g</span><br></pre></td></tr></table></figure>
+<h3 id="初始化一个项目"><a href="#初始化一个项目" class="headerlink" title="初始化一个项目"></a>初始化一个项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wepy init standard myproject</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>输出，后面几个选择 <code>no</code> 暂时用不上</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">? Project name 项目名称</span><br><span class="line">? AppId wxfc0******1e 你的AppId</span><br><span class="line">? Project description A WePY 项目名称</span><br><span class="line">? Author ta***<span class="keyword">in</span> 2196****35@qq.com </span><br><span class="line">? Use ESLint to lint your code? (y/n) No</span><br><span class="line">? Use Redux <span class="keyword">in</span> your project? (y/n) No</span><br><span class="line">? Use web transform feature <span class="keyword">in</span> your project? (/n) No</span><br><span class="line"></span><br><span class="line">   wepy-cli · Generated <span class="string">&quot;try-wepy&quot;</span>.</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p><strong>首先要切换至项目目录</strong><br><code>cd myproject</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn</span><br></pre></td></tr></table></figure>
+<p>或者 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install</span><br></pre></td></tr></table></figure>
+<p>推荐 <code>yarn</code></p>
+<blockquote>
+<p>根据 <code>package.json</code> 安装依赖文件，将会在 <code>node_modules</code> 文件中添加依赖包</p>
+</blockquote>
+<h3 id="开启实时编译"><a href="#开启实时编译" class="headerlink" title="开启实时编译"></a>开启实时编译</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wepy build --watch</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这会像 <code>stylus</code> 一样开始编译并监听文件改变，此时会生成 <code>dist</code> 目录（小程序目录，微信开发者工具从此处打开小程序），我们的开发目录在 <code>src/</code> 下</p>
+</blockquote>
+<h2 id="WePY项目的目录结构"><a href="#WePY项目的目录结构" class="headerlink" title="WePY项目的目录结构"></a>WePY项目的目录结构</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">├── dist                   小程序运行代码目录（该目录由WePY的build指令自动编译生成，请不要直接修改该目录下的文件）</span><br><span class="line">├── node_modules           </span><br><span class="line">├── src                    代码编写的目录（该目录为使用WePY后的开发目录）</span><br><span class="line">|   ├── components         WePY组件目录（组件不属于完整页面，仅供完整页面或其他组件引用）</span><br><span class="line">|   |   ├── com_a.wpy      可复用的WePY组件a</span><br><span class="line">|   |   └── com_b.wpy      可复用的WePY组件b</span><br><span class="line">|   ├── pages              WePY页面目录（属于完整页面）</span><br><span class="line">|   |   ├── index.wpy      index页面（经build后，会在dist目录下的pages目录生成index.js、index.json、index.wxml和index.wxss文件）</span><br><span class="line">|   |   └── other.wpy      other页面（经build后，会在dist目录下的pages目录生成other.js、other.json、other.wxml和other.wxss文件）</span><br><span class="line">|   └── app.wpy            小程序配置项（全局数据、样式、声明钩子等；经build后，会在dist目录下生成app.js、app.json和app.wxss文件）</span><br><span class="line">└── package.json           项目的package配置</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加项目"><a href="#添加项目" class="headerlink" title="添加项目"></a>添加项目</h2><ul>
+<li><p>app.wpy<br>  <code>app.wpy</code> 文件其实就是小程序中的 <code>app.json</code> 文件，我们在这个文件中注册 App 的页面，参照这一段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">export default class extends wepy.app &#123;</span><br><span class="line">    config = &#123;</span><br><span class="line">        pages: [</span><br><span class="line">            &#x27;pages/home&#x27;,</span><br><span class="line">            &#x27;pages/classify&#x27;,</span><br><span class="line">            &#x27;pages/shop_cart&#x27;,</span><br><span class="line">            &#x27;pages/info&#x27;,</span><br><span class="line">            &#x27;pages/index&#x27;</span><br><span class="line">        ],</span><br></pre></td></tr></table></figure></li>
+<li><p>新建文件<br>在 <code>src/pages/</code> 目录下新建注册的页面，后缀名为 <code>.wpy</code></p>
+</li>
+<li><p>基本格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;style lang=&quot;less&quot;&gt;&lt;/style&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;view&gt;&lt;/view&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    // wepy 在本地的 node_modules/ 下（其实也在全局，如果全局安装了 wepy）</span><br><span class="line">    import wepy from &#x27;wepy&#x27;</span><br><span class="line"></span><br><span class="line">    // 单页面组件</span><br><span class="line">    export default class Home extends wepy.page &#123;</span><br><span class="line">        // es6 class 内部，不是 json 不使用 : </span><br><span class="line">        data = &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>微信开发者工具<br>使用<code>微信开发者工具</code>–&gt;<code>添加项目</code>，项目目录请选择 <code>dist</code> 目录，即可根据配置（<code>project.config.json</code>）完成项目信息自动配置。</p>
+</li>
+<li><p>打开你就能看到你的小程序了</p>
+</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>依赖管理<br>何为依赖管理？ 依赖管理说白了就是构建一个有向无环图。项目A依赖项目B，项目B依赖项目C，那么当你的项目依赖A的时候，依赖管理工具会自动让你的项目依赖B和C。 要想构建有向无环图，最关键的是要将项目转化为有向无环图中的结点。所以对于项目往往有description，作者信息，版本信息等额外信息。 </li>
+<li>全局样式<br><code>app.wpy</code> 文件中 <code>&lt;style&gt;&lt;/style&gt;</code> 存放全局样式，我们通常在这里引入公共样式、基础样式等</li>
+<li>组件 component 化开发</li>
+</ul>
+<ol>
+<li>在 component 文件夹内定义组件<br>export default class Card extends wepy.component<br>意思是说：基于wepy.component 类新生出一个组件类，将此组件以模块的方式向外输出</li>
+<li>页面引入组件，至此，页面开发不叫页面开发，而是组件开发，<br>页面由组件构成，将页面分为几个组件<br>就如飞机，全世界都在生产，组装在美国</li>
+<li>在页面的 script component 区域内 声明一下<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">component = &#123;</span><br><span class="line">	组件名<span class="attr">card</span>: 类名<span class="title class_">Card</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+组件式开发将类以 html 标签的形式在页面上显示</li>
+<li>除了小程序 的页面组件之外，我们可以定制，可以使用社区的组件，可以从 github…</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/wepy/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> wepy</a>
+              <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> 小程序</a>
+              <a href="/tags/%E7%BB%84%E4%BB%B6%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> 组件化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/05/18/wxapp/" rel="prev" title="微信小程序学习(一)">
+      <i class="fa fa-chevron-left"></i> 微信小程序学习(一)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/06/04/mpvue/" rel="next" title="mpvue 初识">
+      mpvue 初识 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6-WePY-%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="nav-number">1.</span> <span class="nav-text">微信小程序组件化开发框架 WePY 初体验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WePY%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="nav-number">1.1.</span> <span class="nav-text">WePY项目的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E5%AE%89%E8%A3%85%E6%88%96%E6%9B%B4%E6%96%B0WePY%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7"><span class="nav-number">1.1.1.</span> <span class="nav-text">全局安装或更新WePY命令行工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.1.2.</span> <span class="nav-text">初始化一个项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">1.1.3.</span> <span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E5%AE%9E%E6%97%B6%E7%BC%96%E8%AF%91"><span class="nav-number">1.1.4.</span> <span class="nav-text">开启实时编译</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WePY%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">WePY项目的目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.3.</span> <span class="nav-text">添加项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.4.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>
