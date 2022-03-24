@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="vue2.x 与 vue3.x 区别（一）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2.x 与 Vue3.x 区别">
+<meta property="og:url" content="http://yoursite.com/2022/03/24/vue2-x-%E4%B8%8E-vue3-x-%E5%8C%BA%E5%88%AB/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="vue2.x 与 vue3.x 区别（一）">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-24T06:45:54.000Z">
+<meta property="article:modified_time" content="2022-03-24T07:06:48.210Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="vue2">
+<meta property="article:tag" content="vue3">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/03/24/vue2-x-%E4%B8%8E-vue3-x-%E5%8C%BA%E5%88%AB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue2.x 与 Vue3.x 区别 | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">62</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">30</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/24/vue2-x-%E4%B8%8E-vue3-x-%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue2.x 与 Vue3.x 区别
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-24 14:45:54 / 修改时间：15:06:48" itemprop="dateCreated datePublished" datetime="2022-03-24T14:45:54+08:00">2022-03-24</time>
+            </span>
+
+          
+            <div class="post-description">vue2.x 与 vue3.x 区别（一）</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><ol>
+<li>创建实例</li>
+<li>使用 router、vuex 等</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue2.x</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  router,</span><br><span class="line">  store,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue3.x</span></span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> store <span class="keyword">from</span> <span class="string">&#x27;./store&#x27;</span></span><br><span class="line"><span class="title function_">createApp</span>(<span class="title class_">App</span>).<span class="title function_">use</span>(router).<span class="title function_">use</span>(store).<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="选项式-API-amp-amp-组合式-API"><a href="#选项式-API-amp-amp-组合式-API" class="headerlink" title="选项式 API &amp;&amp; 组合式 API"></a>选项式 API &amp;&amp; 组合式 API</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue2.x</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">components</span>: &#123;&#125;,</span><br><span class="line">  <span class="attr">props</span>: &#123;&#125;,</span><br><span class="line">  <span class="attr">computed</span>: &#123;&#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;&#125;,</span><br><span class="line">  <span class="attr">watch</span>: &#123;&#125;,</span><br><span class="line">  <span class="attr">mounted</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;&#125;,</span><br><span class="line">  <span class="attr">data</span>: <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// vue3.x</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">  <span class="attr">components</span>: &#123;&#125;,</span><br><span class="line">  <span class="attr">props</span>: [],</span><br><span class="line">  setup (props, context) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>props<br>props 是响应式的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">props</span>: &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="title class_">String</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">setup</span>(<span class="params">props</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(props.<span class="property">title</span>)</span><br><span class="line">    <span class="comment">// ES6 的解构会消除 响应式，需要通过 toRefs 解构</span></span><br><span class="line">    <span class="keyword">const</span> &#123; name &#125; = <span class="title function_">toRefs</span>(props)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>context<br>普通的 js 对象，非响应式</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 可以直接 ES6 解构</span></span><br><span class="line"><span class="comment">// setup (props, &#123; attrs, slots, emit, expose &#125;) &#123;</span></span><br><span class="line">setup (context) &#123;</span><br><span class="line">  <span class="comment">// $attrs | $slots | $emit 方法 | expose 暴露一个属性，可以被外部访问 如 $refs</span></span><br><span class="line">  <span class="keyword">const</span> &#123; attrs, slots, emit, expose &#125; = context</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>生命周期钩子</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Vue2</span>---------------vue3</span><br><span class="line">beforeCreate  -&gt;   <span class="title function_">setup</span>()</span><br><span class="line">created       -&gt;   <span class="title function_">setup</span>()</span><br><span class="line">beforeMount   -&gt;   onBeforeMount</span><br><span class="line">mounted       -&gt;   onMounted</span><br><span class="line">beforeUpdate  -&gt;   onBeforeUpdate</span><br><span class="line">updated       -&gt;   onUpdated</span><br><span class="line">beforeDestroy -&gt;   onBeforeUnmount</span><br><span class="line">destroyed     -&gt;   onUnmounted</span><br><span class="line">activated     -&gt;   onActivated</span><br><span class="line">deactivated   -&gt;   onDeactivated</span><br><span class="line">errorCaptured -&gt;   onErrorCaptured</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li><p>setup: 组件创建之前，在 beforeCreate 和 created 之前执行，创建 data 和 methods</p>
+</li>
+<li><p>onBeforeMount: 组件挂载到节点上之前执行的函数</p>
+</li>
+<li><p>onMounted: …</p>
+</li>
+<li><p>若组件被<keep-alive>包含，则多出下面两个钩子函数</p>
+</li>
+<li><p>onActivated: 被激活时</p>
+</li>
+<li><p>onDeactivated: 失活时执行</p>
+</li>
+</ul>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ul>
+<li>执行 setup 时，只能访问 props/attrs/slots/emit</li>
+<li>无法访问 data/computed/methods/refs</li>
+<li>setup 中不能使用 this，因为组件实例尚未被创建，this 不指向实例的引用，Vue 将其设置为 undefined</li>
+</ul>
+<h2 id="响应式-API"><a href="#响应式-API" class="headerlink" title="响应式 API"></a>响应式 API</h2><h3 id="ref-amp-amp-reactive"><a href="#ref-amp-amp-reactive" class="headerlink" title="ref &amp;&amp; reactive"></a>ref &amp;&amp; reactive</h3><ul>
+<li>vue2.x 的响应式数据 直接在 data 函数中<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  data () &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">obj</span>: &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>vue3.x 的响应式数据 在 setup 函数返回<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ref, reactive &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup () &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 封装成 proxy(&#123; value: &#x27;tang&#x27; &#125;) 的形式</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="keyword">let</span> name1 = <span class="title function_">ref</span>(<span class="string">&#x27;tang&#x27;</span>)</span><br><span class="line">    <span class="keyword">const</span> nameObj = <span class="title function_">reactive</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;tang&#x27;</span> &#125;)</span><br><span class="line">    <span class="keyword">const</span> &#123; name &#125; = <span class="title function_">toRefs</span>(nameObj)</span><br><span class="line">    <span class="keyword">return</span> &#123; name1, name &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="computed-amp-amp-watch-amp-amp-watchEffect"><a href="#computed-amp-amp-watch-amp-amp-watchEffect" class="headerlink" title="computed &amp;&amp; watch &amp;&amp; watchEffect"></a>computed &amp;&amp; watch &amp;&amp; watchEffect</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; computed, watch, watchEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  setup () &#123;</span><br><span class="line">    <span class="title function_">computed</span>(<span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">    <span class="title function_">computed</span>(&#123;</span><br><span class="line">      <span class="attr">set</span>: <span class="function">() =&gt;</span> &#123;&#125;,</span><br><span class="line">      <span class="attr">get</span>: <span class="function">() =&gt;</span> &#123;&#125;</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="title function_">watch</span>(name, <span class="function">(<span class="params">newVal, oldVal</span>) =&gt;</span> &#123;&#125;)</span><br><span class="line">    <span class="title function_">watch</span>(<span class="function">() =&gt;</span> nameObj.<span class="property">name</span>, <span class="function">(<span class="params">curVal, preVal</span>) =&gt;</span> &#123;&#125;)</span><br><span class="line">    <span class="title function_">watch</span>(</span><br><span class="line">      [<span class="function">() =&gt;</span> nameObj.<span class="property">name</span>, <span class="function">() =&gt;</span> nameObj.<span class="property">engName</span>], </span><br><span class="line">      <span class="function">(<span class="params">[curName, curEng], [preName, preEng]</span>) =&gt;</span> &#123;&#125;,</span><br><span class="line">      &#123; <span class="attr">deep</span>: <span class="literal">true</span> &#125;</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="title function_">watchEffect</span>(<span class="function">() =&gt;</span> &#123;&#125;)</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="toRef"><a href="#toRef" class="headerlink" title="toRef"></a>toRef</h3><p>为源响应式对象上的一个 属性 创建一个 ref，它可以被传递，并且会保持对其源响应式对象的属性的 响应式链接</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = <span class="title function_">reactive</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;111&#x27;</span>, <span class="attr">age</span>: <span class="number">0</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> ageRef = <span class="title function_">toRef</span>(state, <span class="string">&#x27;age&#x27;</span>)</span><br><span class="line"></span><br><span class="line">ageRef.<span class="property">value</span>++    <span class="comment">// 1</span></span><br><span class="line">state.<span class="property">age</span>         <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<p>当你要将 prop 的 ref 传递给复合函数时，toRef 很有用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">setup</span>(<span class="params">props</span>) &#123;</span><br><span class="line">  <span class="title function_">useSomeFeature</span>(<span class="title function_">toRef</span>(props, <span class="string">&#x27;foo&#x27;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="toRefs"><a href="#toRefs" class="headerlink" title="toRefs"></a>toRefs</h3><p>将响应式对象转换为普通对象，但其内部的所有属性，指向的是其原始对象的属性的 ref (其内部属性还是响应式的)</p>
+<p>将 proxy 对象<br><code>proxy(&#123; name: &#39;tang&#39;, age: 12 &#125;)</code><br>转换成<br><code>&#123; name: proxy(&#123; value: &#39;tang&#39; &#125;), age: proxy(&#123; value: 12 &#125;) &#125;</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = <span class="title function_">reactive</span>(&#123; <span class="attr">name</span>: <span class="string">&#x27;111&#x27;</span>, <span class="attr">age</span>: <span class="number">0</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> stateRefs = <span class="title function_">toRefs</span>(state)</span><br><span class="line"></span><br><span class="line">state.<span class="property">age</span>++           <span class="comment">// 1</span></span><br><span class="line">stateRefs.<span class="property">age</span>.<span class="property">value</span>   <span class="comment">// 1</span></span><br><span class="line"></span><br><span class="line">stateRefs.<span class="property">age</span>.<span class="property">value</span>++   <span class="comment">// 2</span></span><br><span class="line">state.<span class="property">age</span>               <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="响应式原理"><a href="#响应式原理" class="headerlink" title="响应式原理"></a>响应式原理</h3><p><code>Object.defineProperty</code> =&gt; <code>defineProxy</code></p>
+<h3 id="模板根节点"><a href="#模板根节点" class="headerlink" title="模板根节点"></a>模板根节点</h3><ul>
+<li><p>vue 2.x 的 template 根节点只能一个</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;home&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></li>
+<li><p>vue 3.x 根节点可以有多个</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;home&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;docker&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="vue2-x-使用-flow-vue3-x-使用-typescript"><a href="#vue2-x-使用-flow-vue3-x-使用-typescript" class="headerlink" title="vue2.x 使用 flow, vue3.x 使用 typescript"></a>vue2.x 使用 flow, vue3.x 使用 typescript</h3><h3 id="对虚拟-DOM-的改进"><a href="#对虚拟-DOM-的改进" class="headerlink" title="对虚拟 DOM 的改进"></a>对虚拟 DOM 的改进</h3><ol>
+<li><p>treeshaking<br>options API 无法 摇树</p>
+</li>
+<li><p>block<br>vue2.x 对所有响应式数据 patch 和 diff，vue3.x 将 模板切分为 block(if | slot | for)，对于静态节点优化，更新时只遍历动态节点</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/vue2/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> vue2</a>
+              <a href="/tags/vue3/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> vue3</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/23/array-map-fn/" rel="prev" title="array.map(fn)">
+      <i class="fa fa-chevron-left"></i> array.map(fn)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/24/array-reduce/" rel="next" title="array.reduce">
+      array.reduce <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E9%A1%B9%E5%BC%8F-API-amp-amp-%E7%BB%84%E5%90%88%E5%BC%8F-API"><span class="nav-number">2.</span> <span class="nav-text">选项式 API &amp;&amp; 组合式 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F"><span class="nav-number">2.1.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F-API"><span class="nav-number">3.</span> <span class="nav-text">响应式 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ref-amp-amp-reactive"><span class="nav-number">3.1.</span> <span class="nav-text">ref &amp;&amp; reactive</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#computed-amp-amp-watch-amp-amp-watchEffect"><span class="nav-number">3.2.</span> <span class="nav-text">computed &amp;&amp; watch &amp;&amp; watchEffect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toRef"><span class="nav-number">3.3.</span> <span class="nav-text">toRef</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#toRefs"><span class="nav-number">3.4.</span> <span class="nav-text">toRefs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">响应式原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E6%A0%B9%E8%8A%82%E7%82%B9"><span class="nav-number">4.2.</span> <span class="nav-text">模板根节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue2-x-%E4%BD%BF%E7%94%A8-flow-vue3-x-%E4%BD%BF%E7%94%A8-typescript"><span class="nav-number">4.3.</span> <span class="nav-text">vue2.x 使用 flow, vue3.x 使用 typescript</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%99%9A%E6%8B%9F-DOM-%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="nav-number">4.4.</span> <span class="nav-text">对虚拟 DOM 的改进</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">62</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tan-ln" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tan-ln" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/tan_ln@163.com" title="E-Mail → tan_ln@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>
