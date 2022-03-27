@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="call1234567891011121314151617181920212223242526&#x2F;** *  call 能让一个对象使用另一个对象上的方法 *&#x2F;const person &#x3D; &amp;#123;  show: function (age) &amp;#123;    console.log(this.name + &amp;#x27;, age: &amp;#x27; + age)  &amp;#125;&amp;#125;con">
+<meta property="og:type" content="article">
 <meta property="og:title" content="call &amp;&amp; apply &amp;&amp; bind">
 <meta property="og:url" content="http://yoursite.com/2022/03/25/call-apply-bind/index.html">
 <meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="call1234567891011121314151617181920212223242526&#x2F;** *  call 能让一个对象使用另一个对象上的方法 *&#x2F;const person &#x3D; &amp;#123;  show: function (age) &amp;#123;    console.log(this.name + &amp;#x27;, age: &amp;#x27; + age)  &amp;#125;&amp;#125;con">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-25T06:24:21.000Z">
-<meta property="article:modified_time" content="2022-03-25T06:24:21.969Z">
+<meta property="article:modified_time" content="2022-03-27T15:10:28.165Z">
 <meta property="article:author" content="tang">
-<meta property="article:tag" content="GOGOGO">
+<meta property="article:tag" content="js">
+<meta property="article:tag" content="call">
+<meta property="article:tag" content="apply">
+<meta property="article:tag" content="bind">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2022/03/25/call-apply-bind/">
@@ -124,7 +129,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">64</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">67</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -191,6 +196,13 @@
 
               <time title="创建时间：2022-03-25 14:24:21" itemprop="dateCreated datePublished" datetime="2022-03-25T14:24:21+08:00">2022-03-25</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-27 23:10:28" itemprop="dateModified" datetime="2022-03-27T23:10:28+08:00">2022-03-27</time>
+              </span>
 
           
 
@@ -203,7 +215,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h2 id="call"><a href="#call" class="headerlink" title="call"></a>call</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  call 能让一个对象使用另一个对象上的方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">  <span class="attr">show</span>: <span class="keyword">function</span> (<span class="params">age</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&#x27;, age: &#x27;</span> + age)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span>: <span class="string">&#x27;tan&#x27;</span> &#125;</span><br><span class="line"></span><br><span class="line">person.<span class="property">show</span>.<span class="title function_">call</span>(obj, <span class="number">200</span>)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_call</span> = <span class="keyword">function</span> (<span class="params">ctx</span>) &#123;</span><br><span class="line">  <span class="comment">// ctx 为 undefined || null</span></span><br><span class="line">  ctx = ctx || <span class="title class_">Window</span></span><br><span class="line">  <span class="comment">// 调用的方法 like show</span></span><br><span class="line">  ctx.<span class="property">fn</span> = <span class="variable language_">this</span></span><br><span class="line">  <span class="keyword">const</span> _args = [...<span class="variable language_">arguments</span>].<span class="title function_">slice</span>(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">const</span> res = ctx.<span class="title function_">fn</span>(..._args)</span><br><span class="line">  <span class="keyword">delete</span> ctx.<span class="property">fn</span></span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">person.<span class="property">show</span>.<span class="title function_">_call</span>(obj, <span class="number">500</span>)       <span class="comment">// tan, age: 500</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  apply 能让一个对象使用另一个对象上的方法</span></span><br><span class="line"><span class="comment"> *        与 call 的区别在于传参</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">const</span> person = &#123;</span><br><span class="line">  <span class="attr">show</span>: <span class="keyword">function</span> (<span class="params">age, weapon</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&#x27;, age: &#x27;</span> + age + <span class="string">&#x27;, weapon: &#x27;</span> + weapon)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span>: <span class="string">&#x27;tan&#x27;</span> &#125;</span><br><span class="line"></span><br><span class="line">person.<span class="property">show</span>.<span class="title function_">apply</span>(obj, [<span class="number">200</span>])</span><br><span class="line"></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_apply</span> = <span class="keyword">function</span> (<span class="params">ctx</span>) &#123;</span><br><span class="line">  <span class="comment">// ctx 为 undefined || null</span></span><br><span class="line">  ctx = ctx || <span class="title class_">Window</span></span><br><span class="line">  <span class="comment">// 调用的方法 like show</span></span><br><span class="line">  ctx.<span class="property">fn</span> = <span class="variable language_">this</span></span><br><span class="line">  <span class="keyword">const</span> _args = <span class="variable language_">arguments</span>[<span class="number">1</span>] || []</span><br><span class="line">  <span class="keyword">const</span> res = ctx.<span class="title function_">fn</span>(..._args)</span><br><span class="line">  <span class="comment">// 防止 ctx 属性越来越多</span></span><br><span class="line">  <span class="keyword">delete</span> ctx.<span class="property">fn</span></span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">person.<span class="property">show</span>.<span class="title function_">_apply</span>(obj, [<span class="number">500</span>, <span class="string">&#x27;AK&#x27;</span>])       <span class="comment">// tan, age: 500, weapon: AK</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  bind 将一个函数绑定到一个对象上，但不会立即调用，而是返回一个新的函数</span></span><br><span class="line"><span class="comment"> *       新函数被调用时，可以再次传参</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_bind</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> _self = <span class="variable language_">this</span></span><br><span class="line">  <span class="keyword">const</span> _this = [...<span class="variable language_">arguments</span>].<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">  <span class="keyword">const</span> _args = [...<span class="variable language_">arguments</span>].<span class="title function_">slice</span>(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> temp = _args.<span class="title function_">concat</span>([...args])</span><br><span class="line">    _self.<span class="title function_">apply</span>(_this, temp)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">fn</span>(<span class="params">a, b, c</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b + c;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> _fn = fn.<span class="title function_">_bind</span>(<span class="literal">null</span>, <span class="number">10</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">_fn</span>(<span class="number">20</span>, <span class="number">30</span>))</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -221,6 +237,13 @@
       </div>
 
       <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> js</a>
+              <a href="/tags/call/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> call</a>
+              <a href="/tags/apply/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> apply</a>
+              <a href="/tags/bind/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> bind</a>
+          </div>
 
         
 
@@ -293,6 +316,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#call"><span class="nav-number">1.</span> <span class="nav-text">call</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#apply"><span class="nav-number">2.</span> <span class="nav-text">apply</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bind"><span class="nav-number">3.</span> <span class="nav-text">bind</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -315,7 +339,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
