@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="全局 APIVue.setVue.set(target, key, value)  由于 VUe 无法探测普通的新增 property(比如 this.myObj.newProp &#x3D; 111)，所以通过 Vue.set() 为响应式对象中添加一个 property，可以确保这个 property 是响应式的，并且触发视图更新   用于在运行时添加根级别属性，使该属性必须具有响应式能力 不能是 Vu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue2.x 源码 02">
+<meta property="og:url" content="http://yoursite.com/2022/03/27/Vue2-x-%E6%BA%90%E7%A0%81-02/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="全局 APIVue.setVue.set(target, key, value)  由于 VUe 无法探测普通的新增 property(比如 this.myObj.newProp &#x3D; 111)，所以通过 Vue.set() 为响应式对象中添加一个 property，可以确保这个 property 是响应式的，并且触发视图更新   用于在运行时添加根级别属性，使该属性必须具有响应式能力 不能是 Vu">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-27T14:53:50.000Z">
+<meta property="article:modified_time" content="2022-03-27T14:54:45.465Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="源码阅读">
+<meta property="article:tag" content="Vue2.6">
+<meta property="article:tag" content="全局 API">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/03/27/Vue2-x-%E6%BA%90%E7%A0%81-02/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue2.x 源码 02 | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">64</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">33</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/27/Vue2-x-%E6%BA%90%E7%A0%81-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue2.x 源码 02
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-27 22:53:50 / 修改时间：22:54:45" itemprop="dateCreated datePublished" datetime="2022-03-27T22:53:50+08:00">2022-03-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="全局-API"><a href="#全局-API" class="headerlink" title="全局 API"></a>全局 API</h2><h3 id="Vue-set"><a href="#Vue-set" class="headerlink" title="Vue.set"></a>Vue.set</h3><p>Vue.set(target, key, value)</p>
+<blockquote>
+<p>由于 VUe 无法探测普通的新增 property(比如 this.myObj.newProp = 111)，所以通过 Vue.set() 为响应式对象中添加一个 property，可以确保这个 property 是响应式的，并且触发视图更新</p>
+</blockquote>
+<ol>
+<li>用于在运行时添加根级别属性，使该属性必须具有响应式能力</li>
+<li>不能是 Vue 实例，或者 Vue 实例的根数据对象( 即 return {} )</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">a</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">str</span>: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">      <span class="attr">obj</span>: &#123;&#125;,</span><br><span class="line">      <span class="attr">arr</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, &#123; <span class="attr">key</span>: val &#125;]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="title function_">change</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">b</span> = <span class="number">2</span>,                     <span class="comment">// 不具有响应式</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">arr</span>[<span class="number">0</span>] = <span class="number">111</span>，             <span class="comment">// 不具有响应式</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">arr</span>[<span class="number">3</span>].<span class="property">key</span> = <span class="string">&#x27;newVal&#x27;</span>      <span class="comment">// 具有响应式</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">func</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="title class_">Vue</span>.<span class="title function_">set</span>(<span class="variable language_">this</span>, c, <span class="number">3</span>),            <span class="comment">// 具有响应式</span></span><br><span class="line">      <span class="title class_">Vue</span>.<span class="title function_">set</span>(<span class="variable language_">this</span>.<span class="property">arr</span>, <span class="number">0</span>, <span class="number">111</span>)       <span class="comment">// 具有响应式</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>不可在运行时直接 set 一个根级别属性( b: 2 )，这样不具有响应式</li>
+<li>若是初始化时设置 str 为空字符或者 obj 空对象，运行时再 set 是具有响应式的</li>
+</ul>
+<h3 id="Vue-use"><a href="#Vue-use" class="headerlink" title="Vue.use"></a>Vue.use</h3><ul>
+<li>Vue.use(plugin) 作用：负责安装插件，其实就是执行插件提供的 install 方法</li>
+</ul>
+<ol>
+<li>首先会判断插件是否安装过<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> installedPlugins = (<span class="variable language_">this</span>.<span class="property">_installedPlugins</span> || (<span class="variable language_">this</span>.<span class="property">_installedPlugins</span> = []))</span><br><span class="line"><span class="comment">// 是否存在组件</span></span><br><span class="line"><span class="comment">// 防止重复注册</span></span><br><span class="line"><span class="keyword">if</span> (installedPlugins.<span class="title function_">indexOf</span>(plugin) &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>未安装过则执行插件提供的 install 方法，具体做什么由插件自己决定<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// plugin 是 对象，直接执行 install 方法</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">typeof</span> plugin.<span class="property">install</span> === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">  plugin.<span class="property">install</span>.<span class="title function_">apply</span>(plugin, args)</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">typeof</span> plugin === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">  <span class="comment">// plugin 是函数</span></span><br><span class="line">  plugin.<span class="title function_">apply</span>(<span class="literal">null</span>, args)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Vue-mixin"><a href="#Vue-mixin" class="headerlink" title="Vue.mixin"></a>Vue.mixin</h3><ul>
+<li>负责在全局的配置上合并 options 选项，然后在每个组件生成 vnode 时将全局配置合并到自己的 options 上来</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 核心 mergeOptions，合并选项</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">mixin</span> = <span class="keyword">function</span> (<span class="params">mixin: <span class="built_in">Object</span></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">options</span> = <span class="title function_">mergeOptions</span>(<span class="variable language_">this</span>.<span class="property">options</span>, mixin)</span><br><span class="line">  <span class="keyword">return</span> <span class="variable language_">this</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vue-component-Vue-directive-‘my-directive’-Vue-filter-‘my-filter’"><a href="#Vue-component-Vue-directive-‘my-directive’-Vue-filter-‘my-filter’" class="headerlink" title="Vue.component | Vue.directive(‘my-directive’, {}) | Vue.filter(‘my-filter’, {})"></a>Vue.component | Vue.directive(‘my-directive’, {}) | Vue.filter(‘my-filter’, {})</h3><ul>
+<li>负责注册全局组件</li>
+<li>其实就是将组件配置注册到全局配置的 components 选项上，然后各个子组件在生成 vnode 时会将全局的 components 选项合并到 局部的 components 配置上<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (type === <span class="string">&#x27;component&#x27;</span> &amp;&amp; <span class="title function_">isPlainObject</span>(definition)) &#123;</span><br><span class="line">  <span class="comment">// 设置组件名</span></span><br><span class="line">  definition.<span class="property">name</span> = definition.<span class="property">name</span> || id</span><br><span class="line">  <span class="comment">// Vue.extend 方法，基于 definition 扩展一个新的组件子类</span></span><br><span class="line">  <span class="comment">// 后面可以直接 new definition() 实例化一个组件</span></span><br><span class="line">  definition = <span class="variable language_">this</span>.<span class="property">options</span>.<span class="property">_base</span>.<span class="title function_">extend</span>(definition)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (type === <span class="string">&#x27;directive&#x27;</span> &amp;&amp; <span class="keyword">typeof</span> definition === <span class="string">&#x27;function&#x27;</span>) &#123;</span><br><span class="line">  definition = &#123; <span class="attr">bind</span>: definition, <span class="attr">update</span>: definition &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 放入全局配置上</span></span><br><span class="line"><span class="comment">// this.options[components] = &#123; CompName: definition &#125;</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">options</span>[type + <span class="string">&#x27;s&#x27;</span>][id] = definition</span><br><span class="line"><span class="keyword">return</span> definition</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Vue-extend-options"><a href="#Vue-extend-options" class="headerlink" title="Vue.extend(options)"></a>Vue.extend(options)</h3><ul>
+<li>Vue.extends 基于 Vue 创建一个子类，参数 options 会作为该子类的默认全局配置，如同 Vue 的默认全局配置一般；</li>
+<li>所以通过 Vue.extend 扩展一个子类，一大用处就是内置一些公共配置，供子类的子类使用</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 重点</span></span><br><span class="line"><span class="comment">// 定义一个 Vue 子类，调用 _init() 方法</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Sub</span> = <span class="keyword">function</span> <span class="title function_">VueComponent</span> (options) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="title function_">_init</span>(options)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 设置子类的原型对象</span></span><br><span class="line"><span class="title class_">Sub</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Object</span>.<span class="title function_">create</span>(<span class="title class_">Super</span>.<span class="property"><span class="keyword">prototype</span></span>)</span><br><span class="line"><span class="comment">// 子类的构造函数，指回子类自己</span></span><br><span class="line"><span class="title class_">Sub</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span> = <span class="title class_">Sub</span></span><br><span class="line"><span class="title class_">Sub</span>.<span class="property">cid</span> = cid++</span><br><span class="line"><span class="comment">// 合并 options</span></span><br><span class="line"><span class="comment">// 使用 Vue.extentd 方法定义一个子类，预设一些配置项，就相当于直接使用 Vue 构造函数时的默认配置的一样</span></span><br><span class="line"><span class="title class_">Sub</span>.<span class="property">options</span> = <span class="title function_">mergeOptions</span>(</span><br><span class="line">  <span class="title class_">Super</span>.<span class="property">options</span>,</span><br><span class="line">  extendOptions</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将全局方法复制到子类上</span></span><br><span class="line"><span class="comment">// 允许子类继续向下扩展</span></span><br><span class="line"><span class="title class_">Sub</span>.<span class="property">extend</span> = <span class="title class_">Super</span>.<span class="property">extend</span></span><br><span class="line"><span class="title class_">Sub</span>.<span class="property">mixin</span> = <span class="title class_">Super</span>.<span class="property">mixin</span></span><br><span class="line"><span class="title class_">Sub</span>.<span class="property">use</span> = <span class="title class_">Super</span>.<span class="property">use</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Vue-delete-target-key"><a href="#Vue-delete-target-key" class="headerlink" title="Vue.delete(target, key)"></a>Vue.delete(target, key)</h3><ul>
+<li>删除对象的 property，如果对象是响应式的，确保删除能触发视图更新，</li>
+<li>这个方法主要用于避开 Vue 不能监测到 property 被删除的限制</li>
+<li>当然不能删除根级别的响应式属性</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 数组利用 splice 删除</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title class_">Array</span>.<span class="title function_">isArray</span>(target) &amp;&amp; <span class="title function_">isValidArrayIndex</span>(key)) &#123;</span><br><span class="line">  target.<span class="title function_">splice</span>(key, <span class="number">1</span>)</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> ob = (target).<span class="property">__ob__</span></span><br><span class="line">  <span class="comment">// 删除对象上的属性 delete 操作符</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="title function_">hasOwn</span>(target, key)) &#123;</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">delete</span> target[key]</span><br><span class="line"><span class="keyword">if</span> (!ob) &#123;</span><br><span class="line">  <span class="keyword">return</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 触发依赖通知更新</span></span><br><span class="line">ob.<span class="property">dep</span>.<span class="title function_">notify</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Vue-nextTick-cb"><a href="#Vue-nextTick-cb" class="headerlink" title="Vue.nextTick(cb)"></a>Vue.nextTick(cb)</h3><ul>
+<li><code>Vue.nextTick(cb)</code> 方法的作用是延迟回调函数 cb 的执行，一般用于 <code>this.key = newVal</code> 更改数据后，想要立即获取更改后的 DOM 数据<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 执行 1， 2， 3</span></span><br><span class="line"><span class="variable language_">this</span>.<span class="property">key</span> = <span class="string">&#x27;newVal&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">nextTick</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// DOM 更新了</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+其内部执行过程：    </li>
+</ul>
+<ol>
+<li>this.key = ‘newVal’ 触发依赖通知更新，将负责更新的 watcher 放入 watcher 队列</li>
+<li>将刷新 watcher 的函数放入 callbacks 数组中</li>
+<li> 在浏览器的异步任务队列中放入一个刷新 callbacks 数组的函数</li>
+<li>Vue.nextTick(cb) 插队，将 cb 函数放入 callbacks 数组</li>
+<li>待将来的某个时刻执行刷新 callbacks 数组的函数</li>
+<li>然后执行 callbacks 数组的众多函数，触发 watcher.run() 的执行 更新 DOM</li>
+<li>由于 cb 函数是在后面放到 callbacks 数组，这就保证了先完成的 DOM 更新，再执行 cb 函数</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> 源码阅读</a>
+              <a href="/tags/Vue2-6/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> Vue2.6</a>
+              <a href="/tags/%E5%85%A8%E5%B1%80-API/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> 全局 API</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/25/%E9%98%B2%E6%8A%96-%E8%8A%82%E6%B5%81/" rel="prev" title="防抖 && 节流">
+      <i class="fa fa-chevron-left"></i> 防抖 && 节流
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80-API"><span class="nav-number">1.</span> <span class="nav-text">全局 API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-set"><span class="nav-number">1.1.</span> <span class="nav-text">Vue.set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-use"><span class="nav-number">1.2.</span> <span class="nav-text">Vue.use</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-mixin"><span class="nav-number">1.3.</span> <span class="nav-text">Vue.mixin</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-component-Vue-directive-%E2%80%98my-directive%E2%80%99-Vue-filter-%E2%80%98my-filter%E2%80%99"><span class="nav-number">1.4.</span> <span class="nav-text">Vue.component | Vue.directive(‘my-directive’, {}) | Vue.filter(‘my-filter’, {})</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-extend-options"><span class="nav-number">1.5.</span> <span class="nav-text">Vue.extend(options)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-delete-target-key"><span class="nav-number">1.6.</span> <span class="nav-text">Vue.delete(target, key)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-nextTick-cb"><span class="nav-number">1.7.</span> <span class="nav-text">Vue.nextTick(cb)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tan-ln" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tan-ln" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/tan_ln@163.com" title="E-Mail → tan_ln@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>
