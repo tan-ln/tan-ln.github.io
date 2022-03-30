@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="若要拖放某个元素，则必须将其的 draggable 属性设置为 trueimg 和 a 元素默认为 true  拖放事件 拖放的过程中被拖放的对象被称为源对象，过拖放过程中间经过的其他对象被称为过程对象，最终到达的对象称作目标对象。   源对象:  dragstart: 源对象开始拖放，开始移动时事件触发 drag: 源对象拖放过程中，移动被拖拽对象时触发 dragend: 源对象拖放结束，整个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="drag-拖拽">
+<meta property="og:url" content="http://yoursite.com/2022/03/30/drag-%E6%8B%96%E6%8B%BD/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="若要拖放某个元素，则必须将其的 draggable 属性设置为 trueimg 和 a 元素默认为 true  拖放事件 拖放的过程中被拖放的对象被称为源对象，过拖放过程中间经过的其他对象被称为过程对象，最终到达的对象称作目标对象。   源对象:  dragstart: 源对象开始拖放，开始移动时事件触发 drag: 源对象拖放过程中，移动被拖拽对象时触发 dragend: 源对象拖放结束，整个">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-30T08:28:53.000Z">
+<meta property="article:modified_time" content="2022-03-30T08:42:11.087Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="h5">
+<meta property="article:tag" content="drag">
+<meta property="article:tag" content="拖拽">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/03/30/drag-%E6%8B%96%E6%8B%BD/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>drag-拖拽 | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">71</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">35</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/30/drag-%E6%8B%96%E6%8B%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          drag-拖拽
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-30 16:28:53 / 修改时间：16:42:11" itemprop="dateCreated datePublished" datetime="2022-03-30T16:28:53+08:00">2022-03-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>若要拖放某个元素，则必须将其的 <code>draggable</code> 属性设置为 <code>true</code><br><code>img</code> 和 <code>a</code> 元素默认为 <code>true</code></p>
+</blockquote>
+<h2 id="拖放事件"><a href="#拖放事件" class="headerlink" title="拖放事件"></a>拖放事件</h2><blockquote>
+<p>拖放的过程中被拖放的对象被称为<em>源对象</em>，过拖放过程中间经过的其他对象被称为<em>过程对象</em>，最终到达的对象称作<em>目标对象</em>。</p>
+</blockquote>
+<ul>
+<li>源对象: <ul>
+<li><code>dragstart</code>: 源对象开始拖放，开始移动时事件触发</li>
+<li><code>drag</code>: 源对象拖放过程中，移动被拖拽对象时触发</li>
+<li><code>dragend</code>: 源对象拖放结束，整个拖放操作结束时触发</li>
+</ul>
+</li>
+<li>过程对象: <ul>
+<li><code>dragenter</code>: 源对象进入过程对象范围内，被拖拽对象进入过程对象时被触发</li>
+<li><code>dragover</code>: 源对象在过程对象范围内移动，被拖拽对象在过程对象内移动时触发</li>
+<li><code>dragleave</code>: 源对象离开过程对象的范围，被拖拽对象离开目标对象时触发</li>
+</ul>
+</li>
+<li>目标对象: <ul>
+<li><code>drop</code>: 源对象拖放到目标对象中，目标对象完全接受被拖拽对象时触发，可理解为在目标对象内松手时触发</li>
+</ul>
+</li>
+</ul>
+<h2 id="dataTransfer-对象"><a href="#dataTransfer-对象" class="headerlink" title="dataTransfer 对象"></a>dataTransfer 对象</h2><blockquote>
+<p>在所有的拖放事件中都提供了一个数据传输对象 <code>dataTransfer</code> ，主要是用于在<em>源对象</em>和<em>目标对象</em>之间<em>传递数据</em></p>
+</blockquote>
+<ul>
+<li><p><code>setData(format, data)</code></p>
+<ul>
+<li><p><code>format</code> 表示要存入的数据类型，共有4种：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">text/plain</span><br><span class="line">text/html</span><br><span class="line">text/xml</span><br><span class="line">text/uri-list</span><br></pre></td></tr></table></figure></li>
+<li><p><code>data</code> 为要存入的数据</p>
+<p>例如：<code>event.dataTransfer.setData(&#39;text/plain&#39;, &#39;hello world&#39;)</code></p>
+</li>
+</ul>
+<blockquote>
+<p>注：如果给定类型的数据不存在，则将其添加到拖动数据存储的末尾，使得 <code>dataTransfer.types</code> 列表中的最后一个项目将是新类型。</p>
+</blockquote>
+</li>
+<li><p><code>getData(format)</code></p>
+<p>该方法从 <code>dataTransfer</code> 对象中读取数据，参数为在 <code>setData方</code> 法中指定的数据类型，例如：<code>event.dataTransfer.getData(&#39;text/plain&#39;)</code></p>
+</li>
+<li><p><code>clearData()</code></p>
+<p>该方法清空 <code>dataTransfer</code> 对象中存储的数据，参数可选，为数据类型。若为空，则清空所有数据。</p>
+</li>
+<li><p><code>setDragImage(element,x,y)</code> 该方法通过 img 元素来设置拖放图标</p>
+<ul>
+<li><code>element</code> 表示拖拽时鼠标下面的图片（通常是 <code>image</code> 元素，也可以说 <code>canvas</code> 元素）</li>
+<li><code>x、y</code> 分别指示相对于图片的横向和纵向偏移量，相对应鼠标指针。</li>
+</ul>
+</li>
+<li><p><code>files</code> 属性</p>
+<p>返回被拖拽的文件列表，是一个 <code>FileList</code> 对象，有 <code>length</code> 属性，可通过下标访问</p>
+</li>
+</ul>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h3</span>&gt;</span>金币 拖入 钱袋 的时候消失<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;coin1&quot;</span> <span class="attr">class</span>=<span class="string">&quot;coin&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://img2.baidu.com/it/u=1887149691,564116742&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=330&amp;h=325&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;coin&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;coin2&quot;</span> <span class="attr">class</span>=<span class="string">&quot;coin&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://img2.baidu.com/it/u=1887149691,564116742&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=330&amp;h=325&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;coin&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">id</span>=<span class="string">&quot;coin3&quot;</span> <span class="attr">class</span>=<span class="string">&quot;coin&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://img2.baidu.com/it/u=1887149691,564116742&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=330&amp;h=325&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;coin&quot;</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;bag&quot;</span> <span class="attr">id</span>=<span class="string">&quot;bag&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://img1.baidu.com/it/u=1595129334,3379693149&amp;fm=253&amp;fmt=auto&amp;app=138&amp;f=JPEG?w=500&amp;h=500&quot;</span></span></span><br><span class="line"><span class="tag">	<span class="attr">alt</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">const</span> coins = <span class="variable language_">document</span>.<span class="title function_">getElementsByClassName</span>(<span class="string">&#x27;coin&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; coins.<span class="property">length</span>; i++) &#123;</span></span><br><span class="line"><span class="language-javascript">    coins[i].<span class="property">ondragstart</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      e.<span class="property">dataTransfer</span>.<span class="title function_">setData</span>(<span class="string">&#x27;coin_id&#x27;</span>, <span class="variable language_">this</span>.<span class="property">id</span>)</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;drag start : &#x27;</span> + <span class="variable language_">this</span>.<span class="property">id</span>)</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">  bag.<span class="property">ondragenter</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;drag enter bag&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">    bag.<span class="property">style</span>.<span class="property">opacity</span> = <span class="number">1</span></span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">  bag.<span class="property">ondragleave</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;drag leave bag&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">    bag.<span class="property">style</span>.<span class="property">opacity</span> = <span class="number">.2</span></span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">  bag.<span class="property">ondragover</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    e.<span class="title function_">preventDefault</span>()</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript">  <span class="comment">// ondragover preventDefault 时才会触发</span></span></span><br><span class="line"><span class="language-javascript">  bag.<span class="property">ondrop</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">    bag.<span class="property">style</span>.<span class="property">opacity</span> = <span class="number">.2</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> coin_id = e.<span class="property">dataTransfer</span>.<span class="title function_">getData</span>(<span class="string">&#x27;coin_id&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">const</span> coin = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(coin_id)</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">removeChild</span>(coin)</span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">console</span>.<span class="title function_">log</span>(coin_id + <span class="string">&#x27; : drop into the bag&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/h5/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> h5</a>
+              <a href="/tags/drag/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> drag</a>
+              <a href="/tags/%E6%8B%96%E6%8B%BD/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> 拖拽</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/27/Vue2-x-%E6%BA%90%E7%A0%81-02/" rel="prev" title="Vue2.x 源码 02">
+      <i class="fa fa-chevron-left"></i> Vue2.x 源码 02
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/30/event%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1%EF%BC%881%EF%BC%89/" rel="next" title="event事件对象（1）">
+      event事件对象（1） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%96%E6%94%BE%E4%BA%8B%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">拖放事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataTransfer-%E5%AF%B9%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">dataTransfer 对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-number">3.</span> <span class="nav-text">例子</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tan-ln" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tan-ln" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/tan_ln@163.com" title="E-Mail → tan_ln@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>
