@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">72</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">76</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">36</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,143 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/13/git-%E6%8F%90%E4%BA%A4%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/13/git-%E6%8F%90%E4%BA%A4%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="post-title-link" itemprop="url">git 提交免密登录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2018-06-13 22:32:27 / 修改时间：22:39:23" itemprop="dateCreated datePublished" datetime="2018-06-13T22:32:27+08:00">2018-06-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>首先你要有ssh公钥和秘钥</p>
+<h2 id="查看当前git项目的提交方式"><a href="#查看当前git项目的提交方式" class="headerlink" title="查看当前git项目的提交方式"></a>查看当前git项目的提交方式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+<p>如果是 http 协议提交则会显示</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/13/git-%E6%8F%90%E4%BA%A4%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/06/BFC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/06/BFC/" class="post-title-link" itemprop="url">BFC</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2018-06-06 22:56:55 / 修改时间：22:57:36" itemprop="dateCreated datePublished" datetime="2018-06-06T22:56:55+08:00">2018-06-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="BFC-Block-Formatting-Context"><a href="#BFC-Block-Formatting-Context" class="headerlink" title="BFC (Block Formatting Context)"></a>BFC (Block Formatting Context)</h1><h2 id="块级格式上下文"><a href="#块级格式上下文" class="headerlink" title="块级格式上下文"></a>块级格式上下文</h2><blockquote>
+<p>两个相邻的BFC之间的距离由margin决定。<br>在同一个BFC内部，两个垂直方向相邻的块级元素的margin会发生“塌陷”，重叠为最大的margin</p>
+</blockquote>
+<h3 id="body根元素会创造一个-bfc-环境，其下所有元素具有相同的上下文环境"><a href="#body根元素会创造一个-bfc-环境，其下所有元素具有相同的上下文环境" class="headerlink" title="body根元素会创造一个 bfc 环境，其下所有元素具有相同的上下文环境"></a>body根元素会创造一个 bfc 环境，其下所有元素具有相同的上下文环境</h3><p>块 是页面的基础</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/06/BFC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -684,14 +821,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-count">76</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
