@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ES6 Symbol表示一个独一无二的值  const sym &#x3D; Symbol() 不需要 new unique123const s1 &#x3D; Symbol(&amp;#x27;tan&amp;#x27;)const s2 &#x3D; Symbol(&amp;#x27;tan&amp;#x27;)console.log(s1 &#x3D;&#x3D;&#x3D; s2);           &#x2F;&#x2F; error 不能使用运算符123const s3 &#x3D; Symbol(1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="symbol">
+<meta property="og:url" content="http://yoursite.com/2022/04/05/symbol/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="ES6 Symbol表示一个独一无二的值  const sym &#x3D; Symbol() 不需要 new unique123const s1 &#x3D; Symbol(&amp;#x27;tan&amp;#x27;)const s2 &#x3D; Symbol(&amp;#x27;tan&amp;#x27;)console.log(s1 &#x3D;&#x3D;&#x3D; s2);           &#x2F;&#x2F; error 不能使用运算符123const s3 &#x3D; Symbol(1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-05T04:16:08.000Z">
+<meta property="article:modified_time" content="2022-04-05T04:16:43.912Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="es6">
+<meta property="article:tag" content="symbol">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/04/05/symbol/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>symbol | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">78</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/05/symbol/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          symbol
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-05 12:16:08 / 修改时间：12:16:43" itemprop="dateCreated datePublished" datetime="2022-04-05T12:16:08+08:00">2022-04-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="ES6-Symbol"><a href="#ES6-Symbol" class="headerlink" title="ES6 Symbol"></a>ES6 Symbol</h2><p>表示一个独一无二的值</p>
+<ol>
+<li><code>const sym = Symbol()</code> 不需要 <code>new</code></li>
+<li>unique<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s1 = <span class="title class_">Symbol</span>(<span class="string">&#x27;tan&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> s2 = <span class="title class_">Symbol</span>(<span class="string">&#x27;tan&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1 === s2);           <span class="comment">// error</span></span><br></pre></td></tr></table></figure></li>
+<li>不能使用运算符<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s3 = <span class="title class_">Symbol</span>(<span class="number">100</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s3 + <span class="number">200</span>);        <span class="comment">// TS2365: Operator &#x27;+&#x27; cannot be applied to types &#x27;unique symbol&#x27; and &#x27;number&#x27;.</span></span><br><span class="line"><span class="comment">// 不能使用运算符 或 + 拼接</span></span><br></pre></td></tr></table></figure></li>
+<li>toString()<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s3.<span class="title function_">toString</span>() + <span class="number">200</span>);      <span class="comment">// toString() + 拼接   &quot;Symbol(100)200&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="作为对象的属性"><a href="#作为对象的属性" class="headerlink" title="作为对象的属性"></a>作为对象的属性</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s4 = <span class="title class_">Symbol</span>(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  [s4]: <span class="string">&#x27;s4&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj);       <span class="comment">// &#123;Symbol(name): &#x27;volvo s4&#x27;&#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="property">s4</span>);       <span class="comment">// error</span></span><br><span class="line">obj[s4] = <span class="string">&#x27;volvo s60&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj);       <span class="comment">// &#123;Symbol(name): &#x27;s60&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>不能通过对象形式访问 Symbol 类型的属性：<code>obj.name || obj.s4</code></strong></p>
+</li>
+<li><p><strong>只能 <code>obj[s4]</code> 访问</strong></p>
+</li>
+<li><p>遍历：</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s4 = <span class="title class_">Symbol</span>(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  [s4]: <span class="string">&#x27;s4&#x27;</span>,</span><br><span class="line">  <span class="attr">a</span>: <span class="string">&#x27;aaa&#x27;</span>,</span><br><span class="line">  <span class="attr">b</span>: <span class="string">&#x27;1231&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(key);                                     <span class="comment">// a  b     Symbol 类型不会被遍历出来</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="title function_">keys</span>(obj))                           <span class="comment">//  [&#x27;a&#x27;, &#x27;b&#x27;]  同样不会</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="title function_">getOwnPropertyNames</span>(obj))            <span class="comment">//  [&#x27;a&#x27;, &#x27;b&#x27;]  同样不会</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(obj))            <span class="comment">//  &#123;&quot;a&quot;:&quot;aaa&quot;,&quot;b&quot;:&quot;1231&quot;&#125;  同样不会</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Object</span>.<span class="title function_">getOwnPropertySymbols</span>(obj))            <span class="comment">// [Symbol(name)] 只返回 symbol 类型的属性名 key</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Reflect</span>.<span class="title function_">ownKeys</span>(obj))            <span class="comment">// [&#x27;a&#x27;, &#x27;b&#x27;, Symbol(name)]    返回所有</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="静态方法"><a href="#静态方法" class="headerlink" title="静态方法"></a>静态方法</h2><h3 id="for"><a href="#for" class="headerlink" title="for()"></a>for()</h3><p>返回一个 Symbol 类型的值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s7 = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;s5&#x27;</span>)</span><br><span class="line"><span class="comment">// 再次使用 for 方法创建 symbol 的时候，会先判断 全局是否存在使用 string s5 的值，有则直接返回，没有则创建</span></span><br><span class="line"><span class="keyword">const</span> s8 = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;s5&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> s9 = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;s60&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s7 === s8);     <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s8 === s9);     <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="keyFor"><a href="#keyFor" class="headerlink" title="keyFor()"></a>keyFor()</h3><ul>
+<li>返回一个 Symbol 类型的值的 索引</li>
+<li>只接受  Symbol.for() 方法创建的值</li>
+<li>对于 Symbol() 则返回 undefined</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s4 = <span class="title class_">Symbol</span>(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> s8 = <span class="title class_">Symbol</span>.<span class="title function_">for</span>(<span class="string">&#x27;haha&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> s9 = <span class="title class_">Symbol</span>.<span class="title function_">keyFor</span>(s8)</span><br><span class="line"><span class="keyword">const</span> s10 = <span class="title class_">Symbol</span>.<span class="title function_">keyFor</span>(s4)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s9);              <span class="comment">// haha        只接受  Symbol.for 方法创建的值</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s10);             <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="内置属性"><a href="#内置属性" class="headerlink" title="内置属性"></a>内置属性</h2><ol>
+<li><code>Symbol.hasInstance</code> 返回使用 <code>instanceof</code> 判断 <code>symbol</code> 类型的<em>原始对象</em></li>
+<li><code>Symbol.isConcatSpreadable</code></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/es6/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> es6</a>
+              <a href="/tags/symbol/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> symbol</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/03/%E5%88%9D%E8%AF%86-Typescript/" rel="prev" title="初识 Typescript">
+      <i class="fa fa-chevron-left"></i> 初识 Typescript
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/05/Typescript-Interface/" rel="next" title="Typescript-Interface">
+      Typescript-Interface <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ES6-Symbol"><span class="nav-number">1.</span> <span class="nav-text">ES6 Symbol</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%9C%E4%B8%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">2.</span> <span class="nav-text">作为对象的属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">静态方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for"><span class="nav-number">3.1.</span> <span class="nav-text">for()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#keyFor"><span class="nav-number">3.2.</span> <span class="nav-text">keyFor()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%B1%9E%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">内置属性</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tan-ln" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tan-ln" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/tan_ln@163.com" title="E-Mail → tan_ln@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>

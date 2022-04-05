@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">76</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">78</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">38</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,149 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/18/ajax/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/05/18/ajax/" class="post-title-link" itemprop="url">ajax</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-18 12:10:32" itemprop="dateCreated datePublished" datetime="2019-05-18T12:10:32+08:00">2019-05-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-17 18:11:00" itemprop="dateModified" datetime="2022-03-17T18:11:00+08:00">2022-03-17</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="jsonp-json-with-padding"><a href="#jsonp-json-with-padding" class="headerlink" title="jsonp (json with padding)"></a>jsonp (json with padding)</h1><p>跨域 ：跨域名、端口、协议</p>
+<p>js 请求有一个同源机制，同源才能发起请求，ajax 无法跨域</p>
+<p>后端解决跨域问题：koa-cors </p>
+<p>前端方案：jsonp</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/05/18/ajax/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/ques-1px/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/01/ques-1px/" class="post-title-link" itemprop="url">移动 Web 1像素 问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-01 21:06:37" itemprop="dateCreated datePublished" datetime="2019-03-01T21:06:37+08:00">2019-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-18 09:51:11" itemprop="dateModified" datetime="2022-03-18T09:51:11+08:00">2022-03-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>问题：一般在移动端，由于dpr（设备像素比）不为1，在PC端显示1像素的边框，在移动端其实显示为2px。<br>解决这个问题，主要思想是：<strong>使用伪元素设置1px的边框，然后使用 transform:scale，对边框进行缩放（scaleY）。</strong></p>
+</blockquote>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 上边框</span></span><br><span class="line"><span class="selector-pseudo">:before</span></span><br><span class="line">    <span class="attribute">content</span> &quot;&quot;</span><br><span class="line">    <span class="attribute">position</span> absolute</span><br><span class="line">    <span class="attribute">top</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">left</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">right</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">height</span> <span class="number">1px</span></span><br><span class="line">    <span class="attribute">border-top</span> <span class="number">1px</span> solid e5e5e5</span><br><span class="line">    <span class="attribute">color</span> <span class="selector-id">#e5e5e5</span></span><br><span class="line">    -webkit-<span class="attribute">transform-origin</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">transform-origin</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">    -webkit-<span class="attribute">transform</span> <span class="built_in">scaleY</span>(<span class="number">0.5</span>)</span><br><span class="line">    <span class="attribute">transform</span> <span class="built_in">scaleY</span>(<span class="number">0.5</span>)</span><br><span class="line">    <span class="attribute">z-index</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下边框 注意 transform-origin</span></span><br><span class="line">&amp;<span class="selector-pseudo">:after</span></span><br><span class="line">    <span class="attribute">content</span> &quot;&quot;</span><br><span class="line">    <span class="attribute">position</span> absolute</span><br><span class="line">    <span class="attribute">bottom</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">left</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">right</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">height</span> <span class="number">1px</span></span><br><span class="line">    <span class="attribute">border-bottom</span> <span class="number">10px</span> solid <span class="selector-id">#e5e5e5</span></span><br><span class="line">    <span class="attribute">color</span> <span class="selector-id">#e5e5e5</span></span><br><span class="line">    -webkit-<span class="attribute">transform-origin</span> <span class="number">0</span> <span class="number">100%</span></span><br><span class="line">    <span class="attribute">transform-origin</span> <span class="number">0</span> <span class="number">100%</span></span><br><span class="line">    -webkit-<span class="attribute">transform</span> <span class="built_in">scaleY</span>(<span class="number">0.5</span>)</span><br><span class="line">    <span class="attribute">transform</span> <span class="built_in">scaleY</span>(<span class="number">0.5</span>)</span><br><span class="line">    <span class="attribute">z-index</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -821,14 +964,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">76</span>
+        <span class="site-state-item-count">78</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

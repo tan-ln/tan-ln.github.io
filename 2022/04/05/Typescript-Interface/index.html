@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="在TypeScript中，我们使用接口（Interfaces）来定义对象的类型。除了可用于对类的一部分行为进行抽象以外，也常用于对「对象的形状（Shape）」进行描述 TypeScript 的核心原则之一是对值所具有的结构进行类型检查， 在 TypeScript 里，接口的作用就是为这些类型命名和为你的代码或第三方代码定义契约 interface 这个概念在js中并没有，所以 interface">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typescript-Interface">
+<meta property="og:url" content="http://yoursite.com/2022/04/05/Typescript-Interface/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="在TypeScript中，我们使用接口（Interfaces）来定义对象的类型。除了可用于对类的一部分行为进行抽象以外，也常用于对「对象的形状（Shape）」进行描述 TypeScript 的核心原则之一是对值所具有的结构进行类型检查， 在 TypeScript 里，接口的作用就是为这些类型命名和为你的代码或第三方代码定义契约 interface 这个概念在js中并没有，所以 interface">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-05T08:30:16.000Z">
+<meta property="article:modified_time" content="2022-04-05T08:30:34.754Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="ts">
+<meta property="article:tag" content="interface">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/04/05/Typescript-Interface/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Typescript-Interface | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">78</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">40</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/05/Typescript-Interface/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Typescript-Interface
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-05 16:30:16 / 修改时间：16:30:34" itemprop="dateCreated datePublished" datetime="2022-04-05T16:30:16+08:00">2022-04-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>在TypeScript中，我们使用接口（<code>Interfaces</code>）来定义对象的类型。除了可用于对类的一部分行为进行抽象以外，也常用于对「对象的形状（<code>Shape</code>）」进行描述</li>
+<li><code>TypeScript</code> 的核心原则之一是对值所具有的结构进行<em>类型检查</em>， 在 <code>TypeScript</code> 里，接口的作用就是为这些<em>类型命名</em>和为你的代码或第三方代码<em>定义契约</em></li>
+<li><code>interface</code> 这个概念在js中并没有，所以 <code>interface</code> 编译后并不会呈现到 <code>js</code> 中，只会进行<em>静态的类型检查</em></li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">NameInfo</span> &#123;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// const getFullName = (&#123; firstName, lastName &#125;: &#123; firstName: string, lastName: string &#125;): string =&gt; &#123;</span></span><br><span class="line"><span class="keyword">const</span> getFullName = (&#123; firstName, lastName &#125;: <span class="title class_">NameInfo</span>): <span class="function"><span class="params">string</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">`firstName: <span class="subst">$&#123;firstName&#125;</span>, lastName: <span class="subst">$&#123;lastName&#125;</span>`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;tan&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;ln&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">getFullName</span>(obj)</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>可选属性</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>,</span><br><span class="line">  car?: <span class="built_in">string</span>    <span class="comment">// 可选</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>索引签名 任意属性</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">NameInfo</span> &#123;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="built_in">string</span>,</span><br><span class="line">  [<span class="attr">prop</span>: <span class="built_in">string</span>]: <span class="built_in">any</span>       <span class="comment">// 索引签名    多余属性检测</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">getFullName</span>(&#123;</span><br><span class="line">  <span class="attr">firstName</span>: <span class="string">&#x27;tan&#x27;</span>,</span><br><span class="line">  <span class="attr">lastName</span>: <span class="string">&#x27;ln&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">0</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>只读属性</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  car?: <span class="built_in">string</span>,             <span class="comment">// 可选</span></span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">type</span>: <span class="built_in">string</span>     <span class="comment">// 只读</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="数组接口"><a href="#数组接口" class="headerlink" title="数组接口"></a>数组接口</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">ArrInterface</span> &#123;</span><br><span class="line">  <span class="number">0</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="keyword">readonly</span> <span class="number">1</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">arr</span>: <span class="title class_">ArrInterface</span> = [<span class="number">0</span>, <span class="string">&#x27;0&#x27;</span>]</span><br><span class="line">arr[<span class="number">1</span>] = <span class="string">&#x27;&#x27;</span>       <span class="comment">// error</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="函数接口"><a href="#函数接口" class="headerlink" title="函数接口"></a>函数接口</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> addFun &#123;</span><br><span class="line">  (<span class="attr">n1</span>: <span class="built_in">number</span>, <span class="attr">n2</span>: <span class="built_in">number</span>): <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// ts 建议使用 type 类型别名</span></span><br><span class="line"><span class="comment">// type addFun = (n1: number, n2: number) =&gt; number</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="attr">add</span>: addFun = <span class="function">(<span class="params">n1, n2</span>) =&gt;</span> n1 + n2</span><br><span class="line"><span class="title function_">add</span>(<span class="number">10</span>, <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="可索引类型接口"><a href="#可索引类型接口" class="headerlink" title="可索引类型接口"></a>可索引类型接口</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">IdInterface</span> &#123;</span><br><span class="line">  [<span class="attr">id</span>: <span class="built_in">number</span>]: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">r1</span>: <span class="title class_">IdInterface</span> = &#123;</span><br><span class="line">  <span class="number">0</span>: <span class="string">&#x27;id_000&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>TypeScript</code> 支持两种索引签名：<strong>字符串和数字</strong> 可以同时使用两种类型的索引</p>
+</blockquote>
+<h2 id="接口继承"><a href="#接口继承" class="headerlink" title="接口继承"></a>接口继承</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> A <span class="keyword">extends</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="attr">car</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="attr">a</span>: A = &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="number">100</span>,</span><br><span class="line">  <span class="attr">car</span>: <span class="string">&#x27;AMG&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/ts/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> ts</a>
+              <a href="/tags/interface/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> interface</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/05/symbol/" rel="prev" title="symbol">
+      <i class="fa fa-chevron-left"></i> symbol
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.</span> <span class="nav-text">数组接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><span class="nav-number">2.</span> <span class="nav-text">函数接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.</span> <span class="nav-text">可索引类型接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E7%BB%A7%E6%89%BF"><span class="nav-number">4.</span> <span class="nav-text">接口继承</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">78</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tan-ln" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tan-ln" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/tan_ln@163.com" title="E-Mail → tan_ln@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>
