@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="resolve1234567891011&#x2F;&#x2F; resolve 配置 webpack 如何寻找模块所对应的文件resolve: &amp;#123;  &#x2F;&#x2F; 在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在  extensions: [],  &#x2F;&#x2F; 通过别名来把原导入路径映射成一个新的导入路径  alias: &amp;#123;    comonents: &amp;#x27;.&#x2F;src&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack-opt">
+<meta property="og:url" content="http://yoursite.com/2022/04/14/webpack-opt/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="resolve1234567891011&#x2F;&#x2F; resolve 配置 webpack 如何寻找模块所对应的文件resolve: &amp;#123;  &#x2F;&#x2F; 在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在  extensions: [],  &#x2F;&#x2F; 通过别名来把原导入路径映射成一个新的导入路径  alias: &amp;#123;    comonents: &amp;#x27;.&#x2F;src&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-14T13:42:08.000Z">
+<meta property="article:modified_time" content="2022-04-14T13:42:34.467Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="webpack">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/04/14/webpack-opt/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>webpack-opt | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">82</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">45</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/14/webpack-opt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          webpack-opt
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-14 21:42:08 / 修改时间：21:42:34" itemprop="dateCreated datePublished" datetime="2022-04-14T21:42:08+08:00">2022-04-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="resolve"><a href="#resolve" class="headerlink" title="resolve"></a>resolve</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// resolve 配置 webpack 如何寻找模块所对应的文件</span></span><br><span class="line"><span class="attr">resolve</span>: &#123;</span><br><span class="line">  <span class="comment">// 在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在</span></span><br><span class="line">  <span class="attr">extensions</span>: [],</span><br><span class="line">  <span class="comment">// 通过别名来把原导入路径映射成一个新的导入路径</span></span><br><span class="line">  <span class="attr">alias</span>: &#123;</span><br><span class="line">    <span class="attr">comonents</span>: <span class="string">&#x27;./src/components/&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// modules 配置 Webpack 去哪些目录下寻找第三方模块，默认是只会去  node_modules  目录下寻找</span></span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;./src/components&#x27;</span>,<span class="string">&#x27;node_modules&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="modules"><a href="#modules" class="headerlink" title="modules"></a>modules</h3><p>有时项目当中会有一些模块被大量 被其他模块依赖和导入，由于其他模块的位置分布不定，针对不同的文件都要去计算被导入文件的相对路径，<br>这个路径有时候会很长，如：<code>import Button from &#39;../../../components/button&#39;</code>，<br>这时可以通过 webpack 进行优化，假如那些被大量导入的模块都在 <code>./src/components/</code> 目录下，通过 webpack 配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">resolve</span>: &#123;</span><br><span class="line">  <span class="comment">// modules 配置 Webpack 去哪些目录下寻找第三方模块，默认是只会去  node_modules  目录下寻找</span></span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;./src/components&#x27;</span>,<span class="string">&#x27;node_modules&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>之后，可以简单的通过 <code>import &#39;button&#39;</code> 导入</p>
+<h3 id="mainFields"><a href="#mainFields" class="headerlink" title="mainFields"></a>mainFields</h3><blockquote>
+<p>此选项就是在 <code>package.json</code> 文件不存在或者 <code>package.json</code> 文件中的 <code>main</code> 字段没有返回一个有效路径，则按照顺序查找 <code>resolve.mainFields</code> 配置选项中指定的文件名，看是否能在 <code>import/require</code> 目录下匹配到一个存在的文件名。</p>
+</blockquote>
+<p>有一些第三方模块会针对不同环境提供几分代码。 例如分别提供采用 ES5 和 ES6 的2份代码，这2份代码的位置写在  package.json  文件里，如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;jsnext:main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;es/index.js&quot;</span><span class="punctuation">,</span><span class="comment">// 采用 ES6 语法的代码入口文件</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lib/index.js&quot;</span> <span class="comment">// 采用 ES5 语法的代码入口文件</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>Webpack 会根据  mainFields  的配置去决定优先采用那份代码， mainFields  默认如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mainFields</span>: [<span class="string">&#x27;browser&#x27;</span>, <span class="string">&#x27;main&#x27;</span>]</span><br></pre></td></tr></table></figure>
+<p>Webpack 会按照数组里的顺序去 package.json  文件里寻找，只会使用找到的第一个。</p>
+<p>假如你想优先采用 ES6 的那份代码，可以这样配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">mainFields</span>: [<span class="string">&#x27;jsnext:main&#x27;</span>, <span class="string">&#x27;browser&#x27;</span>, <span class="string">&#x27;main&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<h2 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h2><ul>
+<li><code>clean-webpack-plugin</code> 清理指定文件(夹)</li>
+<li><code>html-webpack-plugin</code> 指定编译模板 .html 文件，此后基于这个文件来编译</li>
+</ul>
+<h2 id="devServer"><a href="#devServer" class="headerlink" title="devServer"></a>devServer</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">devServer</span>: &#123;</span><br><span class="line">  <span class="comment">// 本地开发服务 基于 dist 目录 运行</span></span><br><span class="line">  <span class="comment">/*</span></span><br><span class="line"><span class="comment">      webpack5 已废弃</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="attr">contentBase</span>: <span class="string">&#x27;./dist&#x27;</span>,</span><br><span class="line">  <span class="attr">static</span>: &#123;</span><br><span class="line">    <span class="attr">directory</span>: path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;public&#x27;</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// ,     // 服务启动后的打印信息</span></span><br><span class="line">  <span class="attr">compress</span>: <span class="literal">false</span>,          <span class="comment">// 不启用压缩</span></span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">  <span class="attr">port</span>: <span class="number">5000</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 已更改的配置项 1. devServer.stats : </span></span><br><span class="line"><span class="attr">devServer</span>: &#123;</span><br><span class="line">  <span class="attr">stats</span>: <span class="string">&#x27;errors-only&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 新</span></span><br><span class="line"><span class="comment">// 在根配置</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">stats</span>: <span class="string">&#x27;errors-only&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 已更改的配置项 2. contentBase : </span></span><br><span class="line"><span class="attr">contentBase</span>: <span class="string">&#x27;./dist&#x27;</span>,</span><br><span class="line"><span class="comment">// 新配置</span></span><br><span class="line"><span class="attr">static</span>: &#123;</span><br><span class="line">  <span class="attr">directory</span>: path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;dist&#x27;</span>),</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line"><span class="attr">static</span>: <span class="string">&#x27;./dist&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="问题-1-热更新失效"><a href="#问题-1-热更新失效" class="headerlink" title="问题 1. 热更新失效"></a>问题 1. 热更新失效</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// webpack.config.js</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line"> <span class="comment">// target: process.env.NODE_ENV === &#x27;development&#x27; ? &#x27;web&#x27; : &#x27;browserslist&#x27;,</span></span><br><span class="line">  <span class="attr">target</span>: <span class="string">&#x27;web&#x27;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// package.json</span></span><br><span class="line">  <span class="string">&quot;browserslist&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;development&quot;</span>: [</span><br><span class="line">      <span class="string">&quot;last 1 chrome version&quot;</span>,</span><br><span class="line">      <span class="string">&quot;last 1 firfox version&quot;</span>,</span><br><span class="line">      <span class="string">&quot;last 1 safary version&quot;</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;production&quot;</span>: [</span><br><span class="line">      <span class="string">&quot;&gt;0.2%&quot;</span>,</span><br><span class="line">      <span class="string">&quot;not dead&quot;</span>,</span><br><span class="line">      <span class="string">&quot;not op_mini all&quot;</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>自动编译，HMR 启动，页面依旧不更新</p>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/webpack/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> webpack</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/08/es6-class2/" rel="prev" title="es6-class2">
+      <i class="fa fa-chevron-left"></i> es6-class2
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/25/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-1/" rel="next" title="Typescript-高级类型-1">
+      Typescript-高级类型-1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#resolve"><span class="nav-number">1.</span> <span class="nav-text">resolve</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#modules"><span class="nav-number">1.1.</span> <span class="nav-text">modules</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mainFields"><span class="nav-number">1.2.</span> <span class="nav-text">mainFields</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugins"><span class="nav-number">2.</span> <span class="nav-text">plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#devServer"><span class="nav-number">3.</span> <span class="nav-text">devServer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98-1-%E7%83%AD%E6%9B%B4%E6%96%B0%E5%A4%B1%E6%95%88"><span class="nav-number">4.</span> <span class="nav-text">问题 1. 热更新失效</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tan-ln" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tan-ln" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/tan_ln@163.com" title="E-Mail → tan_ln@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>
