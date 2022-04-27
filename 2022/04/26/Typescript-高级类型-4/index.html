@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="unknown 类型ts 3.0 顶级类型  任何类型都可以赋值给 unknown 如果没有 类型断言 或 基于控制流的类型细化时， unknown 只能赋值给 unknown | any，不能赋值给其他类型 如果没有 类型断言 或 基于控制流的类型细化时， 不能在它上面进行任何操作 unknown 与其他类型组成的交叉类型，最后都等于其他类型 unknown 与其他类型（除 any）组成的联合类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typescript 高级类型 4">
+<meta property="og:url" content="http://yoursite.com/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-4/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="unknown 类型ts 3.0 顶级类型  任何类型都可以赋值给 unknown 如果没有 类型断言 或 基于控制流的类型细化时， unknown 只能赋值给 unknown | any，不能赋值给其他类型 如果没有 类型断言 或 基于控制流的类型细化时， 不能在它上面进行任何操作 unknown 与其他类型组成的交叉类型，最后都等于其他类型 unknown 与其他类型（除 any）组成的联合类">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-04-26T09:20:45.000Z">
+<meta property="article:modified_time" content="2022-04-26T09:22:06.461Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="typescript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Typescript 高级类型 4 | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">86</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">49</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Typescript 高级类型 4
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-26 17:20:45 / 修改时间：17:22:06" itemprop="dateCreated datePublished" datetime="2022-04-26T17:20:45+08:00">2022-04-26</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="unknown-类型"><a href="#unknown-类型" class="headerlink" title="unknown 类型"></a>unknown 类型</h2><p>ts 3.0 顶级类型</p>
+<ol>
+<li>任何类型都可以赋值给 <code>unknown</code></li>
+<li>如果没有 <em>类型断言</em> 或 <em>基于控制流的类型细化时</em>，<br> <code>unknown</code> 只能赋值给 <code>unknown | any</code>，不能赋值给其他类型</li>
+<li>如果没有 <em>类型断言</em> 或 <em>基于控制流的类型细化时</em>，<br> 不能在它上面进行任何操作</li>
+<li><code>unknown</code> 与其他类型组成的<em>交叉类型</em>，最后都等于<em>其他类型</em></li>
+<li><code>unknown</code> 与其他类型（除 any）组成的联合类型，都等于 <code>unknown</code> 类型</li>
+<li><code>never</code> 类型是 <code>unknown</code> 的子类型</li>
+<li><code>keyof</code> <code>unknown</code> 等于类型 <code>never</code></li>
+<li>只能对 <code>unknown</code> 进行 等或不等操作，不能进行其他操作</li>
+<li><code>unknown</code> 类型的值不能访问其属性、不能作为函数调用和作为类创建实例</li>
+<li>使用 <em>映射类型</em> 时，如果遍历的是 <code>unknown</code> 类型，则不会映射任何属性 </li>
+</ol>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. </span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">value1</span>: <span class="built_in">unknown</span></span><br><span class="line">value1 = <span class="number">100</span></span><br><span class="line">value1 = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">value1 = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. </span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">value2</span>: <span class="built_in">unknown</span></span><br><span class="line"><span class="comment">// let value3: string = value2    // error 不能将类型“unknown”分配给类型“string”</span></span><br><span class="line">value2 = value1                   <span class="comment">// ok</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. </span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">value4</span>: <span class="built_in">unknown</span></span><br><span class="line"><span class="comment">// value4 += 1                    // error 不能操作（自加）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. </span></span><br><span class="line"><span class="keyword">type</span> type1 = <span class="built_in">string</span> &amp; <span class="built_in">unknown</span>       <span class="comment">// string</span></span><br><span class="line"><span class="keyword">type</span> type2 = <span class="built_in">number</span> &amp; <span class="built_in">unknown</span>       <span class="comment">// number</span></span><br><span class="line"><span class="keyword">type</span> type3 = <span class="built_in">unknown</span> &amp; <span class="built_in">unknown</span>      <span class="comment">// unknown</span></span><br><span class="line"><span class="keyword">type</span> type4 = <span class="built_in">unknown</span> &amp; <span class="built_in">string</span>[]     <span class="comment">// string[]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. </span></span><br><span class="line"><span class="keyword">type</span> type5 = <span class="built_in">string</span> | <span class="built_in">unknown</span>       <span class="comment">// unknown</span></span><br><span class="line"><span class="keyword">type</span> type6 = <span class="built_in">any</span> | <span class="built_in">unknown</span>          <span class="comment">// any</span></span><br><span class="line"><span class="keyword">type</span> type7 = <span class="built_in">number</span>[] | <span class="built_in">unknown</span>     <span class="comment">// any</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. </span></span><br><span class="line"><span class="comment">// 条件类型：如三元运算符</span></span><br><span class="line"><span class="keyword">type</span> type8 = <span class="built_in">never</span> <span class="keyword">extends</span> <span class="built_in">unknown</span> ? <span class="literal">true</span> : <span class="literal">false</span>     <span class="comment">// any</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 7.</span></span><br><span class="line"><span class="keyword">type</span> type9 = keyof <span class="built_in">unknown</span>          <span class="comment">// never</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 8.</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(value1 !== value2);     <span class="comment">// false</span></span><br><span class="line"><span class="comment">// value1 =+ value2                 // error</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 9.</span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">value5</span>: <span class="built_in">unknown</span></span><br><span class="line"><span class="comment">// value5.age                       // error</span></span><br><span class="line"><span class="comment">// value()                          // error</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 10.</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TType</span>&lt;T&gt; = &#123;</span><br><span class="line">  [P <span class="keyword">in</span> keyof T]: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> type10 = <span class="title class_">TType</span>&lt;<span class="built_in">any</span>&gt;            <span class="comment">//  [x: string]: number;</span></span><br><span class="line"><span class="keyword">type</span> type11 = <span class="title class_">TType</span>&lt;<span class="built_in">unknown</span>&gt;        <span class="comment">//  没有属性</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="条件类型"><a href="#条件类型" class="headerlink" title="条件类型"></a>条件类型</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="title class_">Types</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="built_in">string</span> ? <span class="built_in">string</span> : <span class="built_in">number</span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">index</span>: <span class="title class_">Types</span>&lt;<span class="string">&#x27;a&#x27;</span>&gt; = <span class="string">&#x27;123&#x27;</span>           <span class="comment">// let index: string</span></span><br><span class="line"><span class="comment">// let index2: Types&lt;&#x27;a&#x27;&gt; = 123         // error 不能将类型“number”分配给类型“string”</span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">index3</span>: <span class="title class_">Types</span>&lt;<span class="literal">false</span>&gt; = <span class="number">123</span>          <span class="comment">// let index3: number</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="分布式条件类型"><a href="#分布式条件类型" class="headerlink" title="分布式条件类型"></a>分布式条件类型</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 联合类型时，自动分化</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TypeName</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="built_in">any</span> ? T : <span class="built_in">never</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">AType</span> = <span class="title class_">TypeName</span>&lt;<span class="built_in">string</span> | <span class="built_in">number</span>&gt;    <span class="comment">// type AType = string | number</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TypeNames</span>&lt;T&gt; = </span><br><span class="line">  T <span class="keyword">extends</span> <span class="built_in">string</span> ? <span class="built_in">string</span> :</span><br><span class="line">  T <span class="keyword">extends</span> <span class="built_in">number</span> ? <span class="built_in">number</span> :</span><br><span class="line">  T <span class="keyword">extends</span> <span class="built_in">boolean</span> ? <span class="built_in">boolean</span> :</span><br><span class="line">  T <span class="keyword">extends</span> <span class="literal">undefined</span> ? <span class="literal">undefined</span> :</span><br><span class="line">  T <span class="keyword">extends</span> () =&gt; <span class="built_in">void</span> ? <span class="function">() =&gt;</span> <span class="built_in">void</span> :         <span class="comment">// T extends Function ? Function</span></span><br><span class="line">  <span class="title class_">Object</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">BType</span> = <span class="title class_">TypeNames</span>&lt;<span class="function">() =&gt;</span> <span class="built_in">void</span>&gt;      <span class="comment">// type BType = () =&gt; void</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">CType</span> = <span class="title class_">TypeNames</span>&lt;<span class="built_in">string</span>[]&gt;        <span class="comment">// type CType = Object</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">DType</span> = <span class="title class_">TypeNames</span>&lt;(<span class="function">() =&gt;</span> <span class="built_in">void</span>) | <span class="built_in">string</span>[]&gt;  <span class="comment">// type DType = Object | (() =&gt; void)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Diff</span>&lt;T, U&gt; = T <span class="keyword">extends</span> U ? <span class="built_in">never</span> : T</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TestType</span> = <span class="title class_">Diff</span>&lt;<span class="built_in">string</span> | <span class="built_in">number</span> | <span class="built_in">boolean</span>, <span class="literal">undefined</span> | <span class="built_in">number</span>&gt;   <span class="comment">// type TestType = string | boolean</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">EType</span>&lt;T&gt; = &#123;</span><br><span class="line">  <span class="comment">// value 为函数则返回 函数名 的 字符串字面量类型</span></span><br><span class="line">  [K <span class="keyword">in</span> keyof T]: T[K] <span class="keyword">extends</span> <span class="title class_">Function</span> ? K : <span class="built_in">never</span></span><br><span class="line">&#125;[keyof T]    <span class="comment">// 索引访问，获取不为 never 的属性</span></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Part</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">subParts</span>: <span class="title class_">Part</span>[],</span><br><span class="line">  <span class="title function_">undatePart</span>(<span class="attr">newName</span>: <span class="built_in">string</span>): <span class="built_in">void</span>,</span><br><span class="line">  <span class="title function_">undatePart2</span>(<span class="attr">newName</span>: <span class="built_in">string</span>): <span class="built_in">void</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Test</span> = <span class="title class_">EType</span>&lt;<span class="title class_">Part</span>&gt;     <span class="comment">// type Test = &quot;undatePart&quot; | &quot;undatePart2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="条件类型的类型推断-infer"><a href="#条件类型的类型推断-infer" class="headerlink" title="条件类型的类型推断 infer"></a>条件类型的类型推断 infer</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// T[number]: 索引访问，通过传入一个 number 类型的索引，获取到 其 值的类型</span></span><br><span class="line"><span class="comment">// 即 类型为数组，则返回数组成员的类型，不是数组则返回原类型</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">FType</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="built_in">any</span>[] ? T[<span class="built_in">number</span>] : T</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Test1</span> = <span class="title class_">FType</span>&lt;<span class="built_in">string</span>[]&gt;      <span class="comment">// 条件成立，返回 string[] =》[&#x27;a&#x27;, &#x27;aa&#x27;, &#x27;aaa&#x27;] 的值的类型 即 string</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Test2</span> = <span class="title class_">FType</span>&lt;<span class="built_in">string</span>&gt;        <span class="comment">// 条件不成立，返回 string</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 infer</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">GType</span>&lt;T&gt; = T <span class="keyword">extends</span> <span class="title class_">Array</span>&lt;infer U&gt; ? U : T</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Test3</span> = <span class="title class_">GType</span>&lt;<span class="built_in">string</span>[]&gt;      <span class="comment">// type Test3 = string</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">Test4</span> = <span class="title class_">GType</span>&lt;<span class="built_in">string</span>&gt;        <span class="comment">// type Test4 = string</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Exclude-lt-T-U-gt"><a href="#Exclude-lt-T-U-gt" class="headerlink" title="Exclude&lt;T, U&gt;"></a><code>Exclude&lt;T, U&gt;</code></h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 等同 上面定义的 Type Diff</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">HType</span> = <span class="title class_">Exclude</span>&lt;<span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;b&#x27;</span> | <span class="string">&#x27;c&#x27;</span> | <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;c&#x27;</span>&gt;      <span class="comment">// type HType = &quot;b&quot; | &quot;d&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Extract-lt-T-U-gt"><a href="#Extract-lt-T-U-gt" class="headerlink" title="Extract&lt;T, U&gt;"></a><code>Extract&lt;T, U&gt;</code></h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 选取 T 中可以赋值给 U 的类型</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">IType</span> = <span class="title class_">Extract</span>&lt;<span class="string">&#x27;a&#x27;</span> | <span class="string">&#x27;b&#x27;</span> | <span class="string">&#x27;c&#x27;</span> | <span class="string">&#x27;d&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&gt;           <span class="comment">// type IType = &quot;c&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="NonNullable-lt-T-gt"><a href="#NonNullable-lt-T-gt" class="headerlink" title="NonNullable&lt;T&gt;"></a><code>NonNullable&lt;T&gt;</code></h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// T 中取出 null &amp; undefined</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">JType</span> = <span class="title class_">NonNullable</span>&lt;<span class="built_in">string</span> | <span class="built_in">number</span> | <span class="literal">null</span> | <span class="literal">undefined</span>&gt;    <span class="comment">// type JType = string | number</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ReturnType-lt-T-gt"><a href="#ReturnType-lt-T-gt" class="headerlink" title="ReturnType&lt;T&gt;"></a><code>ReturnType&lt;T&gt;</code></h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取函数类型返回值类型</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">KType</span> = <span class="title class_">ReturnType</span>&lt;<span class="function">() =&gt;</span> <span class="built_in">string</span>&gt;     <span class="comment">// type KType = strings</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">LType</span> = <span class="title class_">ReturnType</span>&lt;<span class="function">() =&gt;</span> <span class="built_in">void</span>&gt;       <span class="comment">// type LType = void</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="InstanceType-lt-T-gt"><a href="#InstanceType-lt-T-gt" class="headerlink" title="InstanceType&lt;T&gt;"></a><code>InstanceType&lt;T&gt;</code></h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取构造函数的类型的实例类型</span></span><br><span class="line"><span class="comment">// type MType = InstanceType&lt;&gt;</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AClass</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span> () &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T1</span> = <span class="title class_">InstanceType</span>&lt;<span class="keyword">typeof</span> <span class="title class_">AClass</span>&gt;   <span class="comment">// type T1 = AClass</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T2</span> = <span class="title class_">InstanceType</span>&lt;<span class="built_in">any</span>&gt;             <span class="comment">// type T1 = any</span></span><br><span class="line"><span class="keyword">type</span> <span class="variable constant_">T3</span> = <span class="title class_">InstanceType</span>&lt;<span class="built_in">never</span>&gt;           <span class="comment">// type T1 = never</span></span><br><span class="line"><span class="comment">// type T4 = InstanceType&lt;string&gt;          // error string 不满足 new (...args: any) =&gt; any</span></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/typescript/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> typescript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-3/" rel="prev" title="Typescript 高级类型 3">
+      <i class="fa fa-chevron-left"></i> Typescript 高级类型 3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/04/27/%E6%A8%A1%E5%9D%97%E5%8C%96-1/" rel="next" title="模块化-1">
+      模块化-1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#unknown-%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">unknown 类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">条件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">分布式条件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%9E%8B%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD-infer"><span class="nav-number">4.</span> <span class="nav-text">条件类型的类型推断 infer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exclude-lt-T-U-gt"><span class="nav-number">5.</span> <span class="nav-text">Exclude&lt;T, U&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Extract-lt-T-U-gt"><span class="nav-number">6.</span> <span class="nav-text">Extract&lt;T, U&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NonNullable-lt-T-gt"><span class="nav-number">7.</span> <span class="nav-text">NonNullable&lt;T&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReturnType-lt-T-gt"><span class="nav-number">8.</span> <span class="nav-text">ReturnType&lt;T&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InstanceType-lt-T-gt"><span class="nav-number">9.</span> <span class="nav-text">InstanceType&lt;T&gt;</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">86</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tan-ln" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tan-ln" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/tan_ln@163.com" title="E-Mail → tan_ln@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>

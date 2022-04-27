@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">82</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">86</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">45</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">49</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,291 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/01/ques-1px/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/01/ques-1px/" class="post-title-link" itemprop="url">移动 Web 1像素 问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-03-01 21:06:37" itemprop="dateCreated datePublished" datetime="2019-03-01T21:06:37+08:00">2019-03-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-18 09:51:11" itemprop="dateModified" datetime="2022-03-18T09:51:11+08:00">2022-03-18</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>问题：一般在移动端，由于dpr（设备像素比）不为1，在PC端显示1像素的边框，在移动端其实显示为2px。<br>解决这个问题，主要思想是：<strong>使用伪元素设置1px的边框，然后使用 transform:scale，对边框进行缩放（scaleY）。</strong></p>
+</blockquote>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 上边框</span></span><br><span class="line"><span class="selector-pseudo">:before</span></span><br><span class="line">    <span class="attribute">content</span> &quot;&quot;</span><br><span class="line">    <span class="attribute">position</span> absolute</span><br><span class="line">    <span class="attribute">top</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">left</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">right</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">height</span> <span class="number">1px</span></span><br><span class="line">    <span class="attribute">border-top</span> <span class="number">1px</span> solid e5e5e5</span><br><span class="line">    <span class="attribute">color</span> <span class="selector-id">#e5e5e5</span></span><br><span class="line">    -webkit-<span class="attribute">transform-origin</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">transform-origin</span> <span class="number">0</span> <span class="number">0</span></span><br><span class="line">    -webkit-<span class="attribute">transform</span> <span class="built_in">scaleY</span>(<span class="number">0.5</span>)</span><br><span class="line">    <span class="attribute">transform</span> <span class="built_in">scaleY</span>(<span class="number">0.5</span>)</span><br><span class="line">    <span class="attribute">z-index</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下边框 注意 transform-origin</span></span><br><span class="line">&amp;<span class="selector-pseudo">:after</span></span><br><span class="line">    <span class="attribute">content</span> &quot;&quot;</span><br><span class="line">    <span class="attribute">position</span> absolute</span><br><span class="line">    <span class="attribute">bottom</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">left</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">right</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">height</span> <span class="number">1px</span></span><br><span class="line">    <span class="attribute">border-bottom</span> <span class="number">10px</span> solid <span class="selector-id">#e5e5e5</span></span><br><span class="line">    <span class="attribute">color</span> <span class="selector-id">#e5e5e5</span></span><br><span class="line">    -webkit-<span class="attribute">transform-origin</span> <span class="number">0</span> <span class="number">100%</span></span><br><span class="line">    <span class="attribute">transform-origin</span> <span class="number">0</span> <span class="number">100%</span></span><br><span class="line">    -webkit-<span class="attribute">transform</span> <span class="built_in">scaleY</span>(<span class="number">0.5</span>)</span><br><span class="line">    <span class="attribute">transform</span> <span class="built_in">scaleY</span>(<span class="number">0.5</span>)</span><br><span class="line">    <span class="attribute">z-index</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/13/git-%E6%8F%90%E4%BA%A4%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/13/git-%E6%8F%90%E4%BA%A4%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/" class="post-title-link" itemprop="url">git 提交免密登录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2018-06-13 22:32:27 / 修改时间：22:39:23" itemprop="dateCreated datePublished" datetime="2018-06-13T22:32:27+08:00">2018-06-13</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><p>首先你要有ssh公钥和秘钥</p>
+<h2 id="查看当前git项目的提交方式"><a href="#查看当前git项目的提交方式" class="headerlink" title="查看当前git项目的提交方式"></a>查看当前git项目的提交方式</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote -v</span><br></pre></td></tr></table></figure>
+<p>如果是 http 协议提交则会显示</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/13/git-%E6%8F%90%E4%BA%A4%E5%85%8D%E5%AF%86%E7%99%BB%E5%BD%95/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/06/BFC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/06/BFC/" class="post-title-link" itemprop="url">BFC</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2018-06-06 22:56:55 / 修改时间：22:57:36" itemprop="dateCreated datePublished" datetime="2018-06-06T22:56:55+08:00">2018-06-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="BFC-Block-Formatting-Context"><a href="#BFC-Block-Formatting-Context" class="headerlink" title="BFC (Block Formatting Context)"></a>BFC (Block Formatting Context)</h1><h2 id="块级格式上下文"><a href="#块级格式上下文" class="headerlink" title="块级格式上下文"></a>块级格式上下文</h2><blockquote>
+<p>两个相邻的BFC之间的距离由margin决定。<br>在同一个BFC内部，两个垂直方向相邻的块级元素的margin会发生“塌陷”，重叠为最大的margin</p>
+</blockquote>
+<h3 id="body根元素会创造一个-bfc-环境，其下所有元素具有相同的上下文环境"><a href="#body根元素会创造一个-bfc-环境，其下所有元素具有相同的上下文环境" class="headerlink" title="body根元素会创造一个 bfc 环境，其下所有元素具有相同的上下文环境"></a>body根元素会创造一个 bfc 环境，其下所有元素具有相同的上下文环境</h3><p>块 是页面的基础</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/06/BFC/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/06/wepy-component/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/06/wepy-component/" class="post-title-link" itemprop="url">wepy-component</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2018-06-06 22:50:08 / 修改时间：22:55:48" itemprop="dateCreated datePublished" datetime="2018-06-06T22:50:08+08:00">2018-06-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="wepy-组件化开发-1"><a href="#wepy-组件化开发-1" class="headerlink" title="wepy 组件化开发 1"></a>wepy 组件化开发 1</h1><h2 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h2><ul>
+<li>组件可以将一组功能封装一个 component 里，并且可以在页面上以自定义标签的形式引入<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 列表 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">discover</span>&gt;</span><span class="tag">&lt;/<span class="name">discover</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 底部加载更多提示 --&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">bottomLoadMore</span> <span class="attr">:message</span>=<span class="string">&#x27;mes&#x27;</span> <span class="attr">:show.sync</span>=<span class="string">&#x27;showLoading&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">bottomLoadMore</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 组件暂无数据的提示 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">placeholder</span>&gt;</span><span class="tag">&lt;/<span class="name">placeholder</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 弹出广告 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bombscreen</span>&gt;</span><span class="tag">&lt;/<span class="name">bombscreen</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>引入组件<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Bomnbscreen</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/bomb_screen&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Placeholder</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/placeholder&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">BottomLoadMore</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/bottom_load_more&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Discover</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/discover&#x27;</span></span><br></pre></td></tr></table></figure></li>
+<li>在 components 声明页面地组件构成<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">components = &#123;</span><br><span class="line">    <span class="comment">// 标签名: 组件名</span></span><br><span class="line">    <span class="attr">bombscreen</span>: <span class="title class_">Bomnbscreen</span>,</span><br><span class="line">    <span class="attr">placeholder</span>: <span class="title class_">Placeholder</span>,</span><br><span class="line">    <span class="attr">bottomLoadMore</span>: <span class="title class_">BottomLoadMore</span>,</span><br><span class="line">    <span class="attr">discover</span>: <span class="title class_">Discover</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>组件标签可以携带参数<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bottomLoadMore</span> <span class="attr">:message</span>=<span class="string">&#x27;mes&#x27;</span> <span class="attr">:show.sync</span>=<span class="string">&#x27;showLoading&#x27;</span>&gt;</span><span class="tag">&lt;/<span class="name">bottomLoadMore</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>message=&quot;load more ...&quot;</code> 传参<br><code>:message=&#39;mes&#39;</code> 则是把参数防止在 data 中</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;</span><br><span class="line">    <span class="attr">showLoading</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">mes</span>: <span class="string">&#x27;loading more&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>组件数据props动态更新</strong><br>使用 <code>.sync</code> =&gt; <bottomloadmore :message="mes" :show.sync="showLoading"></bottomloadmore></p>
+<ul>
+<li>在组件文件内 props 接收传递的数据<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">props = &#123;</span><br><span class="line">    <span class="attr">show</span>: &#123;</span><br><span class="line">        <span class="attr">type</span>: <span class="title class_">Boolean</span>,</span><br><span class="line">        <span class="attr">default</span>: <span class="literal">true</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">message</span>: &#123;</span><br><span class="line">        <span class="attr">default</span>: <span class="string">&#x27;正在加载中&#x27;</span>,</span><br><span class="line">        <span class="attr">type</span>: <span class="title class_">String</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+组件内接收<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">&quot;loadMoreGIF&quot;</span> <span class="attr">wx:if</span>=<span class="string">&quot;&#123;&#123;show&#125;&#125;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">image</span> <span class="attr">src</span>=<span class="string">&quot;../images/loadding.gif&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">image</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">text</span>&gt;</span>&#123;&#123;message&#125;&#125;<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/06/wepy-component/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -604,14 +889,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">82</span>
+        <span class="site-state-item-count">86</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
