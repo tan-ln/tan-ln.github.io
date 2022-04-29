@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">86</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">88</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">49</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">50</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,77 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/24/%E6%95%B0%E7%BB%84%E6%89%93%E5%B9%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/24/%E6%95%B0%E7%BB%84%E6%89%93%E5%B9%B3/" class="post-title-link" itemprop="url">数组打平</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-24 16:49:05 / 修改时间：17:25:27" itemprop="dateCreated datePublished" datetime="2022-03-24T16:49:05+08:00">2022-03-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>], <span class="number">3</span>, [[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">4</span>], <span class="number">5</span>]</span><br><span class="line"><span class="keyword">const</span> foo = <span class="keyword">function</span> (<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">total, curVal</span>) =&gt;</span> &#123;</span><br><span class="line">    total = total.<span class="title function_">concat</span>(curVal <span class="keyword">instanceof</span> <span class="title class_">Array</span> ? <span class="title function_">foo</span>(curVal) : curVal)</span><br><span class="line">  &#125;, [])</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">foo</span>(arr))</span><br></pre></td></tr></table></figure>
+
+<h2 id="flat"><a href="#flat" class="headerlink" title="flat"></a>flat</h2><blockquote>
+<p>flat ES6 新增的数组拍平方法</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, [<span class="number">1</span>, <span class="number">2</span>], <span class="number">3</span>, [[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="number">4</span>], <span class="number">5</span>]</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr.<span class="title function_">flat</span>(<span class="title class_">Infinity</span>))</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/24/%E6%95%B0%E7%BB%84%E6%89%93%E5%B9%B3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -868,76 +939,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/18/es6-assign()/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/18/es6-assign()/" class="post-title-link" itemprop="url">Object.assign()</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-18 09:39:59 / 修改时间：09:37:47" itemprop="dateCreated datePublished" datetime="2022-03-18T09:39:59+08:00">2022-03-18</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Object</span>.<span class="title function_">assign</span>(target, ...sources)</span><br></pre></td></tr></table></figure>
-<h2 id="Object-assign-方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。"><a href="#Object-assign-方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。" class="headerlink" title="Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。"></a><code>Object.assign()</code> 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。</h2><blockquote>
-<p>拷贝一份 assign 用于(指向)生成新对象.可以用来合并对象</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o1 = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> o2 = &#123; <span class="attr">b</span>: <span class="number">2</span> &#125;;</span><br><span class="line"><span class="keyword">var</span> o3 = &#123; <span class="attr">c</span>: <span class="number">3</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = <span class="title class_">Object</span>.<span class="title function_">assign</span>(o1, o2, o3);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj); <span class="comment">// &#123; a: 1, b: 2, c: 3 &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(o1);  <span class="comment">// &#123; a: 1, b: 2, c: 3 &#125;, 注意目标对象自身也会改变。</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/18/es6-assign()/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1009,14 +1010,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">86</span>
+        <span class="site-state-item-count">88</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
