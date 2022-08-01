@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">88</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">92</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">50</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">51</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,83 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/07/es6-class/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/07/es6-class/" class="post-title-link" itemprop="url">es6-class</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-04-07 21:51:42" itemprop="dateCreated datePublished" datetime="2022-04-07T21:51:42+08:00">2022-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-04-08 17:25:03" itemprop="dateModified" datetime="2022-04-08T17:25:03+08:00">2022-04-08</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>ES6 Class 语法糖，任然是通过 构造函数 创建实例的</p>
+</blockquote>
+<h2 id="ES5-创建一个类"><a href="#ES5-创建一个类" class="headerlink" title="ES5 创建一个类"></a>ES5 创建一个类</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES5 构造函数创建</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Point</span> (x, y) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">x</span> = x</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">y</span> = y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Point</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getPosition</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;(&#x27;</span> + <span class="variable language_">this</span>.<span class="property">x</span> + <span class="string">&#x27;, &#x27;</span> + <span class="variable language_">this</span>.<span class="property">y</span> + <span class="string">&#x27;)&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="title class_">Point</span>(<span class="number">10</span>, <span class="number">20</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1)                       <span class="comment">// Point &#123; x: 10, y: 20 &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="title function_">getPosition</span>())         <span class="comment">// (10, 20)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="ES6-Class"><a href="#ES6-Class" class="headerlink" title="ES6 Class"></a>ES6 Class</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ES6 class 定义 类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">  z = <span class="number">0</span>   <span class="comment">// 可以直接声明构造函数属性，</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 构造函数 不写为空 constructor() &#123;&#125;</span></span><br><span class="line">  <span class="title function_">constructor</span> (x, y, z) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">x</span> = x</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">y</span> = y</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">z</span> = z</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当自定义返回值，则 对象 p1 不再是 构造函数的实例</span></span><br><span class="line">    <span class="comment">// return &#123; a: &#x27;a&#x27; &#125;</span></span><br><span class="line">  &#125;</span><br><span class="line">  getPosition () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">`(<span class="subst">$&#123;<span class="variable language_">this</span>.x&#125;</span>, <span class="subst">$&#123;<span class="variable language_">this</span>.y&#125;</span>)`</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 静态方法</span></span><br><span class="line">  <span class="keyword">static</span> getClassName () &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title class_">Point</span>.<span class="property">name</span>                 <span class="comment">// 每一个 class 都有一个 name 属性，如同 每个函数都有 name</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p1 = <span class="keyword">new</span> <span class="title class_">Point</span>(<span class="number">1</span>, <span class="number">2</span>， <span class="number">3</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1)         <span class="comment">// Point &#123; z: 3, x: 1, y: 2 &#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="title function_">getPosition</span>())         <span class="comment">// (1, 2)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(p1 instanceof Point)         // false</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;x&#x27;</span>))                             <span class="comment">// true 构造函数上</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;getPosition&#x27;</span>))                   <span class="comment">// false</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(p1.<span class="property">__proto__</span>.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;getPosition&#x27;</span>))         <span class="comment">// true 实际 在 原型上</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// console.log(p1.getClassName())            // p1.getClassName is not a function 实例无法访问静态属性</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Point</span>.<span class="title function_">getClassName</span>())         <span class="comment">// Point class 本身才可以访问</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/07/es6-class/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -842,86 +919,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/25/call-apply-bind/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/25/call-apply-bind/" class="post-title-link" itemprop="url">call && apply && bind</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-25 14:24:21" itemprop="dateCreated datePublished" datetime="2022-03-25T14:24:21+08:00">2022-03-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-03-27 23:10:28" itemprop="dateModified" datetime="2022-03-27T23:10:28+08:00">2022-03-27</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="call"><a href="#call" class="headerlink" title="call"></a>call</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  call 能让一个对象使用另一个对象上的方法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> person = &#123;</span><br><span class="line">  <span class="attr">show</span>: <span class="keyword">function</span> (<span class="params">age</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&#x27;, age: &#x27;</span> + age)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span>: <span class="string">&#x27;tan&#x27;</span> &#125;</span><br><span class="line"></span><br><span class="line">person.<span class="property">show</span>.<span class="title function_">call</span>(obj, <span class="number">200</span>)</span><br><span class="line"></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_call</span> = <span class="keyword">function</span> (<span class="params">ctx</span>) &#123;</span><br><span class="line">  <span class="comment">// ctx 为 undefined || null</span></span><br><span class="line">  ctx = ctx || <span class="title class_">Window</span></span><br><span class="line">  <span class="comment">// 调用的方法 like show</span></span><br><span class="line">  ctx.<span class="property">fn</span> = <span class="variable language_">this</span></span><br><span class="line">  <span class="keyword">const</span> _args = [...<span class="variable language_">arguments</span>].<span class="title function_">slice</span>(<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">const</span> res = ctx.<span class="title function_">fn</span>(..._args)</span><br><span class="line">  <span class="keyword">delete</span> ctx.<span class="property">fn</span></span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">person.<span class="property">show</span>.<span class="title function_">_call</span>(obj, <span class="number">500</span>)       <span class="comment">// tan, age: 500</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  apply 能让一个对象使用另一个对象上的方法</span></span><br><span class="line"><span class="comment"> *        与 call 的区别在于传参</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"> <span class="keyword">const</span> person = &#123;</span><br><span class="line">  <span class="attr">show</span>: <span class="keyword">function</span> (<span class="params">age, weapon</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span> + <span class="string">&#x27;, age: &#x27;</span> + age + <span class="string">&#x27;, weapon: &#x27;</span> + weapon)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123; <span class="attr">name</span>: <span class="string">&#x27;tan&#x27;</span> &#125;</span><br><span class="line"></span><br><span class="line">person.<span class="property">show</span>.<span class="title function_">apply</span>(obj, [<span class="number">200</span>])</span><br><span class="line"></span><br><span class="line"><span class="title class_">Function</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_apply</span> = <span class="keyword">function</span> (<span class="params">ctx</span>) &#123;</span><br><span class="line">  <span class="comment">// ctx 为 undefined || null</span></span><br><span class="line">  ctx = ctx || <span class="title class_">Window</span></span><br><span class="line">  <span class="comment">// 调用的方法 like show</span></span><br><span class="line">  ctx.<span class="property">fn</span> = <span class="variable language_">this</span></span><br><span class="line">  <span class="keyword">const</span> _args = <span class="variable language_">arguments</span>[<span class="number">1</span>] || []</span><br><span class="line">  <span class="keyword">const</span> res = ctx.<span class="title function_">fn</span>(..._args)</span><br><span class="line">  <span class="comment">// 防止 ctx 属性越来越多</span></span><br><span class="line">  <span class="keyword">delete</span> ctx.<span class="property">fn</span></span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">person.<span class="property">show</span>.<span class="title function_">_apply</span>(obj, [<span class="number">500</span>, <span class="string">&#x27;AK&#x27;</span>])       <span class="comment">// tan, age: 500, weapon: AK</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="bind"><a href="#bind" class="headerlink" title="bind"></a>bind</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/25/call-apply-bind/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -989,14 +990,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">92</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
