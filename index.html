@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">92</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">108</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">59</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,541 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/12/18/shadow-dom/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/12/18/shadow-dom/" class="post-title-link" itemprop="url">shadow-dom</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-12-18 16:12:39 / 修改时间：16:13:25" itemprop="dateCreated datePublished" datetime="2022-12-18T16:12:39+08:00">2022-12-18</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Shadow-Dom"><a href="#Shadow-Dom" class="headerlink" title="Shadow Dom"></a>Shadow Dom</h1><blockquote>
+<h3 id="什么是-Shadow-Dom"><a href="#什么是-Shadow-Dom" class="headerlink" title="什么是 Shadow Dom"></a>什么是 Shadow Dom</h3></blockquote>
+<p>​    Shadow Dom：影子 Dom，可以理解为潜藏在背后的 DOM 结构，也就是我们无法直接控制操做的 DOM 结构。</p>
+<p><img src="./assets//shadowdom/shadow-root.png" alt="Shadow Dom Open"></p>
+<p>图中的 <code>#shadow-root</code> 中包含的内容其实就是 <code>Shadow-Dom</code></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/18/shadow-dom/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/09/01/pdf%E8%BD%AC%E5%9B%BE%E7%89%87base64%E4%B8%8A%E4%BC%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/09/01/pdf%E8%BD%AC%E5%9B%BE%E7%89%87base64%E4%B8%8A%E4%BC%A0/" class="post-title-link" itemprop="url">pdf转图片base64上传</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-01 22:58:13 / 修改时间：23:20:48" itemprop="dateCreated datePublished" datetime="2022-09-01T22:58:13+08:00">2022-09-01</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>需求：PDF 转图片 -&gt; base64 格式 -&gt; 上传图片</p>
+</blockquote>
+<h2 id="PDF-转-base64-图片"><a href="#PDF-转-base64-图片" class="headerlink" title="PDF 转 base64 图片"></a>PDF 转 base64 图片</h2><p>参考：<a target="_blank" rel="noopener" href="https://github.com/mozilla/pdf.js/issues/10316">Using pdf.js in React</a></p>
+<ul>
+<li><p>安装 <code>pdfjs-dist</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pdf-dist@2.0.943 --save</span><br></pre></td></tr></table></figure></li>
+<li><p>项目当中引入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="variable constant_">PDFJS</span> <span class="keyword">from</span> <span class="string">&#x27;pdfjs-dist&#x27;</span></span><br><span class="line"><span class="keyword">import</span> pdfjsWorker <span class="keyword">from</span> <span class="string">&#x27;pdfjs-dist/build/pdf.worker.entry&#x27;</span></span><br><span class="line"><span class="comment">// 解析需要</span></span><br><span class="line"><span class="variable constant_">PDFJS</span>.<span class="property">GlobalWorkerOptions</span>.<span class="property">workerSrc</span> = pdfjsWorker</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>项目使用了 Antd 的 Upload 组件，</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/01/pdf%E8%BD%AC%E5%9B%BE%E7%89%87base64%E4%B8%8A%E4%BC%A0/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/28/ES6-%E7%9B%B8%E7%AD%89%E6%80%A7%E5%88%A4%E6%96%AD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/28/ES6-%E7%9B%B8%E7%AD%89%E6%80%A7%E5%88%A4%E6%96%AD/" class="post-title-link" itemprop="url">ES6-相等性判断</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-28 21:25:03" itemprop="dateCreated datePublished" datetime="2022-08-28T21:25:03+08:00">2022-08-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/28/CSS-Houdini/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/28/CSS-Houdini/" class="post-title-link" itemprop="url">CSS Houdini</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-28 21:21:17 / 修改时间：21:21:42" itemprop="dateCreated datePublished" datetime="2022-08-28T21:21:17+08:00">2022-08-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lunahaijiao/article/details/124995781">https://blog.csdn.net/lunahaijiao/article/details/124995781</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/28/fetch-XMLHttpRequest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/28/fetch-XMLHttpRequest/" class="post-title-link" itemprop="url">fetch && XMLHttpRequest</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-28 21:06:07 / 修改时间：21:10:12" itemprop="dateCreated datePublished" datetime="2022-08-28T21:06:07+08:00">2022-08-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43183219/article/details/124689706">https://blog.csdn.net/weixin_43183219/article/details/124689706</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/335786718">https://www.zhihu.com/question/335786718</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/28/es6-promise/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/28/es6-promise/" class="post-title-link" itemprop="url">es6-promise</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-28 20:19:57 / 修改时间：20:28:35" itemprop="dateCreated datePublished" datetime="2022-08-28T20:19:57+08:00">2022-08-28</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="ES6-Promise"><a href="#ES6-Promise" class="headerlink" title="ES6-Promise"></a>ES6-Promise</h1><blockquote>
+<p><code>Promise</code> 是异步编程的一种解决方案，比传统的解决方案回调函数和事件更合理和更强大</p>
+</blockquote>
+<p>有了 <code>Promise</code> 对象，就可以将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数。</p>
+<p>一个 <code>Promise</code> 的当前状态必须为以下三种状态中的一种：等待态（<code>Pending</code>）、执行态（<code>Fulfilled</code>）和拒绝态（<code>Rejected</code>），状态的改变只能是单向的，且变化后不可在改变。</p>
+<p>一个 <code>Promise</code> 必须提供一个 then 方法以访问其当前值、终值和据因。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/28/es6-promise/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/14/polyfill-%E5%92%8C-shim/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/14/polyfill-%E5%92%8C-shim/" class="post-title-link" itemprop="url">polyfill 和 shim</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-14 18:25:15" itemprop="dateCreated datePublished" datetime="2022-08-14T18:25:15+08:00">2022-08-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/08/14/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8-handsontable-%E5%90%8E-promise-finally-%E5%A4%B1%E6%95%88%E8%BF%99%E4%BB%B6%E4%BA%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/08/14/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8-handsontable-%E5%90%8E-promise-finally-%E5%A4%B1%E6%95%88%E8%BF%99%E4%BB%B6%E4%BA%8B/" class="post-title-link" itemprop="url">关于使用 handsontable 后 promise.finally 失效这件事</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-08-14 18:08:48 / 修改时间：19:28:16" itemprop="dateCreated datePublished" datetime="2022-08-14T18:08:48+08:00">2022-08-14</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><ol>
+<li>旧项目使用了 handsontable 出现样式问题，试图解决问题并给 handsontable 小版本升级一下(4、5年前的项目)</li>
+<li>升级过程中出现新问题，原有的 <code>promise.finally polyfill</code> 在某些页面不起作用，正常保存 <code>promise...then().finally is not a function</code></li>
+</ol>
+<h2 id="定位过程"><a href="#定位过程" class="headerlink" title="定位过程"></a>定位过程</h2><ol>
+<li>首先目的是小版本升级一下 handsontable，并在此过程中解决样式问题，原先版本为 0.31.2, 4 年前发布，考虑升级至最小且有官方文档的 4.0.0 版本</li>
+<li>升级前没有 <code>promise.finally is not a function</code> 问题</li>
+<li>查看项目代码，发现有配置 <code>babel-polyfill</code> 且在 <code>main.js</code> 有实现 <code>promise.finally()</code> 方法的 <code>polyfill</code></li>
+<li>考虑可能是 polyfill 方法功能不足，使用 <code>promise.prototype.finally</code> 库代替，并正确引入项目，在出现 <code>is not a function</code> 的页面引入( <code>require(&#39;promise.prototype.finally&#39;).shim()</code> )</li>
+<li>此时项目运行正常，但不久后出现新的问题：其他部分页面在刷新后仍有相同报错，依次引入可解决，但不可取</li>
+<li>与此同时，提交后发布到测试环境时，出现问题，项目启动后报错 <code>cannot find module es-abstract...</code>，无法打开项目，但本地环境正常</li>
+<li>经排查发现 <code>webpack</code> 和 <code>promise.prototype.finally</code> 都有引用到 es-abstract，猜测版本不兼容，降低版本后，项目正常启动</li>
+<li>令外，项目的发版已配置环境自动安装依赖，且环境与管理工具为 node8 和 yarn，而本地环境为 node10，所以本地环境正常，测试环境报错</li>
+<li>同步环境后，问题尚未解决，消失已久的 <code>promise.finally is not a function</code> 再次出现</li>
+<li>总结可能导致出现问题的点        </li>
+</ol>
+<ul>
+<li>axios：<br>  项目使用 axios 处理网络请求，并增加拦截器；发现手动 new 的 promise 实例上有 polyfill 后的 finally 方法，而 <code>this.$http.get</code> 返回的 promise 对象上没有</li>
+<li>新版本的 handsontable 增加了与 promise 相关的处理</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/08/14/%E5%85%B3%E4%BA%8E%E4%BD%BF%E7%94%A8-handsontable-%E5%90%8E-promise-finally-%E5%A4%B1%E6%95%88%E8%BF%99%E4%BB%B6%E4%BA%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -304,581 +839,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/27/%E6%A8%A1%E5%9D%97%E5%8C%96-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/27/%E6%A8%A1%E5%9D%97%E5%8C%96-1/" class="post-title-link" itemprop="url">模块化-1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-27 11:21:14 / 修改时间：11:31:39" itemprop="dateCreated datePublished" datetime="2022-04-27T11:21:14+08:00">2022-04-27</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="ES6-模块化"><a href="#ES6-模块化" class="headerlink" title="ES6 模块化"></a>ES6 模块化</h2><h3 id="export"><a href="#export" class="headerlink" title="export"></a>export</h3><p>ES6 模块化 是 静态编译，在编译阶段就已经引入，而非执行阶段引入</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> name = <span class="string">&#x27;tang&#x27;</span></span><br><span class="line"><span class="keyword">const</span> age = <span class="number">18</span></span><br><span class="line"><span class="keyword">const</span> foo = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;function foo&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">type</span>: <span class="string">&#x27;array&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: []</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123;</span><br><span class="line">  age,</span><br><span class="line">  foo <span class="keyword">as</span> <span class="title class_">Foo1</span> ,</span><br><span class="line">  A <span class="keyword">as</span> <span class="title class_">ClassA</span>,</span><br><span class="line">  obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p><code>export</code> 导出的是一个<strong>接口</strong>而非一个具体的值</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="string">&#x27;string&#x27;</span>               <span class="comment">// error</span></span><br><span class="line"><span class="keyword">const</span> a = <span class="string">&#x27;a&#x27;</span></span><br><span class="line"><span class="keyword">export</span> a                   <span class="comment">// error</span></span><br></pre></td></tr></table></figure></li>
-<li><p><code>export</code> 导出的内容与其对应的值是 动态绑定的，导出的内容发生变化，引入内容值同时变化</p>
-</li>
-<li><p><code>export</code> 命令可以出现在模块中的顶层的任何位置，不是文件顶部，而是不能出现在块级作用域内</p>
-</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/27/%E6%A8%A1%E5%9D%97%E5%8C%96-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-4/" class="post-title-link" itemprop="url">Typescript 高级类型 4</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-26 17:20:45 / 修改时间：17:22:06" itemprop="dateCreated datePublished" datetime="2022-04-26T17:20:45+08:00">2022-04-26</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="unknown-类型"><a href="#unknown-类型" class="headerlink" title="unknown 类型"></a>unknown 类型</h2><p>ts 3.0 顶级类型</p>
-<ol>
-<li>任何类型都可以赋值给 <code>unknown</code></li>
-<li>如果没有 <em>类型断言</em> 或 <em>基于控制流的类型细化时</em>，<br> <code>unknown</code> 只能赋值给 <code>unknown | any</code>，不能赋值给其他类型</li>
-<li>如果没有 <em>类型断言</em> 或 <em>基于控制流的类型细化时</em>，<br> 不能在它上面进行任何操作</li>
-<li><code>unknown</code> 与其他类型组成的<em>交叉类型</em>，最后都等于<em>其他类型</em></li>
-<li><code>unknown</code> 与其他类型（除 any）组成的联合类型，都等于 <code>unknown</code> 类型</li>
-<li><code>never</code> 类型是 <code>unknown</code> 的子类型</li>
-<li><code>keyof</code> <code>unknown</code> 等于类型 <code>never</code></li>
-<li>只能对 <code>unknown</code> 进行 等或不等操作，不能进行其他操作</li>
-<li><code>unknown</code> 类型的值不能访问其属性、不能作为函数调用和作为类创建实例</li>
-<li>使用 <em>映射类型</em> 时，如果遍历的是 <code>unknown</code> 类型，则不会映射任何属性 </li>
-</ol>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. </span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">value1</span>: <span class="built_in">unknown</span></span><br><span class="line">value1 = <span class="number">100</span></span><br><span class="line">value1 = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line">value1 = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. </span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">value2</span>: <span class="built_in">unknown</span></span><br><span class="line"><span class="comment">// let value3: string = value2    // error 不能将类型“unknown”分配给类型“string”</span></span><br><span class="line">value2 = value1                   <span class="comment">// ok</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. </span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">value4</span>: <span class="built_in">unknown</span></span><br><span class="line"><span class="comment">// value4 += 1                    // error 不能操作（自加）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. </span></span><br><span class="line"><span class="keyword">type</span> type1 = <span class="built_in">string</span> &amp; <span class="built_in">unknown</span>       <span class="comment">// string</span></span><br><span class="line"><span class="keyword">type</span> type2 = <span class="built_in">number</span> &amp; <span class="built_in">unknown</span>       <span class="comment">// number</span></span><br><span class="line"><span class="keyword">type</span> type3 = <span class="built_in">unknown</span> &amp; <span class="built_in">unknown</span>      <span class="comment">// unknown</span></span><br><span class="line"><span class="keyword">type</span> type4 = <span class="built_in">unknown</span> &amp; <span class="built_in">string</span>[]     <span class="comment">// string[]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 5. </span></span><br><span class="line"><span class="keyword">type</span> type5 = <span class="built_in">string</span> | <span class="built_in">unknown</span>       <span class="comment">// unknown</span></span><br><span class="line"><span class="keyword">type</span> type6 = <span class="built_in">any</span> | <span class="built_in">unknown</span>          <span class="comment">// any</span></span><br><span class="line"><span class="keyword">type</span> type7 = <span class="built_in">number</span>[] | <span class="built_in">unknown</span>     <span class="comment">// any</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 6. </span></span><br><span class="line"><span class="comment">// 条件类型：如三元运算符</span></span><br><span class="line"><span class="keyword">type</span> type8 = <span class="built_in">never</span> <span class="keyword">extends</span> <span class="built_in">unknown</span> ? <span class="literal">true</span> : <span class="literal">false</span>     <span class="comment">// any</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 7.</span></span><br><span class="line"><span class="keyword">type</span> type9 = keyof <span class="built_in">unknown</span>          <span class="comment">// never</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 8.</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(value1 !== value2);     <span class="comment">// false</span></span><br><span class="line"><span class="comment">// value1 =+ value2                 // error</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 9.</span></span><br><span class="line"><span class="keyword">let</span> <span class="attr">value5</span>: <span class="built_in">unknown</span></span><br><span class="line"><span class="comment">// value5.age                       // error</span></span><br><span class="line"><span class="comment">// value()                          // error</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 10.</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">TType</span>&lt;T&gt; = &#123;</span><br><span class="line">  [P <span class="keyword">in</span> keyof T]: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> type10 = <span class="title class_">TType</span>&lt;<span class="built_in">any</span>&gt;            <span class="comment">//  [x: string]: number;</span></span><br><span class="line"><span class="keyword">type</span> type11 = <span class="title class_">TType</span>&lt;<span class="built_in">unknown</span>&gt;        <span class="comment">//  没有属性</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="条件类型"><a href="#条件类型" class="headerlink" title="条件类型"></a>条件类型</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-4/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-3/" class="post-title-link" itemprop="url">Typescript 高级类型 3</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-26 17:19:59 / 修改时间：17:20:30" itemprop="dateCreated datePublished" datetime="2022-04-26T17:19:59+08:00">2022-04-26</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="映射类型"><a href="#映射类型" class="headerlink" title="映射类型"></a>映射类型</h2><p>从旧类型中创建新类型</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">InfoType</span> &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">sex</span>: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ReadonlyType</span> &#123;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">age</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类型字段多，重定义不方便</span></span><br><span class="line"><span class="comment">// 映射类型</span></span><br><span class="line"><span class="keyword">type</span> <span class="title class_">ReadonlyMapType</span>&lt;T&gt; = &#123;</span><br><span class="line">  <span class="comment">// in ==&gt; for .. in</span></span><br><span class="line">  <span class="keyword">readonly</span> [P <span class="keyword">in</span> keyof T]: T[P]</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">type</span> <span class="title class_">ReadOnlyInfo</span> = <span class="title class_">ReadonlyMapType</span>&lt;<span class="title class_">InfoType</span>&gt;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">_info</span>: <span class="title class_">ReadOnlyInfo</span> = &#123;</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span>,</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;tan&#x27;</span>,</span><br><span class="line">  <span class="attr">sex</span>: <span class="string">&#x27;man&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// _info.age = 100       // error: readonly</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="Readonly-amp-amp-Partical"><a href="#Readonly-amp-amp-Partical" class="headerlink" title="Readonly &amp;&amp; Partical"></a>Readonly &amp;&amp; Partical</h3><ul>
-<li>ts 内置了 常用的两种</li>
-<li>把类型转换为 <strong>每一个都是只读的</strong> 和 <strong>每一个都是可选的</strong></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-3/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-2/" class="post-title-link" itemprop="url">Typescript 高级类型 2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-26 17:19:23 / 修改时间：17:19:53" itemprop="dateCreated datePublished" datetime="2022-04-26T17:19:23+08:00">2022-04-26</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="this-类型"><a href="#this-类型" class="headerlink" title="this 类型"></a>this 类型</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Counter</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span> (<span class="keyword">public</span> <span class="attr">count</span>: <span class="built_in">number</span> = <span class="number">0</span>) &#123;&#125;</span><br><span class="line">  <span class="keyword">public</span> add (<span class="attr">value</span>: <span class="built_in">number</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">count</span> += value</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> substract (<span class="attr">value</span>: <span class="built_in">number</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">count</span> -= value</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> <span class="title class_">Counter</span>(<span class="number">10</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(c.<span class="title function_">add</span>(<span class="number">10</span>).<span class="title function_">substract</span>(<span class="number">2</span>));    <span class="comment">// Counter &#123;count: 18&#125;</span></span><br><span class="line"><span class="comment">// return this 链式调用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">PowCounter</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Counter</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span> (<span class="keyword">public</span> <span class="attr">count</span>: <span class="built_in">number</span> = <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(count)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="title function_">pow</span>(<span class="params">value: <span class="built_in">number</span></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">count</span> = <span class="variable language_">this</span>.<span class="property">count</span> ** value</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> pc = <span class="keyword">new</span> <span class="title class_">PowCounter</span>(<span class="number">5</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(pc.<span class="title function_">add</span>(<span class="number">1</span>).<span class="title function_">substract</span>(<span class="number">2</span>).<span class="title function_">pow</span>(<span class="number">3</span>));    <span class="comment">// PowCounter &#123;count: 64&#125;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">IInfo</span> &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="built_in">string</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="built_in">number</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> <span class="attr">info</span>: keyof <span class="title class_">IInfo</span>     <span class="comment">// 相当于 字符串字面量类型 &#x27;name&#x27; | &#x27;age&#x27; 的联合类型</span></span><br><span class="line">info = <span class="string">&#x27;name&#x27;</span></span><br><span class="line">info = <span class="string">&#x27;age&#x27;</span></span><br><span class="line">info = <span class="string">&#x27;n&#x27;</span>    <span class="comment">// error</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//                                  K 是由 T类型的值的 key 组成的数组</span></span><br><span class="line"><span class="keyword">function</span> getValue &lt;T, K <span class="keyword">extends</span> keyof T&gt;(<span class="attr">obj</span>: T, <span class="attr">names</span>: K[]): T[K][] &#123;</span><br><span class="line">  <span class="keyword">return</span> names.<span class="title function_">map</span>(<span class="function"><span class="params">item</span> =&gt;</span> obj[item])</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> infoObj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;tan&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">values</span>: (<span class="built_in">string</span> | <span class="built_in">number</span>)[] = <span class="title function_">getValue</span>(infoObj, [<span class="string">&#x27;name&#x27;</span>, <span class="string">&#x27;age&#x27;</span>])</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(values);    <span class="comment">// [&quot;tan&quot;, 18]</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="索引访问操作符"><a href="#索引访问操作符" class="headerlink" title="索引访问操作符"></a>索引访问操作符</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/26/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/25/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/25/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-1/" class="post-title-link" itemprop="url">Typescript-高级类型-1</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-25 16:35:19 / 修改时间：16:35:48" itemprop="dateCreated datePublished" datetime="2022-04-25T16:35:19+08:00">2022-04-25</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="交叉类型"><a href="#交叉类型" class="headerlink" title="交叉类型"></a>交叉类型</h2><p>多个类型合并为一个类型，包含所需的 所有类型 的特性</p>
-<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// T &amp; U 交叉类型</span></span><br><span class="line"><span class="keyword">const</span> merge = &lt;T, U&gt;(<span class="attr">arg1</span>: T, <span class="attr">arg2</span>: U): T &amp; <span class="function"><span class="params">U</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> res = &#123;&#125; <span class="keyword">as</span> T &amp; U</span><br><span class="line">  res = <span class="title class_">Object</span>.<span class="title function_">assign</span>(arg1, arg2)</span><br><span class="line">  <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="联合类型"><a href="#联合类型" class="headerlink" title="联合类型"></a>联合类型</h2><p>联合类型表示一个值可以是几种类型之一</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/25/Typescript-%E9%AB%98%E7%BA%A7%E7%B1%BB%E5%9E%8B-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/14/webpack-opt/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/14/webpack-opt/" class="post-title-link" itemprop="url">webpack-opt</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-14 21:42:08 / 修改时间：21:42:34" itemprop="dateCreated datePublished" datetime="2022-04-14T21:42:08+08:00">2022-04-14</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="resolve"><a href="#resolve" class="headerlink" title="resolve"></a>resolve</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// resolve 配置 webpack 如何寻找模块所对应的文件</span></span><br><span class="line"><span class="attr">resolve</span>: &#123;</span><br><span class="line">  <span class="comment">// 在导入语句没带文件后缀时，Webpack 会自动带上后缀后去尝试访问文件是否存在</span></span><br><span class="line">  <span class="attr">extensions</span>: [],</span><br><span class="line">  <span class="comment">// 通过别名来把原导入路径映射成一个新的导入路径</span></span><br><span class="line">  <span class="attr">alias</span>: &#123;</span><br><span class="line">    <span class="attr">comonents</span>: <span class="string">&#x27;./src/components/&#x27;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// modules 配置 Webpack 去哪些目录下寻找第三方模块，默认是只会去  node_modules  目录下寻找</span></span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;./src/components&#x27;</span>,<span class="string">&#x27;node_modules&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="modules"><a href="#modules" class="headerlink" title="modules"></a>modules</h3><p>有时项目当中会有一些模块被大量 被其他模块依赖和导入，由于其他模块的位置分布不定，针对不同的文件都要去计算被导入文件的相对路径，<br>这个路径有时候会很长，如：<code>import Button from &#39;../../../components/button&#39;</code>，<br>这时可以通过 webpack 进行优化，假如那些被大量导入的模块都在 <code>./src/components/</code> 目录下，通过 webpack 配置</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">resolve</span>: &#123;</span><br><span class="line">  <span class="comment">// modules 配置 Webpack 去哪些目录下寻找第三方模块，默认是只会去  node_modules  目录下寻找</span></span><br><span class="line">  <span class="attr">modules</span>: [<span class="string">&#x27;./src/components&#x27;</span>,<span class="string">&#x27;node_modules&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/04/14/webpack-opt/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/08/es6-class2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/08/es6-class2/" class="post-title-link" itemprop="url">es6-class2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-04-08 17:27:50 / 修改时间：17:28:40" itemprop="dateCreated datePublished" datetime="2022-04-08T17:27:50+08:00">2022-04-08</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="ES5-实现-class"><a href="#ES5-实现-class" class="headerlink" title="ES5 实现 class"></a>ES5 实现 class</h2><ol>
-<li><p>构造函数</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ClassPerson</span> (name, age) &#123;</span><br><span class="line">  <span class="string">&#x27;use strict&#x27;</span>;</span><br><span class="line">  <span class="keyword">var</span> name = <span class="variable language_">arguments</span>.<span class="property">length</span> &amp;&amp; <span class="variable language_">arguments</span>[<span class="number">0</span>] !== <span class="literal">undefined</span></span><br><span class="line">    ? <span class="variable language_">arguments</span>[<span class="number">0</span>]</span><br><span class="line">    : name</span><br><span class="line">  <span class="keyword">var</span> age = <span class="variable language_">arguments</span>.<span class="property">length</span> &amp;&amp; <span class="variable language_">arguments</span>[<span class="number">1</span>] !== <span class="literal">undefined</span></span><br><span class="line">    ? <span class="variable language_">arguments</span>[<span class="number">1</span>]</span><br><span class="line">    : age</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 是否通过 new 创建</span></span><br><span class="line">  <span class="title function_">classCheck</span>(<span class="variable language_">this</span>, <span class="title class_">ClassPerson</span>)</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">age</span> = age</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 检测 是否 new 实例</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">classCheck</span> (instance, constructor) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!(instance <span class="keyword">instanceof</span> constructor)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;should exec with new keyword&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-<li><p>属性方法</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> handleProps = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">defineProps</span> (target, props) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; props.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">var</span> descriptor = props[i]</span><br><span class="line">      descriptor.<span class="property">enumerable</span> = descriptor.<span class="property">enumerable</span> || <span class="literal">false</span></span><br><span class="line">      descriptor.<span class="property">configurable</span> = descriptor.<span class="property">configurable</span> || <span class="literal">true</span></span><br><span class="line">      <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(target, descriptor.<span class="property">key</span>, descriptor)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">constructor, protoProps, staticProps</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (protoProps) <span class="title function_">defineProps</span>(constructor.<span class="property"><span class="keyword">prototype</span></span>, protoProps)</span><br><span class="line">    <span class="keyword">if</span> (staticProps) <span class="title function_">defineProps</span>(constructor, staticProps)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 普通方法 和 static 方法</span></span><br><span class="line"><span class="comment">// 可用 babel 转换 ？</span></span><br><span class="line"><span class="title function_">handleProps</span>(<span class="title class_">ClassPerson</span>, [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">key</span>: <span class="string">&#x27;getName&#x27;</span>,</span><br><span class="line">    <span class="attr">value</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">], [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">key</span>: <span class="string">&#x27;getClassName&#x27;</span>,</span><br><span class="line">    <span class="attr">value</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">name</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/07/es6-new-target/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/07/es6-new-target/" class="post-title-link" itemprop="url">es6-new.target</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-07 22:16:55" itemprop="dateCreated datePublished" datetime="2022-04-07T22:16:55+08:00">2022-04-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-04-08 17:23:04" itemprop="dateModified" datetime="2022-04-08T17:23:04+08:00">2022-04-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li><code>new.target</code> 用于检测 方法或构造函数 是否是通过 <code>new</code> 被调用的</li>
-<li>通过 <code>new</code> 初始化的 构造函数中，<code>new.target</code> 返回一个指向<em>构造函数的引用</em></li>
-<li>普通函数 则 返回 <code>undefined</code></li>
-</ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span> () &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span>.<span class="property">target</span>);    <span class="comment">// [class Point]</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Point</span>()</span><br><span class="line"><span class="comment">// console</span></span><br><span class="line"><span class="comment">// class Point &#123;</span></span><br><span class="line"><span class="comment">//   constructor () &#123;</span></span><br><span class="line"><span class="comment">//     console.log(new.target);</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span> () &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="keyword">new</span>.<span class="property">target</span>)       <span class="comment">// [class Child extends Parent]</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">new</span>.<span class="property">target</span> === <span class="title class_">Parent</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;不能实例化&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Child</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Parent</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span> () &#123;</span><br><span class="line">    <span class="comment">// 继承 构造函数 必须 super</span></span><br><span class="line">    <span class="variable language_">super</span>()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="title class_">Parent</span>()        <span class="comment">// Error: 不能实例化</span></span><br><span class="line"><span class="keyword">const</span> c = <span class="keyword">new</span> <span class="title class_">Child</span>()         <span class="comment">// 只能通过 子类创建实例</span></span><br><span class="line"><span class="comment">// console</span></span><br><span class="line"><span class="comment">// class Child extends Parent &#123;</span></span><br><span class="line"><span class="comment">//   constructor () &#123;</span></span><br><span class="line"><span class="comment">//     super()</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>检测 是否通过 new 创建 的实例<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">classCheck</span> (instance, constructor) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!(instance <span class="keyword">instanceof</span> constructor)) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;should exec with new keyword&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -950,14 +910,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">108</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

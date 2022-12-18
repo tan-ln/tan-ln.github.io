@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="需求：PDF 转图片 -&gt; base64 格式 -&gt; 上传图片  PDF 转 base64 图片参考：Using pdf.js in React  安装 pdfjs-dist 1npm install pdf-dist@2.0.943 --save 项目当中引入 1234import * as PDFJS from &amp;#x27;pdfjs-dist&amp;#x27;import pdfjs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pdf转图片base64上传">
+<meta property="og:url" content="http://yoursite.com/2022/09/01/pdf%E8%BD%AC%E5%9B%BE%E7%89%87base64%E4%B8%8A%E4%BC%A0/index.html">
+<meta property="og:site_name" content="tan-ln的博客">
+<meta property="og:description" content="需求：PDF 转图片 -&gt; base64 格式 -&gt; 上传图片  PDF 转 base64 图片参考：Using pdf.js in React  安装 pdfjs-dist 1npm install pdf-dist@2.0.943 --save 项目当中引入 1234import * as PDFJS from &amp;#x27;pdfjs-dist&amp;#x27;import pdfjs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-09-01T14:58:13.000Z">
+<meta property="article:modified_time" content="2022-09-01T15:20:48.178Z">
+<meta property="article:author" content="tang">
+<meta property="article:tag" content="pdf">
+<meta property="article:tag" content="上传">
+<meta property="article:tag" content="base64">
+<meta property="article:tag" content="react">
+<meta property="article:tag" content="antd">
+<meta property="article:tag" content="pdfjs-dist">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2022/09/01/pdf%E8%BD%AC%E5%9B%BE%E7%89%87base64%E4%B8%8A%E4%BC%A0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>pdf转图片base64上传 | tan-ln的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">tan-ln的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">稳住，我们能赢</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">108</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">0</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">59</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/09/01/pdf%E8%BD%AC%E5%9B%BE%E7%89%87base64%E4%B8%8A%E4%BC%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pdf转图片base64上传
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-09-01 22:58:13 / 修改时间：23:20:48" itemprop="dateCreated datePublished" datetime="2022-09-01T22:58:13+08:00">2022-09-01</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>需求：PDF 转图片 -&gt; base64 格式 -&gt; 上传图片</p>
+</blockquote>
+<h2 id="PDF-转-base64-图片"><a href="#PDF-转-base64-图片" class="headerlink" title="PDF 转 base64 图片"></a>PDF 转 base64 图片</h2><p>参考：<a target="_blank" rel="noopener" href="https://github.com/mozilla/pdf.js/issues/10316">Using pdf.js in React</a></p>
+<ul>
+<li><p>安装 <code>pdfjs-dist</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install pdf-dist@2.0.943 --save</span><br></pre></td></tr></table></figure></li>
+<li><p>项目当中引入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="variable constant_">PDFJS</span> <span class="keyword">from</span> <span class="string">&#x27;pdfjs-dist&#x27;</span></span><br><span class="line"><span class="keyword">import</span> pdfjsWorker <span class="keyword">from</span> <span class="string">&#x27;pdfjs-dist/build/pdf.worker.entry&#x27;</span></span><br><span class="line"><span class="comment">// 解析需要</span></span><br><span class="line"><span class="variable constant_">PDFJS</span>.<span class="property">GlobalWorkerOptions</span>.<span class="property">workerSrc</span> = pdfjsWorker</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>项目使用了 Antd 的 Upload 组件，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Upload</span></span><br><span class="line">  beforeUpload=&#123;beforeUpload&#125;</span><br><span class="line">  action=<span class="string">&quot;/api/xxxxxxxxxx&quot;</span></span><br><span class="line">  headers=&#123;&#123; <span class="title class_">Authorization</span>: token &#125;&#125;</span><br><span class="line">  maxCount=&#123;<span class="number">1</span>&#125;</span><br><span class="line">  accept=<span class="string">&quot;image/*, .pdf&quot;</span></span><br><span class="line">&gt;</span><br><span class="line">  ...</span><br><span class="line">&lt;/<span class="title class_">Upload</span>&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>拦截默认上传动作</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pdf 上传前拦截</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">beforeUpload</span> = (<span class="params">originFileObj: any</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (originFileObj.<span class="property">type</span> === <span class="string">&#x27;application/pdf&#x27;</span>) &#123;</span><br><span class="line">    <span class="comment">// 解析 pdf</span></span><br><span class="line">    <span class="title function_">readPdf</span>(originFileObj)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>pdf 解析</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pdf 解析</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">readPdf</span> = (<span class="params">file: any</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> reader = <span class="keyword">new</span> <span class="title class_">FileReader</span>()</span><br><span class="line">  reader.<span class="title function_">readAsArrayBuffer</span>(file)</span><br><span class="line">  reader.<span class="property">onload</span> = <span class="keyword">function</span> (<span class="params">e</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> arr = <span class="keyword">new</span> <span class="title class_">Uint8Array</span>(<span class="variable language_">this</span>.<span class="property">result</span>)</span><br><span class="line">    <span class="variable constant_">PDFJS</span>.<span class="title function_">getDocument</span>(&#123;<span class="attr">data</span>: arr&#125;).<span class="title function_">then</span>(<span class="keyword">function</span>(<span class="params">pdf: any</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (pdf) &#123;</span><br><span class="line">        <span class="comment">// 多页</span></span><br><span class="line">        <span class="comment">// const pageNum = pdf.numPages</span></span><br><span class="line">        <span class="comment">// for (let i = 1; i &lt;= pageNum; i++) &#123;</span></span><br><span class="line">        <span class="comment">// 只展示一页</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">1</span>; i &lt;= <span class="number">1</span>; i++) &#123;</span><br><span class="line">          <span class="comment">// 生成每一页的 canvas</span></span><br><span class="line">          <span class="keyword">const</span> canvas = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;canvas&#x27;</span>)</span><br><span class="line">          canvas.<span class="property">id</span> = <span class="string">&#x27;pageNum&#x27;</span> + i</span><br><span class="line">          <span class="comment">// canvas 添加到 dom</span></span><br><span class="line">          <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;pdf-container&#x27;</span>)?.<span class="title function_">appendChild</span>(canvas)</span><br><span class="line">          <span class="keyword">const</span> context = canvas.<span class="title function_">getContext</span>(<span class="string">&#x27;2d&#x27;</span>)</span><br><span class="line">          <span class="title function_">openPage</span>(pdf, i, context)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">e: any</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(e)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>canvas 设置，转换为 base64 图片</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">openPage</span> = (<span class="params">pdfFile: any, num: number, context: any</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">var</span> scale = <span class="number">2</span></span><br><span class="line">  pdfFile.<span class="title function_">getPage</span>(num).<span class="title function_">then</span>(<span class="function">(<span class="params">page: any</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> viewport = page.<span class="title function_">getViewport</span>(scale)</span><br><span class="line">    <span class="keyword">var</span> canvas = context.<span class="property">canvas</span></span><br><span class="line">    canvas.<span class="property">width</span> = viewport.<span class="property">width</span></span><br><span class="line">    canvas.<span class="property">height</span> = viewport.<span class="property">height</span></span><br><span class="line">    canvas.<span class="property">style</span>.<span class="property">width</span> = <span class="string">&#x27;100%&#x27;</span></span><br><span class="line">    canvas.<span class="property">style</span>.<span class="property">height</span> = <span class="string">&#x27;100%&#x27;</span></span><br><span class="line">    <span class="keyword">var</span> renderContext = &#123;</span><br><span class="line">      <span class="attr">canvasContext</span>: context,</span><br><span class="line">      viewport</span><br><span class="line">    &#125;</span><br><span class="line">    page.<span class="title function_">render</span>(renderContext).<span class="property">promise</span>.<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> base64String = canvas.<span class="title function_">toDataURL</span>(<span class="string">&quot;image/jpeg&quot;</span>)</span><br><span class="line">      <span class="comment">// useState 设置图片 url</span></span><br><span class="line">      <span class="title function_">setPdfimg</span>(base64String)</span><br><span class="line">      <span class="comment">// 手动上传</span></span><br><span class="line">      <span class="title function_">handleUpload</span>(base64String)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>手动上传 base64 转为 file binary</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pdf 转 base64 后手动上传</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">handleUpload</span> = (<span class="params">base64String: string</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 解码 base64 去掉url头，并转换为byte</span></span><br><span class="line">  <span class="keyword">let</span> bytes = <span class="variable language_">window</span>.<span class="title function_">atob</span>(base64String.<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>)[<span class="number">1</span>])</span><br><span class="line">  <span class="keyword">let</span> array = []</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; bytes.<span class="property">length</span>; i++)&#123;</span><br><span class="line">    array.<span class="title function_">push</span>(bytes.<span class="title function_">charCodeAt</span>(i))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// blob</span></span><br><span class="line">  <span class="comment">// let blob = new Blob([new Uint8Array(array)], &#123;type: &#x27;image/jpeg&#x27;&#125;)</span></span><br><span class="line">  <span class="comment">// binary</span></span><br><span class="line">  <span class="keyword">let</span> file = <span class="keyword">new</span> <span class="title class_">File</span>([<span class="keyword">new</span> <span class="title class_">Uint8Array</span>(array)], <span class="string">&#x27;投放授权书.png&#x27;</span>, &#123; <span class="attr">type</span>: <span class="string">&#x27;image/png&#x27;</span> &#125;)</span><br><span class="line">  <span class="comment">// 生成 formData</span></span><br><span class="line">  <span class="keyword">const</span> formData = <span class="keyword">new</span> <span class="title class_">FormData</span>()</span><br><span class="line">  formData.<span class="title function_">append</span>(<span class="string">&#x27;file&#x27;</span>, file)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">fetch</span>(<span class="string">&#x27;/api/xxxxxxxxxx&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">body</span>: formData,</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;Authorization&#x27;</span>: token</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      message.<span class="title function_">error</span>(<span class="string">&#x27;upload failed.&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">resp</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(resp)</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://www.likecs.com/show-775309.html">React中使用 Pdf.JS 将 pdf 转为图片</a><br><a target="_blank" rel="noopener" href="https://www.codeleading.com/article/7946117501/">在react中 实现 base64的图片转换成formdata格式并实现上传功能</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/fbean/article/details/125369400">Base64转Binary</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <div>
+        
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+        
+      </div>
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/pdf/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> pdf</a>
+              <a href="/tags/%E4%B8%8A%E4%BC%A0/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> 上传</a>
+              <a href="/tags/base64/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> base64</a>
+              <a href="/tags/react/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> react</a>
+              <a href="/tags/antd/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> antd</a>
+              <a href="/tags/pdfjs-dist/" rel="tag"><i class="fa fa-tag"></i><i class="fa fa-tag"></i> pdfjs-dist</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/28/ES6-%E7%9B%B8%E7%AD%89%E6%80%A7%E5%88%A4%E6%96%AD/" rel="prev" title="ES6-相等性判断">
+      <i class="fa fa-chevron-left"></i> ES6-相等性判断
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/18/shadow-dom/" rel="next" title="shadow-dom">
+      shadow-dom <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PDF-%E8%BD%AC-base64-%E5%9B%BE%E7%89%87"><span class="nav-number">1.</span> <span class="nav-text">PDF 转 base64 图片</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="tang"
+      src="/images/favicon.ico">
+  <p class="site-author-name" itemprop="name">tang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">108</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/tan-ln" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tan-ln" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/tan_ln@163.com" title="E-Mail → tan_ln@163.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">tang</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+
+</body>
+</html>

@@ -122,7 +122,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">92</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">108</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">51</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">59</span></a>
 
   </li>
   </ul>
@@ -159,6 +159,608 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/05/symbol/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/05/symbol/" class="post-title-link" itemprop="url">symbol</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-05 12:16:08 / 修改时间：12:16:43" itemprop="dateCreated datePublished" datetime="2022-04-05T12:16:08+08:00">2022-04-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="ES6-Symbol"><a href="#ES6-Symbol" class="headerlink" title="ES6 Symbol"></a>ES6 Symbol</h2><p>表示一个独一无二的值</p>
+<ol>
+<li><code>const sym = Symbol()</code> 不需要 <code>new</code></li>
+<li>unique<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s1 = <span class="title class_">Symbol</span>(<span class="string">&#x27;tan&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> s2 = <span class="title class_">Symbol</span>(<span class="string">&#x27;tan&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1 === s2);           <span class="comment">// error</span></span><br></pre></td></tr></table></figure></li>
+<li>不能使用运算符<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> s3 = <span class="title class_">Symbol</span>(<span class="number">100</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s3 + <span class="number">200</span>);        <span class="comment">// TS2365: Operator &#x27;+&#x27; cannot be applied to types &#x27;unique symbol&#x27; and &#x27;number&#x27;.</span></span><br><span class="line"><span class="comment">// 不能使用运算符 或 + 拼接</span></span><br></pre></td></tr></table></figure></li>
+<li>toString()<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s3.<span class="title function_">toString</span>() + <span class="number">200</span>);      <span class="comment">// toString() + 拼接   &quot;Symbol(100)200&quot;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="作为对象的属性"><a href="#作为对象的属性" class="headerlink" title="作为对象的属性"></a>作为对象的属性</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s4 = <span class="title class_">Symbol</span>(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  [s4]: <span class="string">&#x27;s4&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj);       <span class="comment">// &#123;Symbol(name): &#x27;volvo s4&#x27;&#125;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj.<span class="property">s4</span>);       <span class="comment">// error</span></span><br><span class="line">obj[s4] = <span class="string">&#x27;volvo s60&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj);       <span class="comment">// &#123;Symbol(name): &#x27;s60&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/05/symbol/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/03/%E5%88%9D%E8%AF%86-Typescript/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/03/%E5%88%9D%E8%AF%86-Typescript/" class="post-title-link" itemprop="url">初识 Typescript</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-03 17:41:21 / 修改时间：18:19:01" itemprop="dateCreated datePublished" datetime="2022-04-03T17:41:21+08:00">2022-04-03</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><code>Typescript</code> 是 <code>Javascript</code> 的一个超集，且本质上向这个语言添加了可选的<em>静态类型</em>和<em>基于类的面向对象编程</em></p>
+<p><code>Typescript</code> 基于 <code>Javascript</code> 扩展了类型系统 + ECMAScript6+ 特性的支持 ===&gt; 编译回原始的 <code>JavaScript</code></p>
+<p>功能更强大，生态更加健全、完善（微软自身的开发环境）</p>
+<p>Angular | Vue.js3.0</p>
+<h2 id="语言类型"><a href="#语言类型" class="headerlink" title="语言类型"></a>语言类型</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/04/03/%E5%88%9D%E8%AF%86-Typescript/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/31/flow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/31/flow/" class="post-title-link" itemprop="url">flow</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-31 18:34:31 / 修改时间：20:29:19" itemprop="dateCreated datePublished" datetime="2022-03-31T18:34:31+08:00">2022-03-31</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><code>yarn init -y</code></li>
+<li>安装 flow-bin 模块: <code>yarn add flow-bin -D</code></li>
+<li>创建配置项 <code>yarn flow init</code> ==&gt; <code>.flowconfig</code></li>
+</ol>
+<h2 id="类型检查"><a href="#类型检查" class="headerlink" title="类型检查"></a>类型检查</h2><h3 id="类型注解"><a href="#类型注解" class="headerlink" title="类型注解"></a>类型注解</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// @flow</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">sum</span> (<span class="attr">a</span>: number, <span class="attr">b</span>: number) &#123;</span><br><span class="line">  <span class="keyword">return</span> a + b</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">sum</span>(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line"><span class="title function_">sum</span>(<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;34&#x27;</span>)   <span class="comment">// Cannot call sum with &#x27;12&#x27; bound to a because string [1] is incompatible with number [2]. [incompatible-call]</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>yarn flow</code> 进行检查</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/31/flow/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/31/vertical-align/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/31/vertical-align/" class="post-title-link" itemprop="url">vertical-align</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-31 11:50:01 / 修改时间：12:29:58" itemprop="dateCreated datePublished" datetime="2022-03-31T11:50:01+08:00">2022-03-31</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p><code>vertical-align</code> 是用来设置<em>行内元素</em>对齐方式的。或者说 <code>display</code> 属性值为 <code>inline、inline-block、inline-table</code> 另加一个 <code>table-cell</code> 的元素</p>
+</blockquote>
+<h2 id="基线"><a href="#基线" class="headerlink" title="基线"></a>基线</h2><p><img src="http://r8txnxmmq.hn-bkt.clouddn.com/images/baseline.png" alt="baseline"></p>
+<p>基线的位置并不是固定的：</p>
+<ul>
+<li><p>在文本之类内联元素中，基线是字符的下边缘位置</p>
+</li>
+<li><p>在像 <code>img</code> 元素中基线就是下边缘。</p>
+</li>
+<li><p>在 <code>inline-block</code> 元素中，也分两种情况</p>
+<ul>
+<li><code>inline-block</code> 元素盒子里，没有内容(流内内容)，是一个空的盒子时，<code>baseline</code> 位置就是该盒子 <code>margin-bottom</code> 的边界（没有 <code>margin-bottom</code> 值，就是盒子的边界值）。如下图左侧div</li>
+<li><code>inline-block</code> 元素盒子里，有内容元素，并且 <code>overflow</code> 属性值为 <code>visible</code> 时(默认值)，那么该盒子的 <code>baseline</code> 位置就是里面最后一个内容元素的<code>baseline</code>。如下图中间div</li>
+<li><code>inline-block</code> 元素盒子里，有内容元素，并且 <code>overflow</code> 属性值为非 <code>visible</code> 时 (比如 <code>overflow: hidden;</code> )，那么该盒子的<code>baseline</code>位置就是该盒子margin-bottom 的边界。如下图右侧 div</li>
+</ul>
+<p><img src="http://r8txnxmmq.hn-bkt.clouddn.com/images/box.jpg" alt="box.jpg"></p>
+</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/31/vertical-align/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/30/event%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1%EF%BC%881%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/30/event%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1%EF%BC%881%EF%BC%89/" class="post-title-link" itemprop="url">event事件对象（1）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-30 16:45:46 / 修改时间：17:13:58" itemprop="dateCreated datePublished" datetime="2022-03-30T16:45:46+08:00">2022-03-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="event"><a href="#event" class="headerlink" title="event"></a>event</h2><p>Event 对象代表事件的状态，比如事件在其中发生的元素、键盘按键的状态、鼠标的位置、鼠标按钮的状态。</p>
+<h2 id="兼容性处理"><a href="#兼容性处理" class="headerlink" title="兼容性处理"></a>兼容性处理</h2><blockquote>
+<p>在 W3C 规范中，event 对象是随事件处理函数传入的，Chrome、FireFox、Opera、Safari、IE9.0及其以上版本都支持这种方式；但是对于 IE8.0 及其以下版本，event 对象必须作为 window 对象的一个属性     </p>
+</blockquote>
+<blockquote>
+<p>IE、Chrome：event是一个内置的全局对象 </p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/30/event%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1%EF%BC%881%EF%BC%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/30/drag-%E6%8B%96%E6%8B%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/30/drag-%E6%8B%96%E6%8B%BD/" class="post-title-link" itemprop="url">drag-拖拽</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-30 16:28:53 / 修改时间：16:42:11" itemprop="dateCreated datePublished" datetime="2022-03-30T16:28:53+08:00">2022-03-30</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>若要拖放某个元素，则必须将其的 <code>draggable</code> 属性设置为 <code>true</code><br><code>img</code> 和 <code>a</code> 元素默认为 <code>true</code></p>
+</blockquote>
+<h2 id="拖放事件"><a href="#拖放事件" class="headerlink" title="拖放事件"></a>拖放事件</h2><blockquote>
+<p>拖放的过程中被拖放的对象被称为<em>源对象</em>，过拖放过程中间经过的其他对象被称为<em>过程对象</em>，最终到达的对象称作<em>目标对象</em>。</p>
+</blockquote>
+<ul>
+<li>源对象: <ul>
+<li><code>dragstart</code>: 源对象开始拖放，开始移动时事件触发</li>
+<li><code>drag</code>: 源对象拖放过程中，移动被拖拽对象时触发</li>
+<li><code>dragend</code>: 源对象拖放结束，整个拖放操作结束时触发</li>
+</ul>
+</li>
+<li>过程对象: <ul>
+<li><code>dragenter</code>: 源对象进入过程对象范围内，被拖拽对象进入过程对象时被触发</li>
+<li><code>dragover</code>: 源对象在过程对象范围内移动，被拖拽对象在过程对象内移动时触发</li>
+<li><code>dragleave</code>: 源对象离开过程对象的范围，被拖拽对象离开目标对象时触发</li>
+</ul>
+</li>
+<li>目标对象: <ul>
+<li><code>drop</code>: 源对象拖放到目标对象中，目标对象完全接受被拖拽对象时触发，可理解为在目标对象内松手时触发</li>
+</ul>
+</li>
+</ul>
+<h2 id="dataTransfer-对象"><a href="#dataTransfer-对象" class="headerlink" title="dataTransfer 对象"></a>dataTransfer 对象</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/30/drag-%E6%8B%96%E6%8B%BD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/27/Vue2-x-%E6%BA%90%E7%A0%81-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/27/Vue2-x-%E6%BA%90%E7%A0%81-02/" class="post-title-link" itemprop="url">Vue2.x 源码 02</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-03-27 22:53:50 / 修改时间：22:54:45" itemprop="dateCreated datePublished" datetime="2022-03-27T22:53:50+08:00">2022-03-27</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="全局-API"><a href="#全局-API" class="headerlink" title="全局 API"></a>全局 API</h2><h3 id="Vue-set"><a href="#Vue-set" class="headerlink" title="Vue.set"></a>Vue.set</h3><p>Vue.set(target, key, value)</p>
+<blockquote>
+<p>由于 VUe 无法探测普通的新增 property(比如 this.myObj.newProp = 111)，所以通过 Vue.set() 为响应式对象中添加一个 property，可以确保这个 property 是响应式的，并且触发视图更新</p>
+</blockquote>
+<ol>
+<li>用于在运行时添加根级别属性，使该属性必须具有响应式能力</li>
+<li>不能是 Vue 实例，或者 Vue 实例的根数据对象( 即 return {} )</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/03/27/Vue2-x-%E6%BA%90%E7%A0%81-02/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/25/%E9%98%B2%E6%8A%96-%E8%8A%82%E6%B5%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.ico">
+      <meta itemprop="name" content="tang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="tan-ln的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/03/25/%E9%98%B2%E6%8A%96-%E8%8A%82%E6%B5%81/" class="post-title-link" itemprop="url">防抖 && 节流</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-03-25 14:26:57" itemprop="dateCreated datePublished" datetime="2022-03-25T14:26:57+08:00">2022-03-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-03-27 23:04:48" itemprop="dateModified" datetime="2022-03-27T23:04:48+08:00">2022-03-27</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="防抖节流"><a href="#防抖节流" class="headerlink" title="防抖节流"></a>防抖节流</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *  防抖：</span></span><br><span class="line"><span class="comment"> *      频繁触发事件，设定一个时间间隔，当 相邻两次事件 的触发时间间隔 小于设定的时间，则重新设定，大于则触发</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> *  节流</span></span><br><span class="line"><span class="comment"> *      频繁触发事件，每隔一段时间触发一次</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> debounce = <span class="keyword">function</span> (<span class="params">fn, wait = <span class="number">1000</span></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">    <span class="keyword">const</span> _this = <span class="variable language_">this</span></span><br><span class="line">    <span class="keyword">const</span> _args = [...<span class="variable language_">arguments</span>]</span><br><span class="line">    timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      fn.<span class="title function_">apply</span>(_this, _args)</span><br><span class="line">    &#125;, wait);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> throttle = <span class="keyword">function</span> (<span class="params">fn, wait</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) <span class="keyword">return</span></span><br><span class="line">    timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      fn.<span class="title function_">apply</span>(<span class="variable language_">this</span>, args)</span><br><span class="line">      <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">      timer = <span class="literal">null</span></span><br><span class="line">    &#125;, wait);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="防抖-鼠标移动位置捕捉"><a href="#防抖-鼠标移动位置捕捉" class="headerlink" title="防抖 - 鼠标移动位置捕捉"></a>防抖 - 鼠标移动位置捕捉</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> debounce = <span class="keyword">function</span> (<span class="params">fun, delay</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">...args</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (timer) <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">    timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      fun.<span class="title function_">apply</span>(<span class="variable language_">this</span>, args)</span><br><span class="line">    &#125;, delay);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> handle = <span class="title function_">debounce</span>(<span class="function"><span class="params">e</span> =&gt;</span> </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;x: &#x27;</span> + e.<span class="property">pageX</span>, <span class="string">&#x27; , y: &#x27;</span> + e.<span class="property">pageY</span>)</span><br><span class="line">, <span class="number">500</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;mousemove&#x27;</span>, <span class="title function_">debounce</span>(<span class="function"><span class="params">e</span> =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">pageX</span>), <span class="number">500</span>))</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -306,639 +908,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/24/array-reduce/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/24/array-reduce/" class="post-title-link" itemprop="url">array.reduce</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-24 16:22:06 / 修改时间：16:46:23" itemprop="dateCreated datePublished" datetime="2022-03-24T16:22:06+08:00">2022-03-24</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Array-prototype-reduce-total-curVal-curIdx-arr-gt-initVal"><a href="#Array-prototype-reduce-total-curVal-curIdx-arr-gt-initVal" class="headerlink" title="Array.prototype.reduce((total, curVal, curIdx, arr) =&gt; {}, initVal)"></a>Array.prototype.reduce((total, curVal, curIdx, arr) =&gt; {}, initVal)</h2><blockquote>
-<p><code>reduce()</code> 方法接收一个函数作为累加器，数组中的每个值 (从左到右)开始缩减，最终为一个值，是ES5中新增的又一个数组逐项处理方法</p>
-</blockquote>
-<p>参数：</p>
-<ul>
-<li><p>callback (一个在数组中每一项上调用的函数，接受四个函数：)</p>
-<ul>
-<li><p>total (上一次调用回调函数时的返回值，或者初始值)</p>
-</li>
-<li><p>curVal (当前正在处理的数组元素)</p>
-</li>
-<li><p>curIdx (当前正在处理的数组元素下标)</p>
-</li>
-<li><p>arr (调用 reduce() 方法的数组)</p>
-</li>
-</ul>
-</li>
-<li><p><code>initialValue</code> (可选的初始值。作为第一次调用回调函数时传给 total 的值)</p>
-</li>
-</ul>
-<h2 id="原方法"><a href="#原方法" class="headerlink" title="原方法"></a>原方法</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/24/array-reduce/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/24/vue2-x-%E4%B8%8E-vue3-x-%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/24/vue2-x-%E4%B8%8E-vue3-x-%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">Vue2.x 与 Vue3.x 区别</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-24 14:45:54 / 修改时间：15:06:48" itemprop="dateCreated datePublished" datetime="2022-03-24T14:45:54+08:00">2022-03-24</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>vue2.x 与 vue3.x 区别（一）</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/24/vue2-x-%E4%B8%8E-vue3-x-%E5%8C%BA%E5%88%AB/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/23/array-map-fn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/23/array-map-fn/" class="post-title-link" itemprop="url">array.map(fn)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-23 21:55:51 / 修改时间：22:04:38" itemprop="dateCreated datePublished" datetime="2022-03-23T21:55:51+08:00">2022-03-23</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="map-方法"><a href="#map-方法" class="headerlink" title="map() 方法"></a>map() 方法</h2><ul>
-<li><p>map() 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。</p>
-</li>
-<li><p>语法：<code>array.map(function(currentValue,index,arr), thisValue)</code></p>
-</li>
-<li><p><code>callback</code> 为数组中每个元素执行的函数，该函数可接受1-3个参数</p>
-<ul>
-<li><p><code>currentvalue</code> 参数表示数组的当前元素项，必须的参数</p>
-</li>
-<li><p><code>index</code> 参数表示的当前元素下标，可选参数</p>
-</li>
-<li><p><code>arr</code> 参数表示当前元素所属的数组，可选参数   </p>
-</li>
-</ul>
-</li>
-<li><p><code>thisValue</code> 表示执行回调函数 <code>callback()</code> 时的 <code>this</code> 指向。可选参数。当不写时，则默认是指向 <code>window</code> 全局</p>
-</li>
-</ul>
-<h2 id="手写-map"><a href="#手写-map" class="headerlink" title="手写 map"></a>手写 map</h2><h3 id="简单版"><a href="#简单版" class="headerlink" title="简单版"></a>简单版</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">_map</span> = <span class="keyword">function</span> (<span class="params">fn</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> fn !== <span class="string">&#x27;function&#x27;</span>) <span class="keyword">return</span> <span class="string">&#x27;fn is not a function&#x27;</span></span><br><span class="line">  <span class="keyword">let</span> temp = []</span><br><span class="line">  <span class="keyword">const</span> arr = <span class="variable language_">this</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> val <span class="keyword">of</span> arr) &#123;</span><br><span class="line">    temp.<span class="title function_">push</span>(<span class="title function_">fn</span>(val))</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> temp</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> res = arr.<span class="title function_">_map</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">&#x27;_&#x27;</span> + item + <span class="string">&#x27;_&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(res)  <span class="comment">// [ &#x27;_1_&#x27;, &#x27;_2_&#x27;, &#x27;_3_&#x27;, &#x27;_4_&#x27; ]</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/23/array-map-fn/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/23/instanceof/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/23/instanceof/" class="post-title-link" itemprop="url">instanceof</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-23 20:47:22 / 修改时间：20:56:07" itemprop="dateCreated datePublished" datetime="2022-03-23T20:47:22+08:00">2022-03-23</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="instanceof-用于判断在某个对象的原型链上查找是否存在一个构造函数的-prototype-属性"><a href="#instanceof-用于判断在某个对象的原型链上查找是否存在一个构造函数的-prototype-属性" class="headerlink" title="instanceof 用于判断在某个对象的原型链上查找是否存在一个构造函数的 prototype 属性"></a>instanceof 用于判断在某个对象的原型链上查找是否存在一个构造函数的 prototype 属性</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;tan&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Object</span>)          <span class="comment">// true</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr <span class="keyword">instanceof</span> <span class="title class_">Array</span>)           <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="判断内容必须为对象"><a href="#判断内容必须为对象" class="headerlink" title="判断内容必须为对象"></a>判断内容必须为<strong>对象</strong></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> b = <span class="keyword">new</span> <span class="title class_">Number</span>(<span class="number">10</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a <span class="keyword">instanceof</span> <span class="title class_">Number</span>)                  <span class="comment">// false    检测的一定要是对象才行</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b <span class="keyword">instanceof</span> <span class="title class_">Number</span>)                  <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a.<span class="property">__proto__</span> === <span class="title class_">Number</span>.<span class="property"><span class="keyword">prototype</span></span>)     <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(arr <span class="keyword">instanceof</span> <span class="title class_">Object</span>)                <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="手写-instanceof"><a href="#手写-instanceof" class="headerlink" title="手写 instanceof"></a>手写 instanceof</h2>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/23/instanceof/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/23/webpack-%E6%90%AD%E5%BB%BA-vue-%E7%8E%AF%E5%A2%83/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/23/webpack-%E6%90%AD%E5%BB%BA-vue-%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">Webpack 搭建 vue 环境</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-23 19:51:09 / 修改时间：19:53:52" itemprop="dateCreated datePublished" datetime="2022-03-23T19:51:09+08:00">2022-03-23</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>使用 webpack 手动搭建 vue 环境</p>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ul>
-<li><p>全局安装 <code>webpack webpack-cli</code></p>
-</li>
-<li><p>项目安装 <code>yarn add webpack webpack-cli webpack-dev-server -D</code></p>
-</li>
-<li><p><code>yarn add vue@2.6 -S</code></p>
-</li>
-<li><p>文件创建</p>
-<ul>
-<li><p><code>webpack.config.js</code> webpack 配置文件</p>
-</li>
-<li><p><code>index.html</code> 模板挂载页面</p>
-  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
-<li><p><code>src/index.js</code> 入口文件</p>
-  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li><p><code>src/App.vue</code> 根组件</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="webpack-config-js"><a href="#webpack-config-js" class="headerlink" title="webpack.config.js"></a>webpack.config.js</h2><ol>
-<li>安装 <code>vue-loader</code> (必须)、 <code>html-webpack-plugin</code> (必须) 、 <code>vue-template-compiler</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">VueLoaderPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;vue-loader/lib/plugin&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">HtmlWebpackPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;html-webpack-plugin&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">entry</span>: <span class="string">&#x27;./src/index.js&#x27;</span>,</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&#x27;product&#x27;</span>,</span><br><span class="line">  <span class="attr">module</span>: &#123;</span><br><span class="line">    <span class="attr">rules</span>: [</span><br><span class="line">      &#123;</span><br><span class="line">        <span class="attr">test</span>: <span class="regexp">/\.vue$/</span>,</span><br><span class="line">        <span class="attr">loader</span>: <span class="string">&#x27;vue-loader&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">VueLoaderPlugin</span>(),</span><br><span class="line">    <span class="keyword">new</span> <span class="title class_">HtmlWebpackPlugin</span>(&#123;</span><br><span class="line">      <span class="attr">template</span>: <span class="string">&#x27;./index.html&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="attr">port</span>: <span class="number">3000</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/23/webpack-%E6%90%AD%E5%BB%BA-vue-%E7%8E%AF%E5%A2%83/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/22/JavaScript-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/22/JavaScript-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">JavaScript 执行过程</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-22 19:10:30 / 修改时间：20:22:34" itemprop="dateCreated datePublished" datetime="2022-03-22T19:10:30+08:00">2022-03-22</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <ul>
-<li>javascript是单线程的解释性语言，</li>
-<li>单线程就是先执行完一个，再执行另一个；</li>
-<li>解释性语言就是先翻译一行，再执行一行，先翻译一行，再执行一行</li>
-</ul>
-<h2 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h2><blockquote>
-<p>扫描一遍是否有低级语法错误</p>
-</blockquote>
-<h2 id="词法分析（预编译阶段）"><a href="#词法分析（预编译阶段）" class="headerlink" title="词法分析（预编译阶段）"></a>词法分析（预编译阶段）</h2><p>例子</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/22/JavaScript-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/21/aboutme/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/21/aboutme/" class="post-title-link" itemprop="url">aboutme</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2022-03-21 09:47:37 / 修改时间：09:52:27" itemprop="dateCreated datePublished" datetime="2022-03-21T09:47:37+08:00">2022-03-21</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>A Resume About ME</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/21/aboutme/">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/18/hexo_config/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.ico">
-      <meta itemprop="name" content="tang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="tan-ln的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/03/18/hexo_config/" class="post-title-link" itemprop="url">Hexo&NexT 博客个性化主题设置</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-03-18 09:39:59" itemprop="dateCreated datePublished" datetime="2022-03-18T09:39:59+08:00">2022-03-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-05-16 10:42:19" itemprop="dateModified" datetime="2018-05-16T10:42:19+08:00">2018-05-16</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Hexo-amp-NexT-博客骚操作-个性化主题设置"><a href="#Hexo-amp-NexT-博客骚操作-个性化主题设置" class="headerlink" title="Hexo&amp;NexT 博客骚操作-个性化主题设置"></a>Hexo&amp;NexT 博客骚操作-个性化主题设置</h1><blockquote>
-<p>最简单的 hexo&amp;next 主题个性化设置 </p>
-<blockquote>
-<p>前提须知：<br>    <strong>站点配置文件</strong>: 根目录下的 <code>_config.yml</code><br>    <strong>主题配置文件</strong>: 主题文件夹内的 <code>_config.yml</code>  </p>
-</blockquote>
-</blockquote>
-<h2 id="站内搜索功能"><a href="#站内搜索功能" class="headerlink" title="站内搜索功能"></a>站内搜索功能</h2><blockquote>
-<p>推荐使用 Hexo 提供的 Local Search，通过安装 hexo-generator-search 插件，在本地生成一个 search.xml 文件，搜索的时候从这个文件中根据关键字检索出相应的链接  </p>
-</blockquote>
-<ul>
-<li><h3 id="安装-hexo-generator-search-和-hexo-generator-searchdb"><a href="#安装-hexo-generator-search-和-hexo-generator-searchdb" class="headerlink" title="安装 hexo-generator-search 和 hexo-generator-searchdb"></a>安装 hexo-generator-search 和 hexo-generator-searchdb</h3><blockquote>
-<p>站点根目录下命令行输入  </p>
-  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-generator-search --save</span><br><span class="line">```     </span><br><span class="line">```bash</span><br><span class="line">$ npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure></blockquote>
-</li>
-<li><h3 id="配置站点"><a href="#配置站点" class="headerlink" title="配置站点"></a>配置站点</h3><blockquote>
-<p>编辑 站点配置文件 <code>_config.yml</code> ，新增以下内容:</p>
-  <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line"><span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line"><span class="attr">field:</span> <span class="string">post</span></span><br><span class="line"><span class="attr">format:</span> <span class="string">html</span></span><br><span class="line"><span class="attr">limit:</span> <span class="number">10000</span></span><br></pre></td></tr></table></figure></blockquote>
-</li>
-<li><h3 id="启用本地搜索功能"><a href="#启用本地搜索功能" class="headerlink" title="启用本地搜索功能"></a>启用本地搜索功能</h3><blockquote>
-<p>打开主题配置文件 <code>_config.yml</code> ，设为 true    </p>
-  <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Local search</span></span><br><span class="line"><span class="attr">local_search:</span></span><br><span class="line"><span class="attr">enable:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<h2 id="代码块自定义样式"><a href="#代码块自定义样式" class="headerlink" title="代码块自定义样式"></a>代码块自定义样式</h2><blockquote>
-<p>打开\themes\next\source\css_custom\custom.styl<br>向里面加入：(颜色可以自己定义)    </p>
-</blockquote>
-<figure class="highlight styl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Custom styles.</span></span><br><span class="line"><span class="selector-tag">code</span></span><br><span class="line">    <span class="attribute">color</span> <span class="number">#ff7600</span></span><br><span class="line">    <span class="attribute">background</span> <span class="number">#fbf7f8</span></span><br><span class="line">    <span class="attribute">margin</span> <span class="number">2px</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 大代码块的自定义样式</span></span><br><span class="line"><span class="selector-class">.highlight</span>, pre</span><br><span class="line">    <span class="attribute">margin</span> <span class="number">5px</span> <span class="number">0</span></span><br><span class="line">    <span class="attribute">padding</span> <span class="number">5px</span></span><br><span class="line">    <span class="attribute">border-radius</span> <span class="number">3px</span></span><br><span class="line"></span><br><span class="line"><span class="selector-class">.highlight</span>, <span class="selector-tag">code</span>, pre</span><br><span class="line">    <span class="attribute">border</span> <span class="number">1px</span> solid <span class="number">#d6d6d6</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/18/hexo_config/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1010,14 +979,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">108</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
