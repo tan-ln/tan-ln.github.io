@@ -27,20 +27,20 @@
 <meta property="og:site_name" content="tan-ln的博客">
 <meta property="og:description" content="Shadow Dom 什么是 Shadow Dom ​    Shadow Dom：影子 Dom，可以理解为潜藏在背后的 DOM 结构，也就是我们无法直接控制操做的 DOM 结构。  图中的 #shadow-root 中包含的内容其实就是 Shadow-Dom">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://yoursite.com/2022/12/18/shadow-dom/assets//shadowdom/shadow-root.png">
-<meta property="og:image" content="http://yoursite.com/2022/12/18/shadow-dom/assets//shadowdom/show-shadow-dom.png">
-<meta property="og:image" content="http://yoursite.com/2022/12/18/shadow-dom/assets//shadowdom/shadowdom.svg">
-<meta property="og:image" content="http://yoursite.com/2022/12/18/shadow-dom/assets//shadowdom/video.png">
-<meta property="og:image" content="http://yoursite.com/2022/12/18/shadow-dom/assets//shadowdom/video-shadow-dom.png">
-<meta property="og:image" content="http://yoursite.com/2022/12/18/shadow-dom/assets//shadowdom/create-shadow-dom.png">
-<meta property="og:image" content="http://yoursite.com/2022/12/18/shadow-dom/assets//shadowdom/get-shadow-dom.png">
+<meta property="og:image" content="http://yoursite.com/2022/12/18/images//shadowdom/shadow-root.png">
+<meta property="og:image" content="http://yoursite.com/2022/12/18/images//shadowdom/show-shadow-dom.png">
+<meta property="og:image" content="http://yoursite.com/2022/12/18/images//shadowdom/shadowdom.svg">
+<meta property="og:image" content="http://yoursite.com/2022/12/18/images//shadowdom/video.png">
+<meta property="og:image" content="http://yoursite.com/2022/12/18/images//shadowdom/video-shadow-dom.png">
+<meta property="og:image" content="http://yoursite.com/2022/12/18/images//shadowdom/create-shadow-dom.png">
+<meta property="og:image" content="http://yoursite.com/2022/12/18/images//shadowdom/get-shadow-dom.png">
 <meta property="article:published_time" content="2022-12-18T08:12:39.000Z">
-<meta property="article:modified_time" content="2022-12-18T08:13:25.063Z">
+<meta property="article:modified_time" content="2022-12-18T08:30:09.513Z">
 <meta property="article:author" content="tang">
 <meta property="article:tag" content="html">
 <meta property="article:tag" content="shadowdom">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2022/12/18/shadow-dom/assets//shadowdom/shadow-root.png">
+<meta name="twitter:image" content="http://yoursite.com/2022/12/18/images//shadowdom/shadow-root.png">
 
 <link rel="canonical" href="http://yoursite.com/2022/12/18/shadow-dom/">
 
@@ -201,7 +201,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-12-18 16:12:39 / 修改时间：16:13:25" itemprop="dateCreated datePublished" datetime="2022-12-18T16:12:39+08:00">2022-12-18</time>
+              <time title="创建时间：2022-12-18 16:12:39 / 修改时间：16:30:09" itemprop="dateCreated datePublished" datetime="2022-12-18T16:12:39+08:00">2022-12-18</time>
             </span>
 
           
@@ -218,15 +218,15 @@
         <h1 id="Shadow-Dom"><a href="#Shadow-Dom" class="headerlink" title="Shadow Dom"></a>Shadow Dom</h1><blockquote>
 <h3 id="什么是-Shadow-Dom"><a href="#什么是-Shadow-Dom" class="headerlink" title="什么是 Shadow Dom"></a>什么是 Shadow Dom</h3></blockquote>
 <p>​    Shadow Dom：影子 Dom，可以理解为潜藏在背后的 DOM 结构，也就是我们无法直接控制操做的 DOM 结构。</p>
-<p><img src="./assets//shadowdom/shadow-root.png" alt="Shadow Dom Open"></p>
+<p><img src="../images//shadowdom/shadow-root.png" alt="Shadow Dom Open"></p>
 <p>图中的 <code>#shadow-root</code> 中包含的内容其实就是 <code>Shadow-Dom</code></p>
 <p><code>Shadow-Dom</code> 其实是浏览器的一种能力，它允许在浏览器渲染文档 <code>document</code> 的时候向其中的 <code>Dom</code> 结构中插入一棵 <code>DOM 元素子树</code>，但是特殊的是，这棵子树<code>Shadow-Dom 并不在主 DOM 树中</code>。</p>
 <p>它相当于一个 <strong>作用域</strong> 的概念，使其不会被外部所影响。可以把它理解成一颗单独的dom树。这样就不会有 css 的命名冲突或者样式的意外泄漏。</p>
-<p><img src="./assets//shadowdom/show-shadow-dom.png" alt="打开Shadow Dom"></p>
+<p><img src="../images//shadowdom/show-shadow-dom.png" alt="打开Shadow Dom"></p>
 <p>通过上图方式启用开发者工具的 <code>Show user agent shadow DOM</code> 可以看到原本隐藏的结构。</p>
 <blockquote>
 <h3 id="Shadow-Dom-的构成"><a href="#Shadow-Dom-的构成" class="headerlink" title="Shadow Dom 的构成"></a>Shadow Dom 的构成</h3></blockquote>
-<img src="./assets//shadowdom/shadowdom.svg" alt="Shadow Dom" style="zoom: 80%;" />
+<img src="../images//shadowdom/shadowdom.svg" alt="Shadow Dom" style="zoom: 80%;" />
 
 
 
@@ -249,11 +249,11 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">video</span></span></span><br><span class="line"><span class="tag">  <span class="attr">id</span>=<span class="string">&quot;video&quot;</span> <span class="attr">src</span>=<span class="string">&quot;./car-loading-data.mp4&quot;</span> <span class="attr">controls</span> <span class="attr">autoplay</span> <span class="attr">loop</span> <span class="attr">width</span>=<span class="string">&quot;400&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>只需简单的一行代码，就可以实现视频播放，并且附带很多其他的功能：<strong>暂停，播放，音量控制，全屏按钮，进度条</strong> …</p>
-<p><img src="./assets//shadowdom/video.png" alt="video"></p>
+<p><img src="../images//shadowdom/video.png" alt="video"></p>
 <blockquote>
 <p>这些功能的具体实现其实都在 <code>shadow-dom</code> 之中：</p>
 </blockquote>
-<p><img src="./assets//shadowdom/video-shadow-dom.png" alt="video shadow-dom"></p>
+<p><img src="../images//shadowdom/video-shadow-dom.png" alt="video shadow-dom"></p>
 <blockquote>
 <h3 id="如何创建-Shadow-Dom"><a href="#如何创建-Shadow-Dom" class="headerlink" title="如何创建 Shadow Dom"></a>如何创建 Shadow Dom</h3></blockquote>
 <p>​    首先需要一个 <code>Shadow root</code>，作为 <code>shadow</code> 树中最顶层的节点，是在创建 <code>shadow DOM</code> 时被附加到 常规DOM节点（<code>shadow host</code>）的内容</p>
@@ -263,13 +263,13 @@
 </code></pre>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="comment">// Shadow root</span></span><br><span class="line">  <span class="keyword">const</span> root = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>)</span><br><span class="line">  root.<span class="title function_">setAttribute</span>(<span class="string">&#x27;class&#x27;</span>, <span class="string">&#x27;shadow-root&#x27;</span>)</span><br><span class="line">  <span class="comment">// 创建 Shadow Dom</span></span><br><span class="line">  <span class="keyword">const</span> shadow  = root.<span class="title function_">attachShadow</span>(&#123; <span class="attr">mode</span>: <span class="string">&#x27;open&#x27;</span> &#125;)</span><br><span class="line">  <span class="keyword">const</span> p = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;p&#x27;</span>)</span><br><span class="line">  p.<span class="property">innerText</span> = <span class="string">&#x27;i am a tag inn a shadow dom&#x27;</span></span><br><span class="line">  <span class="comment">// 通过 DOM 操作将元素插入 Shadow Dom</span></span><br><span class="line">  shadow.<span class="title function_">appendChild</span>(p)</span><br><span class="line">  <span class="comment">// 将 Shadow Dom 挂载到 document</span></span><br><span class="line">  <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(root)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<p><img src="./assets//shadowdom/create-shadow-dom.png" alt="create-shadow-dom"></p>
+<p><img src="../images//shadowdom/create-shadow-dom.png" alt="create-shadow-dom"></p>
 <blockquote>
 <h4 id="获取-Shadow-Dom：element-shadowRoot"><a href="#获取-Shadow-Dom：element-shadowRoot" class="headerlink" title="获取 Shadow Dom：element.shadowRoot"></a>获取 Shadow Dom：<code>element.shadowRoot</code></h4></blockquote>
 <p>  然后就可以通过 DOM 操作，控制 Shadow Dom 中的元素</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">document</span>.<span class="title function_">querySelector</span>(<span class="string">&#x27;.shadow-root&#x27;</span>).<span class="property">shadowRoot</span></span><br><span class="line">    	.<span class="title function_">querySelector</span>(<span class="string">&#x27;p&#x27;</span>)</span><br><span class="line">    	.<span class="property">style</span>.<span class="property">background</span> = <span class="string">&#x27;red&#x27;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="./assets//shadowdom/get-shadow-dom.png" alt="get-shadow-dom"></p>
+<p><img src="../images//shadowdom/get-shadow-dom.png" alt="get-shadow-dom"></p>
 <blockquote>
 <h3 id="为-Shadow-Dom-中的元素添加样式"><a href="#为-Shadow-Dom-中的元素添加样式" class="headerlink" title="为 Shadow Dom 中的元素添加样式"></a>为 <code>Shadow Dom</code> 中的元素添加样式</h3></blockquote>
 <p>​    上面说过，Shadow Dom 之中是一个独立的作用域，外部无法直接影响内部元素，但可以通过以下方式添加样式：</p>
